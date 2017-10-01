@@ -11,10 +11,10 @@ Getting Started
 
 1. Download and install Geosupport Desktop Edition for Windows:
 
- * `Geosupport Desktop Edition for Windows (32-bit)`_
- * `Geosupport Desktop Edition for Windows (64-bit)`_
+* `Geosupport Desktop Edition for Windows (32-bit)`_
+* `Geosupport Desktop Edition for Windows (64-bit)`_
 
- **Note:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
+**Note:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
 
 2. Install the python package:
 

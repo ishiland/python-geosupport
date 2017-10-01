@@ -1,7 +1,7 @@
 Geosupport
 ==========
 
-Geosupport is a Python library for using the NYC `Geosupport Desktop
+Geosupport is a Python library for using NYC Planning's `Geosupport Desktop
 Edition™`_.
 
 Currently this library only supports Windows x86 and x64 environments.
@@ -21,15 +21,17 @@ Download and install Geosupport Desktop Edition for Windows. Ensure you select t
 corresponds to the Python interpreter you are using. Ex., Python 32-bit
 will only work with Geosupport 32-bit.
 
- 1. Install the python package
+1. Install the python package:
 
-    ``pip install geosupport``
+  ``pip install geosupport``
 
- 2. Geocode some addresses:
+2. Import the package and create and instance of:
 
    ``import geosupport``
 
    ``g = geosupport.Geocode()``
+
+3. Geocode some addresses:
 
    **Geocode by borough code**
 
@@ -43,10 +45,9 @@ will only work with Geosupport 32-bit.
 
    ``r = g.address_zipcode(house_number=‘125’, street_name=‘Worth St’, zip_code=‘10013’)``
 
-   ``print(r[‘Latitude’], r[‘Longitude’]) # Expected output: (‘40.715428’,-74.002673’)``
 
-All Output Keys
----------------
+4. A dictionary of results is returned:
+
 ::
 
     {'2010 Census Block': '1012',
@@ -100,10 +101,10 @@ python based on `Chris Whong`_ and `Noah Veltman’s`_ work using Node.js
 
 TODO
 ----
- * Add linux support
- * Add single line address input
- * Add more Geosupport functions
- * More tests
+* Add linux support
+* Add single line address input
+* Add more Geosupport functions
+* More tests
 
 .. _Geosupport Desktop Edition™: https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page
 .. _Geosupport Desktop Edition for Windows (32-bit): https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gde16b.zip

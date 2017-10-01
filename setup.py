@@ -1,6 +1,7 @@
+import os
+
 try:
     from distutils.core import setup
-    import os
 except ImportError:
     raise ImportError(
         "setuptools module required, please go to "
@@ -8,9 +9,6 @@ except ImportError:
         "for installing setuptools"
     )
 
-# from geosupport.utils import check_env
-
-# check_env()
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()

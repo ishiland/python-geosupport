@@ -1,6 +1,7 @@
 import sys
 from ctypes import cdll
 
+
 class Geosupport(object):
     """
     All geocoding methods require House Number and Street Name. In addition, Boro Code, Boro Name or Zip code
@@ -49,7 +50,8 @@ class Geosupport(object):
         self.geolib.NYCgeo(wa1, wa2)
         return self._parse(str(wa1), str(wa2))
 
-    def _xstr(self, s):
+    @staticmethod
+    def _xstr(s):
         """
         :param s: String to be processed by Geosupport WA1 or WA2
         :return: Empty string if s is None.
@@ -80,7 +82,8 @@ class Geosupport(object):
     def address_borocode(self, house_number, street_name, boro_code):
         return self._geocode(house_number=house_number, street_name=street_name, boro_code=boro_code)
 
-    def _rightpad(self, field, length):
+    @staticmethod
+    def _rightpad(field, length):
         """
         Creates a string of specified length, either by adding whitespace to the right, or concatenating
         """
@@ -93,7 +96,8 @@ class Geosupport(object):
                 field += ' '
         return field.upper()
 
-    def _parse(self, wa1, wa2):
+    @staticmethod
+    def _parse(wa1, wa2):
         """
         :param wa1: Work Area 1 from GeoSupport results
         :param wa2: Work Area 2 from GeoSupport results

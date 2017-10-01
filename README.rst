@@ -23,9 +23,9 @@ will only work with Geosupport 32-bit.
 
 1. Install the python package:
 
-  ``pip install geosupport``
+   ``pip install geosupport``
 
-2. Import the package and create and instance of:
+2. Import the package and create an instance:
 
    ``import geosupport``
 

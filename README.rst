@@ -1,37 +1,32 @@
-Geosupport
+python-geosupport
 ==========
 
-Geosupport is a Python library for using NYC Planning's `Geosupport Desktop
-Edition™`_.
+python-geosupport is a Python package for using NYC Planning's `Geosupport Desktop Edition™`_.
 
-Currently this library only supports Windows x86 and x64 environments.
-Future support of Linux is expected. ## Getting Started
+**Currently this package only supports Windows x86 and x64 environments.** Future support of Linux is possible.
 
-Download and install Geosupport Desktop Edition for Windows: 
- * `Geosupport Desktop Edition for Windows (32-bit)`_ 
- * `Geosupport Desktop Edition for Windows (64-bit)`_
-
-**Note:** Ensure you select the correct Geosupport installation that
-corresponds to the Python interpreter you are using. Ex., Python 32-bit
-will only work with Geosupport 32-bit. 
 
 Getting Started
 ---------------
-Download and install Geosupport Desktop Edition for Windows. Ensure you select the correct Geosupport installation that
-corresponds to the Python interpreter you are using. Ex., Python 32-bit
-will only work with Geosupport 32-bit.
 
-1. Install the python package:
+1. Download and install Geosupport Desktop Edition for Windows:
 
-   ``pip install geosupport``
+ * `Geosupport Desktop Edition for Windows (32-bit)`_
+ * `Geosupport Desktop Edition for Windows (64-bit)`_
 
-2. Import the package and create an instance:
+ **Note:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
+
+2. Install the python package:
+
+   ``pip install python-geosupport``
+
+3. Import the package and create an instance:
 
    ``import geosupport``
 
    ``g = geosupport.Geocode()``
 
-3. Geocode some addresses:
+4. Geocode some addresses:
 
    **Geocode by borough code**
 
@@ -46,7 +41,7 @@ will only work with Geosupport 32-bit.
    ``r = g.address_zipcode(house_number=‘125’, street_name=‘Worth St’, zip_code=‘10013’)``
 
 
-4. A dictionary of results is returned:
+5. A dictionary of results is returned:
 
 ::
 

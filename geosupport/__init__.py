@@ -2,7 +2,7 @@ import sys
 from ctypes import cdll
 
 
-class Geosupport(object):
+class Geocode(object):
     """
     All geocoding methods require House Number and Street Name. In addition, Boro Code, Boro Name or Zip code
     must be provided. Currently only function 1B is supported. See the Geosupport User Programming Guide for
@@ -15,12 +15,17 @@ class Geosupport(object):
 
     def __init__(self):
         self.py_version = sys.version_info[0]
-        if sys.platform == 'win32':
-            self.geolib = cdll.LoadLibrary("NYCGEO.dll")
-        # elif sys.platform == 'linux' or sys.platform == 'linux2':
-        #     self.geolib = cdll.LoadLibrary("libgeo.so")
-        else:
-            raise Exception('This Operating System is currently not supported.')
+        try:
+            if sys.platform == 'win32':
+                self.geolib = cdll.LoadLibrary("NYCGEO.dll")
+            # elif sys.platform == 'linux' or sys.platform == 'linux2':
+            #     self.geolib = cdll.LoadLibrary("libgeo.so")
+            else:
+                raise Exception('This Operating System is currently not supported.')
+        except OSError as e:
+            '''Utility to check python environment, Geosupport Desktop and OS are configured correctly.'''
+            from geosupport import utils
+            utils.check_env()
 
     def _geocode(self, **kwargs):
         """
@@ -50,16 +55,6 @@ class Geosupport(object):
         self.geolib.NYCgeo(wa1, wa2)
         return self._parse(str(wa1), str(wa2))
 
-    @staticmethod
-    def _xstr(s):
-        """
-        :param s: String to be processed by Geosupport WA1 or WA2
-        :return: Empty string if s is None.
-        """
-        if s is None:
-            return ''
-        return str(s).strip()
-
     def address_zipcode(self, house_number, street_name, zip_code):
         return self._geocode(house_number=house_number, street_name=street_name, zip_code=zip_code)
 
@@ -81,6 +76,16 @@ class Geosupport(object):
 
     def address_borocode(self, house_number, street_name, boro_code):
         return self._geocode(house_number=house_number, street_name=street_name, boro_code=boro_code)
+
+    @staticmethod
+    def _xstr(s):
+        """
+        :param s: String to be processed by Geosupport WA1 or WA2
+        :return: Empty string if s is None.
+        """
+        if s is None:
+            return ''
+        return str(s).strip()
 
     @staticmethod
     def _rightpad(field, length):

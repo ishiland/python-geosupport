@@ -4,3 +4,6 @@
 /.idea/
 /__pycache__/
 /dist/
+MANIFEST
+.coverage
+coverage.xml

@@ -1,6 +1,7 @@
 import sys
 from ctypes import cdll
 
+
 def check_env():
 
     '''
@@ -27,7 +28,6 @@ def check_env():
         print('Detected Geosupport Desktop and a {}-bit Python environment on {}.'.format(python_bit, platform))
     except OSError as e:
         sys.exit(
-            'There was an error loading the Geosupport Desktop libraries: {}\n\n'
-            'You are currently using a {} bit Python executable. Is the configured '
-            'version of Geosupport {} bit? They must match.'.format(e, python_bit,
-                                                                    python_bit))
+            '\n{}\n\n'
+            'You are currently using a {}-bit Python interpreter. Is the installed '
+            'version of Geosupport {}-bit?'.format(e, python_bit, python_bit))

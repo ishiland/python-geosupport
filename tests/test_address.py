@@ -1,8 +1,8 @@
-from geosupport import Geosupport
+from geosupport import Geocode
 import unittest
 import csv
 
-g = Geosupport()
+g = Geocode()
 
 
 class TestAddressObject(unittest.TestCase):

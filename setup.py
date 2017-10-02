@@ -1,4 +1,6 @@
-import os
+from os import path
+
+here = path.abspath(path.dirname(__file__))
 
 try:
     from distutils.core import setup
@@ -9,21 +11,20 @@ except ImportError:
         "for installing setuptools"
     )
 
-
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
-    version='1.0',
+    name='python-geosupport',
+    version='0.0.2',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for the NYC Geosupport Desktop application',
-    name='python-geosupport',
+    long_description=long_description,
     author='Ian Shiland',
     author_email='ishiland@gmail.com',
     packages=['geosupport'],
     license='MIT',
-    long_description=read('README.rst'),
-    keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'], # arbitrary keywords
+    keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

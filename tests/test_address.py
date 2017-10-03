@@ -1,4 +1,4 @@
-from geosupport import Geocode
+from ..geosupport import Geocode
 import unittest
 import csv
 

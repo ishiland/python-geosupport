@@ -1,22 +1,27 @@
 from os import path
+import unittest
 
-here = path.abspath(path.dirname(__file__))
+
 
 try:
-    from distutils.core import setup
+    from setuptools import setup
 except ImportError:
     raise ImportError(
-        "setuptools module required, please go to "
-        "https://pypi.python.org/pypi/setuptools and follow the instructions "
-        "for installing setuptools"
+        "Unable to import setup tools. "
     )
+here = path.abspath(path.dirname(__file__))
 
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.rst')) as f:
     long_description = f.read()
+
+def test_suite():
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.discover('tests', pattern='test_*.py')
+    return test_suite
 
 setup(
     name='python-geosupport',
-    version='0.0.2',
+    version='0.0.3',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for the NYC Geosupport Desktop application',
     long_description=long_description,
@@ -25,6 +30,7 @@ setup(
     packages=['geosupport'],
     license='MIT',
     keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
+    test_suite='tests',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

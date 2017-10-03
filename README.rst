@@ -3,8 +3,6 @@ python-geosupport
 
 python-geosupport is a Python package for using NYC Planning's `Geosupport Desktop Edition™`_.
 
-**Currently this package only supports Windows x86 and x64 environments.** Future support of Linux is possible.
-
 
 Getting Started
 ---------------
@@ -13,8 +11,14 @@ Getting Started
 
    * `Geosupport Desktop Edition for Windows (32-bit)`_
    * `Geosupport Desktop Edition for Windows (64-bit)`_
+   * `Geosupport Desktop Edition for Linux`_
 
-   **Note:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
+   **Windows users:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
+
+   **Linux users:** Extract the .zip to a folder of your choice and set the ``GEOFILES`` and ``LD_LIBRARY_PATH`` environmental variables of the ``fls`` and ``lib`` directories:
+        ``$ export GEOFILES=/var/geosupport/version-16c_16.3/fls/``
+
+        ``$ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/``
 
 2. Install the python package:
 
@@ -30,15 +34,15 @@ Getting Started
 
    **Geocode by borough code**
 
-   ``r = g.address_borocode(house_number=‘125’, street_name=‘Worth St’, boro_code=1)``
+   ``r = g.address_borocode(house_number="125", street_name="Worth St", boro_code=1)``
 
    **Geocode by borough name**
 
-   ``r = g.address_boroname(house_number=‘125’, street_name=‘Worth St’, boro_name=‘MANHATTAN’)``
+   ``r = g.address_boroname(house_number="125", street_name="Worth St", boro_name="MANHATTAN")``
 
    **Geocode by zip code**
 
-   ``r = g.address_zipcode(house_number=‘125’, street_name=‘Worth St’, zip_code=‘10013’)``
+   ``r = g.address_zipcode(house_number="125", street_name="Worth St", zip_code="10013")``
 
 
 5. A dictionary of results is returned:
@@ -96,7 +100,6 @@ python based on `Chris Whong`_ and `Noah Veltman’s`_ work using Node.js
 
 TODO
 ----
-* Add linux support
 * Add single line address input
 * Add more Geosupport functions
 * More tests
@@ -104,6 +107,7 @@ TODO
 .. _Geosupport Desktop Edition™: https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page
 .. _Geosupport Desktop Edition for Windows (32-bit): https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gde16b.zip
 .. _Geosupport Desktop Edition for Windows (64-bit): https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gde6416b.zip
+.. _Geosupport Desktop Edition for Linux: https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gdelx16b.zip
 .. _Charles Wang: https://github.com/CharlesKWang/NYC-Geocoder
 .. _Chris Whong: https://gist.github.com/chriswhong/2e5f0f41fc5d366ec902613251445b30
 .. _Noah Veltman’s: https://github.com/veltman/node-geosupport

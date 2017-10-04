@@ -6,11 +6,8 @@ class Geocode(object):
     """
     All geocoding methods require House Number and Street Name. In addition, Boro Code, Boro Name or Zip code
     must be provided. Currently only function 1B is supported. See the Geosupport User Programming Guide for
-    more information on function 1B.
-
-    All geocoding methods return a dict of results.
-
-    NOTE: Only Windows is supported at this time. Future support of Linux is possible.
+    more information.
+    All geocoding methods return a dictionary of results.
     """
 
     def __init__(self):
@@ -21,12 +18,12 @@ class Geocode(object):
                 self.py_bit = '64'
             else:
                 self.py_bit = '32'
-            if self.platform  == 'win32':
+            if self.platform == 'win32':
                 if self.py_bit == '64':
                     self.geolib = cdll.LoadLibrary("NYCGEO.dll")
                 else:
-                    from ctypes import windll
-                    self.geolib = windll.LoadLibrary("NYCGEO.dll") # must use windll for 32-bit binaries
+                    from ctypes import windll  # must use windll for 32-bit Windows binaries
+                    self.geolib = windll.LoadLibrary("NYCGEO.dll")
             elif self.platform == 'linux' or self.platform == 'linux2':
                 import os
                 self.geolib = cdll.LoadLibrary(os.path.join(os.environ['LD_LIBRARY_PATH'], "libgeo.so"))
@@ -34,7 +31,7 @@ class Geocode(object):
                 raise Exception('This Operating System is currently not supported.')
         except OSError as e:
             sys.exit(
-                '\n{}\n\n'
+                '{}\n'
                 'You are currently using a {}-bit Python interpreter. Is the installed '
                 'version of Geosupport {}-bit?'.format(e, self.py_bit, self.py_bit))
 
@@ -43,7 +40,7 @@ class Geocode(object):
         :param func: Current only function 1B is supported. Function 1B processes an input address or input
         Non-Addressable Place name (NAP).
         :param kwargs: house_number and street_name are required. Additionally, Either boro_code or zip_code is required.
-        :return: Returns
+        :return: Returns results from parser
         """
         house_number = self._xstr(kwargs.get('house_number'))
         street_name = self._xstr(kwargs.get('street_name'))
@@ -67,7 +64,7 @@ class Geocode(object):
             self.geolib.NYCgeo(wa1, wa2)
         else:
             self.geolib.geo(wa1, wa2)
-        return self._parse(str(wa1), str(wa2))
+        return self._parse(wa1, wa2)
 
     def address_zipcode(self, house_number, street_name, zip_code):
         """
@@ -85,7 +82,7 @@ class Geocode(object):
         """
         Geocode by borough name
         """
-        # a dict to lookup a boro code if a boro name is provided.
+        # a dictionary to lookup boro codes.
         boroughs = {'MANHATTAN': 1, 'MN': 1, 'NEW YORK': 1, 'NY': 1,
                     'BRONX': 2, 'THE BRONX': 2, 'BX': 2,
                     'BROOKLYN': 3, 'BK': 3, 'BKLYN': 3,
@@ -123,106 +120,59 @@ class Geocode(object):
         return field.upper()
 
     def _parse(self, wa1, wa2):
+        if self.py_version == 3:
+            wa1 = str(wa1, 'ascii')
+            wa2 = str(wa2, 'ascii')
         """
         :param wa1: Work Area 1 from GeoSupport results
         :param wa2: Work Area 2 from GeoSupport results
         :return: Dictionary of results
         """
-        if self.py_version == 2:
-            output = {
-                'First Borough Name': wa1[360:369].strip(),
-                'House Number Display Format': wa1[369: 385].strip(),
-                'House Number Sort Format': wa1[385: 396].strip(),
-                'B10SC First Borough and Street Code': wa1[396: 407].strip(),
-                'Second Street Name Normalized': wa1[407:439].strip(),
-                'Community District': wa2[149:152].strip(),
-                'Zip Code': wa2[152:157].strip(),
-                'Election District': wa2[157:160].strip(),
-                'Assembly District': wa2[160:162].strip(),
-                'Congressional District': wa2[163:165].strip(),
-                'State Senatorial District': wa2[165:167].strip(),
-                'City Council District': wa2[169:171].strip(),
-                'Police Precinct': wa2[191:194].strip(),
-                'Community School District': wa2[203:205].strip(),
-                'Atomic Polygon': wa2[205: 208].strip(),
-                '2010 Census Tract': wa2[223: 229].strip(),
-                '2010 Census Block': wa2[229:233].strip(),
-                '2010 Census Block Suffix': wa2[233].strip(),
-                'NTA': wa2[245:249].strip(),
-                'DSNY Snow Priority Code': wa2[249].strip(),
-                'Hurricane Evacuation Zone (HEZ)': wa2[260:262].strip(),
-                'Spatial Coordinates of Segment': {'X Coordinate, Low Address End': wa2[313:320].strip(),
-                                                   'Y Coordinate, Low Address End': wa2[320:327].strip(),
-                                                   'Z Coordinate, Low Address End': wa2[327:334].strip(),
-                                                   'X Coordinate, High Address End': wa2[334:341].strip(),
-                                                   'Y Coordinate, High Address End': wa2[341:348].strip(),
-                                                   'Z Coordinate, High Address End': wa2[348:355].strip(),
-                                                   },
-                'Roadway Type': wa2[444:446].strip(),
-                'Bike Lane': wa2[486].strip(),
-                'NTA Name': wa2[553: 628].strip(),
-                'USPS Preferred City Name': wa2[628:653].strip(),
 
-                'Latitude': wa2[653:662].strip(),
-                'Longitude': wa2[662: 673].strip(),
-                'Borough Block Lot (BBL)': {'Borough code': wa2[1533].strip(),
-                                            'Tax Block': wa2[1534:1539].strip(),
-                                            'Tax Lot': wa2[1539:1543].strip(),
-                                            },
-                'Building Identification Number (BIN) of Input Address or NAP': wa2[1581:1588].strip(),
-                'X-Y Coordinates of Lot Centroid': wa2[1699:1713].strip(),
-                'XCoord': wa2[125:132].strip(),
-                'YCoord': wa2[132:139].strip(),
-                'Message': wa1[579:659].strip(),
-            }
+        output = {
+            'First Borough Name': wa1[360:369].strip(),
+            'House Number Display Format': wa1[369: 385].strip(),
+            'House Number Sort Format': wa1[385: 396].strip(),
+            'B10SC First Borough and Street Code': wa1[396: 407].strip(),
+            'Second Street Name Normalized': wa1[407:439].strip(),
+            'Community District': wa2[149:152].strip(),
+            'Zip Code': wa2[152:157].strip(),
+            'Election District': wa2[157:160].strip(),
+            'Assembly District': wa2[160:162].strip(),
+            'Congressional District': wa2[163:165].strip(),
+            'State Senatorial District': wa2[165:167].strip(),
+            'City Council District': wa2[169:171].strip(),
+            'Police Precinct': wa2[191:194].strip(),
+            'Community School District': wa2[203:205].strip(),
+            'Atomic Polygon': wa2[205: 208].strip(),
+            '2010 Census Tract': wa2[223: 229].strip(),
+            '2010 Census Block': wa2[229:233].strip(),
+            '2010 Census Block Suffix': wa2[233].strip(),
+            'NTA': wa2[245:249].strip(),
+            'DSNY Snow Priority Code': wa2[249].strip(),
+            'Hurricane Evacuation Zone (HEZ)': wa2[260:262].strip(),
+            'Spatial Coordinates of Segment': {'X Coordinate, Low Address End': wa2[313:320].strip(),
+                                               'Y Coordinate, Low Address End': wa2[320:327].strip(),
+                                               'Z Coordinate, Low Address End': wa2[327:334].strip(),
+                                               'X Coordinate, High Address End': wa2[334:341].strip(),
+                                               'Y Coordinate, High Address End': wa2[341:348].strip(),
+                                               'Z Coordinate, High Address End': wa2[348:355].strip(),
+                                               },
+            'Roadway Type': wa2[444:446].strip(),
+            'Bike Lane': wa2[486].strip(),
+            'NTA Name': wa2[553: 628].strip(),
+            'USPS Preferred City Name': wa2[628:653].strip(),
 
-        # why is lat/lng parsed differently here?
-        else:
-            output = {
-                'First Borough Name': wa1[360:369].strip(),
-                'House Number Display Format': wa1[369: 385].strip(),
-                'House Number Sort Format': wa1[385: 396].strip(),
-                'B10SC First Borough and Street Code': wa1[396: 407].strip(),
-                'Second Street Name Normalized': wa1[407:439].strip(),
-                'Community District': wa2[149:152].strip(),
-                'Zip Code': wa2[152:157].strip(),
-                'Election District': wa2[157:160].strip(),
-                'Assembly District': wa2[160:162].strip(),
-                'Congressional District': wa2[163:165].strip(),
-                'State Senatorial District': wa2[165:167].strip(),
-                'City Council District': wa2[169:171].strip(),
-                'Police Precinct': wa2[191:194].strip(),
-                'Community School District': wa2[203:205].strip(),
-                'Atomic Polygon': wa2[205: 208].strip(),
-                '2010 Census Tract': wa2[223: 229].strip(),
-                '2010 Census Block': wa2[229:233].strip(),
-                '2010 Census Block Suffix': wa2[233].strip(),
-                'NTA': wa2[245:249].strip(),
-                'DSNY Snow Priority Code': wa2[249].strip(),
-                'Hurricane Evacuation Zone (HEZ)': wa2[260:262].strip(),
-                'Spatial Coordinates of Segment': {'X Coordinate, Low Address End': wa2[313:320].strip(),
-                                                   'Y Coordinate, Low Address End': wa2[320:327].strip(),
-                                                   'Z Coordinate, Low Address End': wa2[327:334].strip(),
-                                                   'X Coordinate, High Address End': wa2[334:341].strip(),
-                                                   'Y Coordinate, High Address End': wa2[341:348].strip(),
-                                                   'Z Coordinate, High Address End': wa2[348:355].strip(),
-                                                   },
-                'Roadway Type': wa2[444:446].strip(),
-                'Bike Lane': wa2[486].strip(),
-                'NTA Name': wa2[553: 628].strip(),
-                'USPS Preferred City Name': wa2[628:653].strip(),
-
-                'Latitude': wa2[653:664].strip(),
-                'Longitude': wa2[664: 673].strip(),
-                'Borough Block Lot (BBL)': {'Borough code': wa2[1533].strip(),
-                                            'Tax Block': wa2[1534:1539].strip(),
-                                            'Tax Lot': wa2[1539:1543].strip(),
-                                            },
-                'Building Identification Number (BIN) of Input Address or NAP': wa2[1581:1588].strip(),
-                'X-Y Coordinates of Lot Centroid': wa2[1699:1713].strip(),
-                'XCoord': wa2[125:132].strip(),
-                'YCoord': wa2[132:139].strip(),
-                'Message': wa1[579:659].strip(),
-            }
-
+            'Latitude': wa2[653:662].strip(),
+            'Longitude': wa2[662: 673].strip(),
+            'Borough Block Lot (BBL)': {'Borough code': wa2[1533].strip(),
+                                        'Tax Block': wa2[1534:1539].strip(),
+                                        'Tax Lot': wa2[1539:1543].strip(),
+                                        },
+            'Building Identification Number (BIN) of Input Address or NAP': wa2[1581:1588].strip(),
+            'X-Y Coordinates of Lot Centroid': wa2[1699:1713].strip(),
+            'XCoord': wa2[125:132].strip(),
+            'YCoord': wa2[132:139].strip(),
+            'Message': wa1[579:659].strip(),
+        }
         return output

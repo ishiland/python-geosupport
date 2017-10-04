@@ -1,13 +1,13 @@
 python-geosupport
 =================
 
-python-geosupport is a Python package for using NYC Planning's `Geosupport Desktop Edition™`_.
+python-geosupport is a Python package for using NYC Planning's `Geosupport Desktop Edition`_.
 
 
 Getting Started
 ---------------
 
-1. Download and install Geosupport Desktop Edition for Windows:
+1. Download and install Geosupport Desktop Edition:
 
    * `Geosupport Desktop Edition for Windows (32-bit)`_
    * `Geosupport Desktop Edition for Windows (64-bit)`_
@@ -16,9 +16,10 @@ Getting Started
    **Windows users:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
 
    **Linux users:** Extract the .zip to a folder of your choice and set the ``GEOFILES`` and ``LD_LIBRARY_PATH`` environmental variables of the ``fls`` and ``lib`` directories:
-        ``$ export GEOFILES=/var/geosupport/version-16c_16.3/fls/``
 
-        ``$ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/``
+   ``$ export GEOFILES=/var/geosupport/version-16c_16.3/fls/``
+
+   ``$ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/``
 
 2. Install the python package:
 
@@ -104,7 +105,7 @@ TODO
 * Add more Geosupport functions
 * More tests
 
-.. _Geosupport Desktop Edition™: https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page
+.. _Geosupport Desktop Edition: https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page
 .. _Geosupport Desktop Edition for Windows (32-bit): https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gde16b.zip
 .. _Geosupport Desktop Edition for Windows (64-bit): https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gde6416b.zip
 .. _Geosupport Desktop Edition for Linux: https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/gdelx16b.zip

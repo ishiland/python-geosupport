@@ -1,7 +1,4 @@
 from os import path
-import unittest
-
-
 
 try:
     from setuptools import setup
@@ -14,14 +11,10 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
-def test_suite():
-    test_loader = unittest.TestLoader()
-    test_suite = test_loader.discover('tests', pattern='test_*.py')
-    return test_suite
 
 setup(
     name='python-geosupport',
-    version='0.0.3',
+    version='0.0.4',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for the NYC Geosupport Desktop application',
     long_description=long_description,
@@ -30,7 +23,6 @@ setup(
     packages=['geosupport'],
     license='MIT',
     keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
-    test_suite='tests',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
@@ -43,5 +35,6 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-    ]
+    ],
+    test_suite="tests",
 )

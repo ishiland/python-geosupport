@@ -1,5 +1,7 @@
 import sys
-from ctypes import cdll
+from .wa_parsers import _parseWA1, _parseWA2_1A_BL_BN, _parseWA2_1B
+import usaddress
+from usaddress import RepeatedLabelError, OrderedDict
 
 
 class Geocode(object):
@@ -20,12 +22,14 @@ class Geocode(object):
                 self.py_bit = '32'
             if self.platform == 'win32':
                 if self.py_bit == '64':
+                    from ctypes import cdll
                     self.geolib = cdll.LoadLibrary("NYCGEO.dll")
                 else:
                     from ctypes import windll  # must use windll for 32-bit Windows binaries
                     self.geolib = windll.LoadLibrary("NYCGEO.dll")
             elif self.platform == 'linux' or self.platform == 'linux2':
                 import os
+                from ctypes import cdll
                 self.geolib = cdll.LoadLibrary(os.path.join(os.environ['LD_LIBRARY_PATH'], "libgeo.so"))
             else:
                 raise Exception('This Operating System is currently not supported.')
@@ -35,144 +39,202 @@ class Geocode(object):
                 'You are currently using a {}-bit Python interpreter. Is the installed '
                 'version of Geosupport {}-bit?'.format(e, self.py_bit, self.py_bit))
 
-    def _geocode(self, **kwargs):
+    def _call_geolib(self, wa1, wa2, func):
         """
-        :param func: Current only function 1B is supported. Function 1B processes an input address or input
-        Non-Addressable Place name (NAP).
-        :param kwargs: house_number and street_name are required. Additionally, Either boro_code or zip_code is required.
-        :return: Returns results from parser
+        Calls the Geosupport libs. Encodes and deocodes strings for Python 3.
+        :param wa1: Work Area 1
+        :param wa2: Work Area 2
+        :param func: Function that determines the dictionary to return.
+        :return: Dictionary of results
         """
-        house_number = self._xstr(kwargs.get('house_number'))
-        street_name = self._xstr(kwargs.get('street_name'))
-        boro_code = self._xstr(kwargs.get('boro_code'))
-        if len(boro_code) < 1:
-            boro_code = ' '
-        zip_code = self._xstr(kwargs.get('zip_code'))
-        wa1 = '1B{}{}{}{}{}C{}{}'.format(self._rightpad(house_number, 16),
-                                         self._rightpad('', 38),
-                                         boro_code,
-                                         self._rightpad('', 10),
-                                         self._rightpad(street_name, 32),
-                                         self._rightpad('', 113),
-                                         self._rightpad(zip_code, 5))
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = self._rightpad('', 4300)
+
+        # encode
         if self.py_version == 3:
             wa1 = bytes(str(wa1), 'ascii')
             wa2 = bytes(str(wa2), 'ascii')
+
+        # Call Geosupport libs
         if self.platform == 'win32':
-            self.geolib.NYCgeo(wa1, wa2)
+            self.geolib.NYCgeo(wa1, wa2)  # windows
         else:
-            self.geolib.geo(wa1, wa2)
-        return self._parse(wa1, wa2)
+            self.geolib.geo(wa1, wa2)  # linux
 
-    def address_zipcode(self, house_number, street_name, zip_code):
-        """
-        Geocode by zipcode
-        """
-        return self._geocode(house_number=house_number, street_name=street_name, zip_code=zip_code)
+        # decode
+        if self.py_version == 3:
+            wa1 = str(wa1, 'ascii')
+            wa2 = str(wa2, 'ascii')
 
-    def address_borocode(self, house_number, street_name, boro_code):
-        """
-        Geocode by borough code
-        """
-        return self._geocode(house_number=house_number, street_name=street_name, boro_code=boro_code)
+        return self._merge_wa(_parseWA1(wa1), globals()["_parseWA2_" + func](wa2))
 
-    def address_boroname(self, house_number, street_name, boro_name):
-        """
-        Geocode by borough name
-        """
-        # a dictionary to lookup boro codes.
-        boroughs = {'MANHATTAN': 1, 'MN': 1, 'NEW YORK': 1, 'NY': 1,
-                    'BRONX': 2, 'THE BRONX': 2, 'BX': 2,
-                    'BROOKLYN': 3, 'BK': 3, 'BKLYN': 3,
-                    'QUEENS': 4, 'QN': 4,
-                    'STATEN ISLAND': 5, 'SI': 5, 'STATEN IS': 5}
-
-        if boro_name.upper() in boroughs:
-            boro_code = boroughs[boro_name.upper()]
-        else:
-            boro_code = 0
-        return self._geocode(house_number=house_number, street_name=street_name, boro_code=boro_code)
 
     @staticmethod
-    def _xstr(s):
+    def _parse_sfs(ad):
         """
-        :param s: String to be processed by Geosupport WA1 or WA2.
-        :return: Empty string if s is None. Else removes whitespace and ensures variable is a string.
+        Parses a single address input from the usaddress package. A work in progress.
+        :param ad: usaddress parsed address
+        :return: results
         """
-        if s is None:
-            return ''
-        return str(s).strip()
+        try:
+            if ad[0]:
+                if 'AddressNumber' in ad[0]:
+                    house_number = ad[0]['AddressNumber']
+                else:
+                    raise Exception('No address number detected in single field search string')
+                if 'StreetName' in ad[0]:
+                    street_name = ad[0]['StreetName']
+                else:
+                    raise Exception('No street name detected in single field search string')
+                if 'StreetNamePreDirectional' in ad[0]:
+                    street_name = ad[0]['StreetNamePreDirectional'] + ' ' + street_name
+                if 'StreetNamePreType' in ad[0]:
+                    street_name = ad[0]['StreetNamePreType'] + ' ' + street_name
+                if 'StreetNamePostType' in ad[0]:
+                    street_name = street_name + ' ' + ad[0]['StreetNamePostType']
+                if 'ZipCode' in ad[0]:
+                    zip_code = ad[0]['ZipCode']
+                else:
+                    zip_code = None
+                if 'PlaceName' in ad[0]:
+                    city = ad[0]['PlaceName']
+                else:
+                    city = None
+                return {'houseNumber': house_number, 'streetName': street_name, 'zipCode': zip_code, 'city': city}
+            else:
+                raise Exception('No data')
+        except AttributeError as e:
+            print(e)
+
+    def address(self, address=None, house_number=None, street_name=None, zip_code=None, boro=None):
+        """
+        Function 1B processes an input address or input Non-Addressable Place name (NAP).
+        Zip code, Boro code or Boro name must be provided in addition to a house number and street name.
+        :param address: Input adddress to be parsed. Should include a house number and street name.
+        :param house_number: Required if no address
+        :param street_name: Required if no address
+        :param zip_code:  Optional
+        :param boro_code: Optional
+        :param boro_name: Optional
+        :return: results
+        """
+        if address:
+            try:
+                usaddress_parsed = usaddress.tag(address)
+            except RepeatedLabelError as r:
+                usaddress_parsed = (OrderedDict([(t[1], t[0]) for t in r.parsed_string]), 'Street Address')
+            parsed = self._parse_sfs(usaddress_parsed)
+            if parsed:
+                if 'houseNumber' in parsed:
+                    house_number = parsed['houseNumber']
+                else:
+                    raise Exception('No house number detected in:\n' + address)
+                street_name = parsed['streetName']
+                if boro:
+                    if len(str(boro).strip()) > 1:
+                        boro = self._borocode_from_boroname(boro)
+                    # boro_code = self._borocode_from_boroname(boro_name)
+                elif all(v is None for v in [zip_code, boro]):
+                    if 'zipCode' in parsed:
+                        zip_code = parsed['zipCode']
+                    elif 'city' in parsed:
+                        boro = self._borocode_from_boroname(parsed['city'])
+                    else:
+                        raise Exception('Must provide a valid zip code, boro code or boro name.')
+        elif house_number and street_name:
+            if boro:
+                if len(str(boro).strip()) > 1:
+                    boro = self._borocode_from_boroname(boro)
+            elif all(v is None for v in [zip_code, boro]):
+                raise Exception('Must provide a valid zip code, boro code or boro name.')
+        else:
+            raise Exception('Must provide an address or house number and street name.')
+        func = '1B'
+        wa1 = '1B{}{}{}{}{}C{}{}'.format(self._rightpad(house_number, 16),
+                                         ' ' * 38,
+                                         boro or ' ',
+                                         ' ' * 10,
+                                         self._rightpad(street_name, 32),
+                                         ' ' * 113,
+                                         self._rightpad(zip_code, 5))
+        wa1 = self._rightpad(wa1, 1200)
+        wa2 = ' ' * 4300
+        return self._call_geolib(wa1, wa2, func)
+
+    def bbl(self, boro, block, lot, tpad=True):
+        """
+        Function BL processes an input Borough, Block and Lot.
+        :param boro: input boro code (required)
+        :param block: input block (required)
+        :param lot: input lot (required)
+        :param tpad: tpad switch (optional)
+        :return: results
+        """
+
+        if len(str(boro).strip()) > 1:
+            boro = self._borocode_from_boroname(boro)
+
+        if tpad:
+            tpad = 'Y'
+        else:
+            tpad = 'N'
+        wa1 = '{}{}{}{}{}'.format(self._rightpad('BL', 185),
+                                  str(boro),
+                                  self._rightpad(block, 5),
+                                  self._rightpad(lot, 137),
+                                  tpad)
+        wa1 = self._rightpad(wa1, 1200)
+        wa2 = ' ' * 1363
+        return self._call_geolib(wa1, wa2, '1A_BL_BN')
+
+    def bin(self, bin, tpad=True):
+        """
+        Function BN processes an input Building Identification Number (BIN).
+        :param bin: input BIN (required)
+        :param tpad: TPAD Flag (optional)
+        :return: results
+        """
+        if tpad:
+            tpad = 'Y'
+        else:
+            tpad = 'N'
+        wa1 = '{}{}{}'.format(self._rightpad('BN', 196),
+                              self._rightpad(bin, 126),
+                              tpad)
+        # wa1 = self._rightpad(wa1, 1200)
+        wa1 = self._rightpad(wa1, 1200)
+        wa2 = ' ' * 1363
+        return self._call_geolib(wa1, wa2, '1A_BL_BN')
+
+    @staticmethod
+    def _borocode_from_boroname(name):
+        """
+        a dictionary to lookup boro codes.
+        :param name: Borough name
+        :return: Borough code
+        """
+        name = name.strip()
+        boroughs = {'MANHATTAN': 1, 'MN': 1, 'NEW YORK': 1, 'NY': 1,
+                    'BRONX': 2, 'THE BRONX': 2, 'BX': 2,
+                    'BROOKLYN': 3, 'BK': 3, 'BKLYN': 3, 'KINGS': 3,
+                    'QUEENS': 4, 'QN': 4,
+                    'STATEN ISLAND': 5, 'SI': 5, 'STATEN IS': 5, 'RICHMOND': 5}
+        if name.upper() in boroughs:
+            boro_code = boroughs[name.upper()]
+        else:
+            boro_code = None
+        return boro_code
 
     @staticmethod
     def _rightpad(field, length):
         """
-        Creates a string of specified length, either by adding whitespace to the right, or concatenating
+        Creates a string of specified length by adding whitespace to the right
         """
         field = str(field)
-        field_length = len(field)
-        if field_length > length:
-            field = field[:length]
-        if field_length < length:
-            while len(field) < length:
-                field += ' '
+        field = field + (' ' * (length - len(field)))
         return field.upper()
 
-    def _parse(self, wa1, wa2):
-        if self.py_version == 3:
-            wa1 = str(wa1, 'ascii')
-            wa2 = str(wa2, 'ascii')
-        """
-        :param wa1: Work Area 1 from GeoSupport results
-        :param wa2: Work Area 2 from GeoSupport results
-        :return: Dictionary of results
-        """
-
-        output = {
-            'First Borough Name': wa1[360:369].strip(),
-            'House Number Display Format': wa1[369: 385].strip(),
-            'House Number Sort Format': wa1[385: 396].strip(),
-            'B10SC First Borough and Street Code': wa1[396: 407].strip(),
-            'Second Street Name Normalized': wa1[407:439].strip(),
-            'Community District': wa2[149:152].strip(),
-            'Zip Code': wa2[152:157].strip(),
-            'Election District': wa2[157:160].strip(),
-            'Assembly District': wa2[160:162].strip(),
-            'Congressional District': wa2[163:165].strip(),
-            'State Senatorial District': wa2[165:167].strip(),
-            'City Council District': wa2[169:171].strip(),
-            'Police Precinct': wa2[191:194].strip(),
-            'Community School District': wa2[203:205].strip(),
-            'Atomic Polygon': wa2[205: 208].strip(),
-            '2010 Census Tract': wa2[223: 229].strip(),
-            '2010 Census Block': wa2[229:233].strip(),
-            '2010 Census Block Suffix': wa2[233].strip(),
-            'NTA': wa2[245:249].strip(),
-            'DSNY Snow Priority Code': wa2[249].strip(),
-            'Hurricane Evacuation Zone (HEZ)': wa2[260:262].strip(),
-            'Spatial Coordinates of Segment': {'X Coordinate, Low Address End': wa2[313:320].strip(),
-                                               'Y Coordinate, Low Address End': wa2[320:327].strip(),
-                                               'Z Coordinate, Low Address End': wa2[327:334].strip(),
-                                               'X Coordinate, High Address End': wa2[334:341].strip(),
-                                               'Y Coordinate, High Address End': wa2[341:348].strip(),
-                                               'Z Coordinate, High Address End': wa2[348:355].strip(),
-                                               },
-            'Roadway Type': wa2[444:446].strip(),
-            'Bike Lane': wa2[486].strip(),
-            'NTA Name': wa2[553: 628].strip(),
-            'USPS Preferred City Name': wa2[628:653].strip(),
-
-            'Latitude': wa2[653:662].strip(),
-            'Longitude': wa2[662: 673].strip(),
-            'Borough Block Lot (BBL)': {'Borough code': wa2[1533].strip(),
-                                        'Tax Block': wa2[1534:1539].strip(),
-                                        'Tax Lot': wa2[1539:1543].strip(),
-                                        },
-            'Building Identification Number (BIN) of Input Address or NAP': wa2[1581:1588].strip(),
-            'X-Y Coordinates of Lot Centroid': wa2[1699:1713].strip(),
-            'XCoord': wa2[125:132].strip(),
-            'YCoord': wa2[132:139].strip(),
-            'Message': wa1[579:659].strip(),
-        }
-        return output
+    @staticmethod
+    def _merge_wa(wa1, wa2):
+        """ Merge wa1 and wa2 results as a shallow copy. """
+        wa = wa1.copy()
+        wa.update(wa2)
+        return wa

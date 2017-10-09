@@ -7,28 +7,75 @@ g = Geocode()
 
 here = path.abspath(path.dirname(__file__))
 
-class TestAddressObject(unittest.TestCase):
+address_data = path.join(here,'data','addresses.csv')
 
-    def test_address_borocode(self):
-        with open(path.join(here,'data','addresses.txt')) as csvfile:
+
+class TestGeocodeObject(unittest.TestCase):
+
+    def test_bin(self):
+        with open(address_data) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                r = g.address_borocode(house_number=row['HouseNumber'], street_name=row['StreetName'], boro_code=row['BoroCode'])
-                print(r['Latitude'], r['Longitude'], r['Message'])
+                r = g.bin(row['Bin'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
 
-    def test_address_boroname(self):
-        with open(path.join(here, 'data', 'addresses.txt')) as csvfile:
+    def test_bbl(self):
+        with open(address_data) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                r = g.address_boroname(house_number=row['HouseNumber'], street_name=row['StreetName'], boro_name=row['BoroName'])
-                print(r['Latitude'], r['Longitude'], r['Message'])
+                r = g.bbl(row['BoroCode'], row['Block'], row['Lot'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
 
-    def test_address_zipcode(self):
-        with open(path.join(here, 'data', 'addresses.txt')) as csvfile:
+    def test_address_parser(self):
+        with open(address_data) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                r = g.address_zipcode(house_number=row['HouseNumber'], street_name=row['StreetName'], zip_code=row['ZipCode'])
-                print(r['Latitude'], r['Longitude'], r['Message'])
+                in_data = row['SingleAddress'] + ', ' + row['City'] + ', ' + row['ZipCode']
+                r = g.address(address=in_data)
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
+
+    def test_address_parser_with_borocode(self):
+        with open(address_data) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                r = g.address(address=row['SingleAddress'], boro=row['BoroCode'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
+
+
+    def test_address_parser_with_boroname(self):
+        with open(address_data) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                r = g.address(address=row['SingleAddress'], boro=row['BoroName'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
+
+    def test_address_parser_with_zipcode(self):
+        with open(address_data) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                r = g.address(address=row['SingleAddress'], zip_code=row['ZipCode'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
+
+    def test_address_with_borocode(self):
+        with open(address_data) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                r = g.address(house_number=row['BuildingNumber'], street_name=row['Street'], boro=row['BoroCode'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
+
+    def test_address_with_boroname(self):
+        with open(address_data) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                r = g.address(house_number=row['BuildingNumber'], street_name=row['Street'], boro=row['BoroName'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
+
+    def test_address_with_zipcode(self):
+        with open(address_data) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                r = g.address(house_number=row['BuildingNumber'], street_name=row['Street'], zip_code=row['ZipCode'])
+                self.assertFalse(len(r['Latitude']) < 1 or len(r['Longitude']) < 1)
 
 
 if __name__ == "__main__":

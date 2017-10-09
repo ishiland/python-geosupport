@@ -43,7 +43,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/
     ```
 
     **Parsed street address** (Must provide zip code, borough name or borough code)
-    ```
+    ```python
     r = g.address(house_number="125", street_name="Worth st", zip_code=10013)
     print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
     r = g.address(house_number="125", street_name="Worth st", boro=1)
@@ -53,14 +53,14 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/
     ```
 
     **Borough, Block, and Lot**
-    ```
+    ```python
     r = g.bbl('1','00168','0032')
     print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
     r = g.bbl('Manhattan','00168','0032')
     print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
     ```
     **BIN (Building Identification Number)**
-    ```
+    ```python
     r = g.bin('1001831')
     print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
     ```
@@ -69,7 +69,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/
 
 ### Running tests
 ```
-python setup.py test
+>> python setup.py test
 ```
 
 ### Known Issues

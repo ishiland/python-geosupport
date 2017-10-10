@@ -5,12 +5,6 @@ from usaddress import RepeatedLabelError, OrderedDict
 
 
 class Geocode(object):
-    """
-    All geocoding methods require House Number and Street Name. In addition, Boro Code, Boro Name or Zip code
-    must be provided. Currently only function 1B is supported. See the Geosupport User Programming Guide for
-    more information.
-    All geocoding methods return a dictionary of results.
-    """
 
     def __init__(self):
         self.py_version = sys.version_info[0]
@@ -70,7 +64,7 @@ class Geocode(object):
     @staticmethod
     def _parse_sfs(ad):
         """
-        Parses a single address input from the usaddress package. A work in progress.
+        Parses a single address input from the usaddress library. A work in progress.
         :param ad: usaddress parsed address
         :return: results
         """
@@ -104,7 +98,7 @@ class Geocode(object):
         except AttributeError as e:
             print(e)
 
-    def address(self, address=None, house_number=None, street_name=None, zip_code=None, boro=None):
+    def address(self, address=None, house_number=None, street_name=None, zip_code=None, boro=None, placename=None):
         """
         Function 1B processes an input address or input Non-Addressable Place name (NAP).
         Zip code, Boro code or Boro name must be provided in addition to a house number and street name.
@@ -112,8 +106,8 @@ class Geocode(object):
         :param house_number: Required if no address
         :param street_name: Required if no address
         :param zip_code:  Optional
-        :param boro_code: Optional
-        :param boro_name: Optional
+        :param boro: Either a borough name or borough code. Optional
+        :param placename:  Optional
         :return: results
         """
         if address:
@@ -131,7 +125,6 @@ class Geocode(object):
                 if boro:
                     if len(str(boro).strip()) > 1:
                         boro = self._borocode_from_boroname(boro)
-                    # boro_code = self._borocode_from_boroname(boro_name)
                 elif all(v is None for v in [zip_code, boro]):
                     if 'zipCode' in parsed:
                         zip_code = parsed['zipCode']
@@ -168,10 +161,8 @@ class Geocode(object):
         :param tpad: tpad switch (optional)
         :return: results
         """
-
         if len(str(boro).strip()) > 1:
             boro = self._borocode_from_boroname(boro)
-
         if tpad:
             tpad = 'Y'
         else:
@@ -199,7 +190,6 @@ class Geocode(object):
         wa1 = '{}{}{}'.format(self._rightpad('BN', 196),
                               self._rightpad(bin, 126),
                               tpad)
-        # wa1 = self._rightpad(wa1, 1200)
         wa1 = self._rightpad(wa1, 1200)
         wa2 = ' ' * 1363
         return self._call_geolib(wa1, wa2, '1A_BL_BN')
@@ -228,13 +218,12 @@ class Geocode(object):
         """
         Creates a string of specified length by adding whitespace to the right
         """
-        field = str(field)
-        field = field + (' ' * (length - len(field)))
+        field = str(field) + (' ' * (length - len(str(field))))
         return field.upper()
 
     @staticmethod
     def _merge_wa(wa1, wa2):
-        """ Merge wa1 and wa2 results as a shallow copy. """
+        """ Merge wa1 and wa2 results as a shallow copy """
         wa = wa1.copy()
         wa.update(wa2)
         return wa

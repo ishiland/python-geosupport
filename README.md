@@ -1,6 +1,6 @@
 # python-geosupport
 
-A Python package for using NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
+A Python library for using NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
 
 
 
@@ -15,7 +15,7 @@ Install Geosupport Desktop Edition:
 
 **Windows users:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
 
-**Linux users:** Extract the .zip to a folder of your choice and set the ``GEOFILES`` and ``LD_LIBRARY_PATH`` environmental variables of the ``fls`` and ``lib`` directories like so:
+**Linux users:** Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRARY_PATH` environmental variables of the `fls` and `lib` directories like so:
 
 ```shell
 $ export GEOFILES=/var/geosupport/version-16c_16.3/fls
@@ -30,8 +30,8 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/
 
 2. Import the package and create an instance:
     ```python
-    import geosupport
-    g = geosupport.Geocode()
+    from geosupport import Geocode
+    g = Geocode()
     ```
 
 3. Geocode with:
@@ -45,24 +45,33 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/
     **Parsed street address** (Must provide zip code, borough name or borough code)
     ```python
     r = g.address(house_number="125", street_name="Worth st", zip_code=10013)
-    print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
+    print(r['Latitude'], r['Longitude'])
+    # ('40.715428', '-74.002673')
+
     r = g.address(house_number="125", street_name="Worth st", boro=1)
-    print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
+    print(r['Latitude'], r['Longitude'])
+    # ('40.715428', '-74.002673')
+
     r = g.address(house_number="125", street_name="Worth st", boro='Manhattan')
-    print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
+    print(r['Latitude'], r['Longitude'])
+    # ('40.715428', '-74.002673')
     ```
 
     **Borough, Block, and Lot**
     ```python
     r = g.bbl('1','00168','0032')
-    print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
+    print(r['Latitude'], r['Longitude'])
+    # ('40.71566', '-74.002352')
+
     r = g.bbl('Manhattan','00168','0032')
-    print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
+    print(r['Latitude'], r['Longitude'])
+    # ('40.71566', '-74.002352')
     ```
     **BIN (Building Identification Number)**
     ```python
     r = g.bin('1001831')
-    print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
+    print(r['Latitude'], r['Longitude'])
+    # ('40.71566', '-74.002352')
     ```
 
 4. For all available outputs, see [geosupport/wa_parsers.py](https://github.com/ishiland/python-geosupport/tree/master/geosupport/wa_parsers.py).

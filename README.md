@@ -1,6 +1,6 @@
 # python-geosupport
 
-A Python library for using NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
+A Python library for geocoding with NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
 
 
 
@@ -18,8 +18,8 @@ Install Geosupport Desktop Edition:
 **Linux users:** Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRARY_PATH` environmental variables of the `fls` and `lib` directories like so:
 
 ```shell
-$ export GEOFILES=/var/geosupport/version-16c_16.3/fls
-$ export LD_LIBRARY_PATH=/var/geosupport/version-16c_16.3/lib/
+$ export GEOFILES=/var/geosupport/version-17c/fls
+$ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
 ```
 
 ### How to use

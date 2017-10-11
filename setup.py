@@ -13,13 +13,13 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='python-geosupport',
-    version='0.0.5',
+    version='0.0.6',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for the NYC Geosupport Desktop application',
     long_description="""
 Call NYC Planning's Geosupport Desktop functions from Python.
 
-Ex::
+Ex:
     >>> import geosupport
     >>> g = geosupport.Geocode()
     >>> g.address("125 Worth st NY, NY, 10013")

@@ -13,7 +13,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='python-geosupport',
-    version='0.0.7',
+    version='0.0.8',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for the NYC Geosupport Desktop application',
     long_description="""
@@ -29,7 +29,7 @@ Ex:
     """,
     author='Ian Shiland',
     author_email='ishiland@gmail.com',
-    packages=['geosupport'],
+    packages=['geosupport', 'geosupport/parsers'],
     license='MIT',
     keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
     classifiers=[

@@ -1,7 +1,7 @@
 # python-geosupport
 
 A Python library for geocoding with NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
-
+Developed using version `17C` of Geosupport Desktop Edition.
 
 
 ## Getting Started
@@ -28,7 +28,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
     pip install python-geosupport
     ```
 
-2. Import the package and create an instance:
+2. Import the library and create an instance:
     ```python
     from geosupport import Geocode
     g = Geocode()
@@ -38,37 +38,62 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
 
     **Single input street address**
     ```python
-    r = g.address("125 Worth st NY, NY, 10013")
-    print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
+    result = g.address(address="125 Worth st, NY, NY")
     ```
 
-    **Parsed street address** (Must provide zip code, borough name or borough code)
+    **Parsed street address** (Must provide zip code or borough)
     ```python
-    r = g.address(house_number="125", street_name="Worth st", zip_code=10013)
-    print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
+    result = g.address(house_number="125", street="Worth st", zip=10013)
 
-    r = g.address(house_number="125", street_name="Worth st", boro=1)
-    print(r['Latitude'], r['Longitude'])  # ('40.715428', '-74.002673')
-    ```
+    result = g.address(house_number="125", street="Worth st", boro='MANHATTAN')
+     ```
 
     **Borough, Block, and Lot**
     ```python
-    r = g.bbl('1','00168','0032')
-    print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
+    result = g.bbl(boro='1', block='00168', lot='0032')
     ```
-    **BIN (Building Identification Number)**
+    **BIN**
     ```python
-    r = g.bin('1001831')
-    print(r['Latitude'], r['Longitude'])  # ('40.71566', '-74.002352')
+    result = g.bin(bin='1001831')
     ```
     **Placename**
     ```python
-    r = g.place('VAN CRTLANDT MANSION', 'bronx')
-    print(r['Message'])  # VAN CRTLANDT MANSION IS ON RIGHT SIDE OF BROADWAY
-    print(r['Latitude'], r['Longitude'])  # 40.891193 -73.894808
+    result = g.place(place='VAN CRTLANDT MANSION', boro='bronx')
+    ```
+    **Intersection**
+    ```python
+    result = g.intersection(street_1='ST NICHOLAS AVENUE', street_2='MENAHAN STREET', boro='QUEENS')
+    ```
+    **Street Segment**
+    ```python
+    result = g.street_segment(on_street='STORY AVENUE',
+                              cross_street_1='EVERGREEN AVENUE',
+                              cross_street_2='WHEELER AVENUE',
+                              boro='BRONX')
+    ```
+    **Blockface**
+    ```python
+    result = g.blockface(on_street='STORY AVENUE',
+                         cross_street_1='EVERGREEN AVENUE',
+                         cross_street_2='WHEELER AVENUE',
+                         boro='BRONX',
+                         compass_direction='N')
     ```
 
-4. For all available outputs, see [geosupport/wa_parsers.py](https://github.com/ishiland/python-geosupport/tree/master/geosupport/wa_parsers.py).
+    **Street Stretch**
+    ```python
+    result = g.street_stretch(on_street='CLIFTON PLACE',
+                              cross_street_1='SAINT JAMES PLACE',
+                              cross_street_2='GRAND AVENUE',
+                              boro='BK',
+                              compass_direction='N',
+                              compass_direction_2='S')
+    ```
+
+    *The `boro` argument can be borough code, borough name or a common borough abbreviation.
+
+
+4. For more information on outputs, see [geosupport/parsers](https://github.com/ishiland/python-geosupport/tree/master/geosupport/parsers).
 
 ### Running tests
 ```
@@ -81,9 +106,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
 
 ### TODO
 * Improve single address input parsing
-* Verify all WA outputs are correct and complete
-* Add more Geosupport functions
-* More tests, unique test data
+* Better data with compass direction for testing `blockface` and `street_stretch` methods.
 
 ## License
 

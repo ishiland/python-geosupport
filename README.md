@@ -93,7 +93,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
     *The `boro` argument can be borough code, borough name or a common borough abbreviation.
 
 
-4. For more information on outputs, see [geosupport/parsers](https://github.com/ishiland/python-geosupport/tree/master/geosupport/parsers).
+    *For more information on outputs, see [geosupport/parsers](https://github.com/ishiland/python-geosupport/tree/master/geosupport/parsers).
 
 ### Running tests
 ```

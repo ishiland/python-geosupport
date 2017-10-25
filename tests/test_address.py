@@ -20,9 +20,9 @@ bbl_bin = path.join(here, 'data', 'BBL_BIN.csv')
 
 placenames = path.join(here, 'data', 'placenames.csv')
 
-cross_streets = path.join(here, 'data', 'cross_streets.csv')  # Need better test data for compass direction
+cross_streets = path.join(here, 'data', 'cross_streets.csv')
 
-street_stretch = path.join(here, 'data', 'street_stretch.csv')  # Need better test data for compass direction
+street_stretch = path.join(here, 'data', 'street_stretch.csv')
 
 blockface = path.join(here, 'data', 'blockface.csv')
 

@@ -228,9 +228,9 @@ class Geocode(object):
         """
         Function 3 processes Street Segment Defined by 'ON' Street and Two Cross Streets
 
-        :param on_street: street name of target blockface
-        :param cross_street_1: First cross street of blockface
-        :param cross_street_2: Second cross street of blockface
+        :param on_street: street name of target street segment
+        :param cross_street_1: First cross street of street segment
+        :param cross_street_2: Second cross street of street segment
         :param boro: borough code or borough name
         :param cross_street_1_boro: Borough of first cross street (optional)
         :param cross_street_2_boro: Borough of second cross street (optional)
@@ -301,6 +301,46 @@ class Geocode(object):
         wa1 = self._rightpad(wa1, 1200)
         wa2 = ' ' * 850
         return self._call_geolib(wa1, wa2, func)
+
+    # def blockface(self, on_street, cross_street_1, cross_street_2, boro, compass_direction, cross_street_1_boro=None,
+    #               cross_street_2_boro=None):
+    #     """
+    #     Function 3C processes Blockface Defined by 'ON' Street, Two Cross Streets and Compass Direction
+    #
+    #     :param on_street: street name of target blockface
+    #     :param cross_street_1: First cross street of blockface
+    #     :param cross_street_2: Second cross street of blockface
+    #     :param boro: borough code or borough name
+    #     :param cross_street_1_boro: Borough of first cross street (optional)
+    #     :param cross_street_2_boro: Borough of second cross street (optional)
+    #     :param compass_direction: Used to request information about only one side of the
+    #         street. Valid values are: N, S, E or W (optional)
+    #     :return: Dictionary of results
+    #     """
+    #     if len(str(boro).strip()) > 1:
+    #         boro = self._borocode_from_boroname(boro)
+    #
+    #     if cross_street_1_boro and len(str(cross_street_1_boro).strip()) > 1:
+    #         cross_street_1_boro = self._borocode_from_boroname(cross_street_1_boro)
+    #
+    #     if cross_street_2_boro and len(str(cross_street_2_boro).strip()) > 1:
+    #         cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
+    #
+    #     func = '3C'
+    #     wa1 = '{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),  # 1-2
+    #                                       self._rightpad(boro or ' ', 11),  # 57
+    #                                       self._rightpad(on_street, 32),  # 68-99
+    #                                       self._rightpad(cross_street_1_boro or ' ', 11),  # 100
+    #                                       self._rightpad(cross_street_1, 32),  # 111-142
+    #                                       self._rightpad(cross_street_2_boro or ' ', 11),  # 143
+    #                                       self._rightpad(cross_street_2, 50),  # 154-185
+    #                                       self._rightpad(compass_direction or ' ', 9),  # 204
+    #                                       self._rightpad('C', 117),  # 213 (Work Area Format Indicator)
+    #                                       'X')  # extended mode
+    #     # Cross Street Names Flag 323
+    #     wa1 = self._rightpad(wa1, 1200)
+    #     wa2 = ' ' * 850
+    #     return self._call_geolib(wa1, wa2, func)
 
     def street_stretch(self, on_street, cross_street_1, cross_street_2, boro, compass_direction, compass_direction_2,
                        cross_street_1_boro=None, cross_street_2_boro=None):

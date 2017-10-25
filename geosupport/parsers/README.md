@@ -15,7 +15,7 @@
 
 
 
-All geocoding functions return the items in `all_wa1.py`. Addtionaly, each function returns the items in its associated filename.
+All geocoding functions return the items in `all_wa1.py`. Additionally, each function returns the items in its associated filename.
 
 For more information on NYC Planning Geosupport COW's, see *APPENDIX 13: CHARACTER-ONLY WORK AREA LAYOUTS (COW)*:
 https://nycplanning.github.io/Geosupport-UPG/appendices/appendix13/. The documentation from this url was parsed using [bs4](https://www.crummy.com/software/BeautifulSoup/) to create all `python-geosupport` dictionaries w/comments.

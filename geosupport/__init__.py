@@ -1,5 +1,4 @@
 import sys
-# from .wa_parsers import *
 import usaddress
 from usaddress import RepeatedLabelError, OrderedDict
 from .parsers import *
@@ -63,7 +62,7 @@ class Geocode(object):
     @staticmethod
     def _parse_sfs(ad):
         """
-        Parses a single address input from the usaddress library. A work in progress.
+        Parses a single address input using the usaddress library. A work in progress.
         :param ad: usaddress parsed address
         :return: results
         """
@@ -85,8 +84,9 @@ class Geocode(object):
 
     def address(self, address=None, house_number=None, street=None, zip=None, boro=None):
         """
-        Function 1B processes an input address.
-        Zip code, Boro code or Boro name must be provided in addition to a house number and street name.
+        Function 1B processes an input address. Zip code, Boro code or Boro name must be provided in addition to a house
+        number and street name.
+
         :param address: Input adddress to be parsed. Should include a house number and street name.
         :param house_number: Required if no address.
         :param street: Required if no address.
@@ -115,10 +115,6 @@ class Geocode(object):
             if boro:
                 if len(str(boro).strip()) > 1:
                     boro = self._borocode_from_boroname(boro)
-                    # elif all(v is None for v in [zip, boro]):  # Let geosupport dekstop do error handling.
-                    #     raise Exception('Must provide a valid zip code, boro code or boro name.')
-        # else:
-        #     raise Exception('Must provide an address or house number and street name.')
         func = '1B'
         wa1 = '{}{}{}{}{}{}'.format(func,
                                     self._rightpad(house_number, 54),
@@ -132,7 +128,7 @@ class Geocode(object):
 
     def place(self, place, boro):
         """
-        Function 1B processes a Non-Addressable Place name (NAP).
+        Function 1B also processes a Non-Addressable Place name (NAP).
         :param boro: borough code or borough name
         :param place: A Non-Addressable Placename
         :return: a dictionary of results
@@ -144,7 +140,6 @@ class Geocode(object):
                                 self._rightpad(boro, 11),
                                 self._rightpad(place, 145),
                                 'C')
-
         wa1 = self._rightpad(wa1, 1200)
         wa2 = ' ' * 4300
         return self._call_geolib(wa1, wa2, func)
@@ -210,14 +205,14 @@ class Geocode(object):
         if len(str(boro).strip()) > 1:
             boro = self._borocode_from_boroname(boro)
         func = '2W'
-        wa1 = '{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),  # 1-2
-                                        self._rightpad(boro or ' ', 11),  # 57
-                                        self._rightpad(street_1, 32),  # 68-99
-                                        self._rightpad(boro_2 or ' ', 11),  # 100
-                                        self._rightpad(street_2, 93),  # 111-142
-                                        self._rightpad(compass_direction or ' ', 2),  # 204
-                                        self._rightpad(node_number or ' ', 7),  # 206-212
-                                        self._rightpad('C', 107),  # 213 (Work Area Format Indicator)
+        wa1 = '{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),
+                                        self._rightpad(boro or ' ', 11),
+                                        self._rightpad(street_1, 32),
+                                        self._rightpad(boro_2 or ' ', 11),
+                                        self._rightpad(street_2, 93),
+                                        self._rightpad(compass_direction or ' ', 2),
+                                        self._rightpad(node_number or ' ', 7),
+                                        self._rightpad('C', 107)
                                         )
         wa1 = self._rightpad(wa1, 1200)
         wa2 = ' ' * 4000
@@ -246,7 +241,6 @@ class Geocode(object):
 
         if cross_street_2_boro and len(str(cross_street_2_boro).strip()) > 1:
             cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
-
         func = '3'
         wa1 = '{}{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),  # 1-2
                                             self._rightpad(boro or ' ', 11),  # 57
@@ -287,60 +281,20 @@ class Geocode(object):
             cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
 
         func = '3C'
-        wa1 = '{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),  # 1-2
-                                          self._rightpad(boro or ' ', 11),  # 57
-                                          self._rightpad(on_street, 32),  # 68-99
-                                          self._rightpad(cross_street_1_boro or ' ', 11),  # 100
-                                          self._rightpad(cross_street_1, 32),  # 111-142
-                                          self._rightpad(cross_street_2_boro or ' ', 11),  # 143
-                                          self._rightpad(cross_street_2, 50),  # 154-185
-                                          self._rightpad(compass_direction or ' ', 9),  # 204
+        wa1 = '{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),
+                                          self._rightpad(boro or ' ', 11),
+                                          self._rightpad(on_street, 32),
+                                          self._rightpad(cross_street_1_boro or ' ', 11),
+                                          self._rightpad(cross_street_1, 32),
+                                          self._rightpad(cross_street_2_boro or ' ', 11),
+                                          self._rightpad(cross_street_2, 50),
+                                          self._rightpad(compass_direction or ' ', 9),
                                           self._rightpad('C', 117),  # 213 (Work Area Format Indicator)
                                           'X')  # extended mode
-        # Cross Street Names Flag 323
+                                            # Cross Street Names Flag 323
         wa1 = self._rightpad(wa1, 1200)
         wa2 = ' ' * 850
         return self._call_geolib(wa1, wa2, func)
-
-    # def blockface(self, on_street, cross_street_1, cross_street_2, boro, compass_direction, cross_street_1_boro=None,
-    #               cross_street_2_boro=None):
-    #     """
-    #     Function 3C processes Blockface Defined by 'ON' Street, Two Cross Streets and Compass Direction
-    #
-    #     :param on_street: street name of target blockface
-    #     :param cross_street_1: First cross street of blockface
-    #     :param cross_street_2: Second cross street of blockface
-    #     :param boro: borough code or borough name
-    #     :param cross_street_1_boro: Borough of first cross street (optional)
-    #     :param cross_street_2_boro: Borough of second cross street (optional)
-    #     :param compass_direction: Used to request information about only one side of the
-    #         street. Valid values are: N, S, E or W (optional)
-    #     :return: Dictionary of results
-    #     """
-    #     if len(str(boro).strip()) > 1:
-    #         boro = self._borocode_from_boroname(boro)
-    #
-    #     if cross_street_1_boro and len(str(cross_street_1_boro).strip()) > 1:
-    #         cross_street_1_boro = self._borocode_from_boroname(cross_street_1_boro)
-    #
-    #     if cross_street_2_boro and len(str(cross_street_2_boro).strip()) > 1:
-    #         cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
-    #
-    #     func = '3C'
-    #     wa1 = '{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),  # 1-2
-    #                                       self._rightpad(boro or ' ', 11),  # 57
-    #                                       self._rightpad(on_street, 32),  # 68-99
-    #                                       self._rightpad(cross_street_1_boro or ' ', 11),  # 100
-    #                                       self._rightpad(cross_street_1, 32),  # 111-142
-    #                                       self._rightpad(cross_street_2_boro or ' ', 11),  # 143
-    #                                       self._rightpad(cross_street_2, 50),  # 154-185
-    #                                       self._rightpad(compass_direction or ' ', 9),  # 204
-    #                                       self._rightpad('C', 117),  # 213 (Work Area Format Indicator)
-    #                                       'X')  # extended mode
-    #     # Cross Street Names Flag 323
-    #     wa1 = self._rightpad(wa1, 1200)
-    #     wa2 = ' ' * 850
-    #     return self._call_geolib(wa1, wa2, func)
 
     def street_stretch(self, on_street, cross_street_1, cross_street_2, boro, compass_direction, compass_direction_2,
                        cross_street_1_boro=None, cross_street_2_boro=None):

@@ -15,6 +15,9 @@ Install Geosupport Desktop Edition:
 
 **Windows users:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
 
+`python-geosupport` requires certain environmental variables to be set. This should be handled by the Geosupport Desktop installation process. However, if you encounter issues, please check that the `GEOFILES` variable is set to the `fls` directory of your installation and the Geosupport `bin` directory is in the `PATH`.
+
+
 **Linux users:** Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRARY_PATH` environmental variables of the `fls` and `lib` directories like so:
 
 ```shell
@@ -31,6 +34,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
 2. Import the library and create an instance:
     ```python
     from geosupport import Geocode
+
     g = Geocode()
     ```
 

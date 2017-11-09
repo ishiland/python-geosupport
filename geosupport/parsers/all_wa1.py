@@ -50,43 +50,43 @@ def parse_WA1(wa1):
         # "Filler": wa1[331:359],
 
         # OUTPUT Fields:
-        "First Borough Name": wa1[360:368],  # All but D*
-        "House Number - Display Format": wa1[369:384],  # 1, 1A, 1B, 1E, AP, D*
-        "House Number - Sort Format": wa1[385:395],  # 1, 1A, 1B, 1E, AP, D*
-        "B10SC - First Borough and Street Code": wa1[396:406],  # All but BL, BN
-        "First Street Name Normalized": wa1[407:438],  # 439
-        "B10SC - Second Borough and Street Code": wa1[439:449],  # 2, 3*, D*
-        "Second Street Name Normalized": wa1[450:481],  # 2, 3*, D*
-        "B10SC - Third Borough and Street Code": wa1[482:492],  # 3*, D*
-        "Third Street Name Normalized": wa1[493:524],  # 3*, D*
+        "First Borough Name": wa1[360:369],  # All but D*
+        "House Number - Display Format": wa1[369:385],  # 1, 1A, 1B, 1E, AP, D*
+        "House Number - Sort Format": wa1[385:396],  # 1, 1A, 1B, 1E, AP, D*
+        "B10SC - First Borough and Street Code": wa1[396:407],  # All but BL, BN
+        "First Street Name Normalized": wa1[407:439],  # 439
+        "B10SC - Second Borough and Street Code": wa1[439:450],  # 2, 3*, D*
+        "Second Street Name Normalized": wa1[450:482],  # 2, 3*, D*
+        "B10SC - Third Borough and Street Code": wa1[482:493],  # 3*, D*
+        "Third Street Name Normalized": wa1[493:525],  # 3*, D*
         "BOROUGH BLOCK LOT": {# BL (Also 1, 1A, 1B, 1E if Cross Street Names Flag is 'E'; Also 1, 1E if Mode Switch is 'X')
-        "Borough Code": wa1[525],  # BL (see BL comment above)
-        "Tax Block": wa1[526:530],  # BL (see BL comment above)
-        "Tax Lot": wa1[531:534]},  # BL (see BL comment above)
+        "Borough Code": wa1[526],  # BL (see BL comment above)
+        "Tax Block": wa1[526:531],  # BL (see BL comment above)
+        "Tax Lot": wa1[531:535]},  # BL (see BL comment above)
         "Filler for Tax Lot Version Number": wa1[535],  # Not Implemented
-        "Low House Number - Display Format": wa1[536:551],  # Internal Use, D*
-        "Low House Number - Sort Format": wa1[552:562],  # Internal Use, D*
-        "Building Identification Number (BIN)": wa1[563:569],  # BN (see BBL functions list above)
-        "Street Attribute Indicators": wa1[570:572],  # Internal Use
+        "Low House Number - Display Format": wa1[536:552],  # Internal Use, D*
+        "Low House Number - Sort Format": wa1[552:563],  # Internal Use, D*
+        "Building Identification Number (BIN)": wa1[563:570],  # BN (see BBL functions list above)
+        "Street Attribute Indicators": wa1[570:573],  # Internal Use
         "Reason Code 2": wa1[573],  # 1B - reflects 1A Extended
         "Reason Code Qualifier 2": wa1[574],  # 1B (See Reason Code 2)
-        "Warning Code 2": wa1[575:576],  # 1B (not used)
-        "Geosupport Return Code 2": wa1[577:578],  # 1B (See Reason Code 2)
-        "Message 2": wa1[579:658],  # 1B (See Reason Code 2)
-        "Node Number": wa1[659:665],  # 2, 2W
+        "Warning Code 2": wa1[575:577],  # 1B (not used)
+        "Geosupport Return Code 2": wa1[577:579],  # 1B (See Reason Code 2)
+        "Message 2": wa1[579:659],  # 1B (See Reason Code 2)
+        "Node Number": wa1[659:666],  # 2, 2W
         "UNIT - SORT FORMAT": {  # 1*
-            "Unit - Type": wa1[666:669],  # 1*
-            "Unit - Identifier": wa1[670:679],  # 1*
-            "Unit - Display Format": wa1[680:693]},  # 1*
-        "Filler": wa1[694:704],
-        "NIN28": wa1[705:710],  # Not Implemented
-        "Street Attribute Indicator": wa1[711],  # Internal Use
-        "Reason Code": wa1[712],  # All
-        "Reason Code Qualifier": wa1[713],  # 1A, BL, BN
-        "Warning Code": wa1[714:715],  # All (not used)
-        "Geosupport Return Code": wa1[716:717],  # All
-        "Message": wa1[718:797],  # All
-        "Number of Street Codes and Street Names in List": wa1[798:799],  # 1*, 2, 3*, BB, BF - (up to 10)
-        "List of Street Codes": wa1[800:879],  # 1*, 2, 3*, BB, BF - (10 B7SC's)
-        "List of Street Names": wa1[880:1199],  # 1*, 2, 3*, BB, BF - (10 Street Name Fields, 32 Bytes Each)
+            "Unit - Type": wa1[666:670],  # 1*
+            "Unit - Identifier": wa1[670:680],  # 1*
+            "Unit - Display Format": wa1[680:694]},  # 1*
+        "Filler": wa1[694:705],
+        "NIN28": wa1[705:711],  # Not Implemented
+        "Street Attribute Indicator": wa1[712],  # Internal Use
+        "Reason Code": wa1[713],  # All
+        "Reason Code Qualifier": wa1[714],  # 1A, BL, BN
+        "Warning Code": wa1[714:716],  # All (not used)
+        "Geosupport Return Code": wa1[716:718],  # All
+        "Message": wa1[718:798],  # All
+        "Number of Street Codes and Street Names in List": wa1[798:800],  # 1*, 2, 3*, BB, BF - (up to 10)
+        "List of Street Codes": wa1[800:880],  # 1*, 2, 3*, BB, BF - (10 B7SC's)
+        "List of Street Names": wa1[880:1200],  # 1*, 2, 3*, BB, BF - (10 Street Name Fields, 32 Bytes Each)
     }

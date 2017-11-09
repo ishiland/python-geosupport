@@ -5,18 +5,18 @@ def parse_1A_BL_BN(wa2):
     return{
         # "Internal Use": wa2[0:20],
         "Continuous Parity Indicator / Duplicate Address Indicator": wa2[21],
-        "Low House Number of Defining Address Range": wa2[22:32],  # Sort Format
+        "Low House Number of Defining Address Range": wa2[22:33],  # Sort Format
         "BOROUGH BLOCK LOT (BBL)": {  # Billing BBL if Condo
             "Borough Code": wa2[33],
-            "Tax Block": wa2[34:38],
-            "Tax Lot": wa2[39:42]},
+            "Tax Block": wa2[34:39],
+            "Tax Lot": wa2[39:43]},
         # "Filler for Tax Lot Version Number": wa2[43],  # Not Implemented
         "RPAD Self-Check Code (SCC) for BBL": wa2[44],
         # "Filler": wa2[45],
-        "RPAD Building Classification Code": wa2[46:47],
-        "Corner Code": wa2[48:49],
-        "Number of Existing Structures on Lot": wa2[50:53],
-        "Number of Street Frontages of Lot": wa2[54:55],
+        "RPAD Building Classification Code": wa2[46:48],
+        "Corner Code": wa2[48:50],
+        "Number of Existing Structures on Lot": wa2[50:54],
+        "Number of Street Frontages of Lot": wa2[54:56],
         "Interior Lot Flag": wa2[56],
         "Vacant Lot Flag": wa2[57],
         "Irregularly-Shaped Lot Flag": wa2[58],
@@ -29,48 +29,48 @@ def parse_1A_BL_BN(wa2):
         # "High House Number - Sort Format": wa2[68:78],  # Not Implemented
         # "Filler": wa2[79],  # Not Implemented
         "Reserved for Internal Use": wa2[80],
-        "Building Identification Number (BIN) of Input Address or NAP": wa2[81:87],
+        "Building Identification Number (BIN) of Input Address or NAP": wa2[81:88],
         "Condominium Flag": wa2[88],  # If condo, = 'C';
         # "Filler": wa2[89],
-        "DOF Condominium Identification Number": wa2[90:93],
+        "DOF Condominium Identification Number": wa2[90:94],
         # "Condominium Unit ID Number": wa2[94:100],  # Not Implemented
-        "Condominium Billing BBL": wa2[101:110],
+        "Condominium Billing BBL": wa2[101:111],
         # "Filler - Tax Lot Version No. for Billing BBL": wa2[111],  # Not Implemented
         "Self-Check Code (SCC) of Billing BBL": wa2[112],
         "LOW BBL OF THIS BUILDING'S CONDOMINIUM UNITS": {
-            "Tax Block": wa2[114:118],
-            "Tax Lot": wa2[119:122]},
+            "Tax Block": wa2[114:119],
+            "Tax Lot": wa2[119:123]},
         # "Filler for Tax Lot Version No. of Low BBL": wa2[123],  # Not Implemented
         "HIGH BBL OF THIS BUILDING'S CONDOMINIUM UNITS": {
             "Borough Code": wa2[124],  # Condo
-            "Tax Block": wa2[125:129],
-            "Tax Lot": wa2[130:133]},
+            "Tax Block": wa2[125:130],
+            "Tax Lot": wa2[130:134]},
         # "Filler for Tax Lot Version No. of High BBL": wa2[134],  # Not Implemented
         # "Filler": wa2[135:149],
-        "Cooperative ID Number": wa2[150:153],
+        "Cooperative ID Number": wa2[150:154],
         "SBVP (SANBORN MAP IDENTIFIER)": {
             "Sanborn Borough Code": wa2[154],
-            "Volume Number": wa2[155:156],
+            "Volume Number": wa2[155:157],
             "Volume Number Suffix": wa2[157],
-            "Page Number": wa2[158:160],
+            "Page Number": wa2[158:161],
             "Page Number Suffix": wa2[161]},
-        "DCP Commercial Study Area": wa2[162:166],
-        "Tax Map Number Section & Volume": wa2[167:171],
+        "DCP Commercial Study Area": wa2[162:167],
+        "Tax Map Number Section & Volume": wa2[167:172],
         # "Reserved for Tax Map Page Number": wa2[172:175],  # Not Implemented
         # "Filler": wa2[176:178],
-        "Latitude": wa2[179:187],
-        "Longitude": wa2[188:198],
-        "X-Y Coordinates of Tax Lot Centroid (Internal to Lot)": wa2[199:212],  # Previously X-Y Coordinates of COGIS Annotation Point
-        "Business Improvement District (BID)": wa2[213:218],
+        "Latitude": wa2[179:188],
+        "Longitude": wa2[188:199],
+        "X-Y Coordinates of Tax Lot Centroid (Internal to Lot)": wa2[199:213],  # Previously X-Y Coordinates of COGIS Annotation Point
+        "Business Improvement District (BID)": wa2[213:219],
         "TPAD BIN Status (for DM job)": wa2[219],  # TPAD request
         "TPAD New BIN": wa2[220:226],  # TPAD request
         "TPAD New BIN Status": wa2[227],  # TPAD request
         "TPAD Conflict Flag": wa2[228],  # TPAD request
         # "Filler": wa2[229:237],
         # "List of 4 LGCs": wa2[238:245],  # Internal Use
-        "Number of Entries in List of Geographic  Identifiers": wa2[246:249],  # Maximum of 21 entries
+        "Number of Entries in List of Geographic  Identifiers": wa2[246:250],  # Maximum of 21 entries
 
-        "LIST OF GEOGRAPHIC IDENTIFIERS": wa2[250:1362],  # Maximum of 21 entries, each 53 bytes long: 21x53 = 1,113
+        "LIST OF GEOGRAPHIC IDENTIFIERS": wa2[250:1363],  # Maximum of 21 entries, each 53 bytes long: 21x53 = 1,113
         # Variable length list of up to 21 entries, each 53 - bytes long, structured as follows
         # "Low House Number": wa2[0:15],  # Display format
         # "High House Number": wa2[16:31],  # Display format
@@ -99,8 +99,8 @@ def parse_long(wa2):
     # Long Work Area 2 (COW) - Functions 1A, BL
     return {
         # "Same as Regular Work Area 2 - Functions 1A, BL, BN": wa2[0:245],
-        "Number of Buildings on Tax Lot": wa2[246:249],  # Maximum of 2,500
-        "LIST OF BUILDINGS ON TAX LOT": wa2[250:17749],
+        "Number of Buildings on Tax Lot": wa2[246:250],  # Maximum of 2,500
+        "LIST OF BUILDINGS ON TAX LOT": wa2[250:17750],
         # Variable length list of up to 2,500 entries; each is 7 bytes long structured as follows:
         # Maximum of 2,500 entries, each 7 bytes long. 7 x 2,500 = 17,500
         # "Building Identification Number (BIN)": wa2[-2:-8],
@@ -111,8 +111,8 @@ def parse_long_tpad(wa2):
     # TPAD Long Work Area 2 (COW) - Functions 1A, BL
     return{
         # "Same as Regular Work Area 2 - Functions 1A, BL, BN": wa2[0:245],
-        "Number of Buildings on Tax Lot": wa2[246:249],  # Maximum is 2,187
-        "LIST OF BUILDINGS ON TAX LOT": wa2[250:17745],
+        "Number of Buildings on Tax Lot": wa2[246:250],  # Maximum is 2,187
+        "LIST OF BUILDINGS ON TAX LOT": wa2[250:17750],
         # Variable length list of up to 2,187 entries; each is 8 bytes long, structured as follows
         # Maximum of 2,187 entries, each 8 bytes long. 8 x 2,187 = 17,496
         # "TPAD BIN": wa2[0:6],
@@ -131,8 +131,8 @@ def parse_ext(wa2):
         # "Warning Code": wa2[248:249],  # Not used
         # "Return Code (GRC)": wa2[250:251],  # Same as Work Area 1
         # "Filler": wa2[252:359],
-        "Number of Entries in List of Geographic Identifiers": wa2[360:363],  # Maximum number is 21
-        "LIST OF GEOGRAPHIC IDENTIFIERS": wa2[364:2799],
+        "Number of Entries in List of Geographic Identifiers": wa2[360:364],  # Maximum number is 21
+        "LIST OF GEOGRAPHIC IDENTIFIERS": wa2[364:2800],
         # Variable length list of up to 21 entries; each is 116 bytes long, structured as follows
         # Maximum of 21 entries, each 116 bytes long: 116 x 21 = 2,436
         # "Low House Number": wa2[0:15],  # Display format

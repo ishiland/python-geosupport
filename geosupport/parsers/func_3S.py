@@ -6,11 +6,11 @@ def parse_3S(wa2):
         # "Internal Use": wa2[0:1],
         "Generic/Roadbed Street Name Indicator": wa2[2],  # G - Generic R - Roadbed
         "Borough Code": wa2[3],
-        "5-Digit Street Code of 'On' Street": wa2[4:8],
-        "LGC": wa2[9:10],
+        "5-Digit Street Code of 'On' Street": wa2[4:9],
+        "LGC": wa2[9:11],
         # "Filler": wa2[11:20],  # Always Blank
-        "Number of Intersections": wa2[21:23],  # Maximum of 350
-        "LIST OF INTERSECTIONS": wa2[24:19273],
+        "Number of Intersections": wa2[21:24],  # Maximum of 350
+        "LIST OF INTERSECTIONS": wa2[24:19275],
         # Variable length list of up to 350 entries; each is 55 bytes long, structured as follows
         # Max. of 350 entries, each 55 bytes long: 350 x 55 = 19,250
         # "Marble Hill/Rikers Island Flag": wa2[0],

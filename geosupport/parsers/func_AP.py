@@ -2,45 +2,45 @@
 def parse_AP(wa2):
     # Work Area 2 (COW) - Function AP
     regular =  {
-        "Internal Use": wa2[0:20],
-        "Low House Number of Defining Address Range": wa2[22:32],  # Sort Format
+        "Internal Use": wa2[0:21],
+        "Low House Number of Defining Address Range": wa2[22:33],  # Sort Format
         "BOROUGH BLOCK LOT (BBL)": { # Billing BBL if Condo
             "Borough Code": wa2[33],
-            "Tax Block": wa2[34:38],
-            "Tax Lot": wa2[39:42]},
+            "Tax Block": wa2[34:39],
+            "Tax Lot": wa2[39:43]},
         # "Filler": wa2[43:49],
-        "Number of Existing Structures on Lot": wa2[50:53],
+        "Number of Existing Structures on Lot": wa2[50:54],
         # "Filler": wa2[54:79],
         "Reserved for Internal Use": wa2[80],
-        "Building Identification Number (BIN) of Input Address or NAP": wa2[81:87],
+        "Building Identification Number (BIN) of Input Address or NAP": wa2[81:88],
         "Condominium Flag": wa2[88],  # If condo, = 'C'
         # "Filler": wa2[89],
-        "DOF Condominium Identification Number": wa2[90:93],
+        "DOF Condominium Identification Number": wa2[90:94],
         # "Filler": wa2[94:100],
-        "Condominium Billing BBL": wa2[101:110],
+        "Condominium Billing BBL": wa2[101:111],
         # "Filler - Tax Lot Version No. for Billing BBL": wa2[111],  # Not Implemented
         # "Filler": wa2[112],
         "LOW BBL OF THIS BUILDING'S CONDOMINIUM UNITS": {
             "Borough Code": wa2[113],  # Condo
-            "Tax Block": wa2[114:118],
-            "Tax Lot": wa2[119:122]},
+            "Tax Block": wa2[114:119],
+            "Tax Lot": wa2[119:123]},
         # "Filler for Tax Lot Version No. of Low BBL": wa2[123],  # Not Implemented
         "HIGH BBL OF THIS BUILDING'S CONDOMINIUM UNITS": {
             "Borough Code": wa2[124],
-            "Tax Block": wa2[125:129],
-            "Tax Lot": wa2[130:133]},
+            "Tax Block": wa2[125:130],
+            "Tax Lot": wa2[130:134]},
         # "Filler for Tax Lot Version No. of High BBL": wa2[134],  # Not Implemented
         # "Filler": wa2[135:149],
         "Cooperative ID Number": wa2[150:153],
         # "Filler": wa2[154:175],
         # "Filler": wa2[176:178],
-        "Latitude": wa2[179:187],
-        "Longitude": wa2[188:198],
-        "X-Y Coordinates of Address Point": wa2[199:212],
+        "Latitude": wa2[179:188],
+        "Longitude": wa2[188:199],
+        "X-Y Coordinates of Address Point": wa2[199:213],
         # "Filler": wa2[213:228],
-        "Address Point ID": wa2[229:237],
-        "List of 4 LGCs - Internal Use": wa2[238:245],  # Internal Use
-        "LIST OF GEOGRAPHIC IDENTIFIERS": wa2[250:1362],
+        "Address Point ID": wa2[229:238],
+        "List of 4 LGCs - Internal Use": wa2[238:246],  # Internal Use
+        "LIST OF GEOGRAPHIC IDENTIFIERS": wa2[250:1363],
         # For Function AP - there is only 1 entry. (Potential Max of 21) 21x53 = 1,113
         # "Low House Number": wa2[0:15],  # Display format
         # "High House Number": wa2[16:31],  # Display format
@@ -66,8 +66,8 @@ def parse_AP_ext(wa2):
         # "Warning Code": wa2[248:249],  # Not used
         # "Return Code (GRC)": wa2[250:251],  # Same as Work Area 1
         # "Filler": wa2[252:359],
-        "Number of Entries in List of Geographic Identifiers": wa2[360:363],  # Fn APX # is '0001' Always '0001'
-        "LIST OF GEOGRAPHIC IDENTIFIERS:": wa2[364:2799],
+        "Number of Entries in List of Geographic Identifiers": wa2[360:364],  # Fn APX # is '0001' Always '0001'
+        "LIST OF GEOGRAPHIC IDENTIFIERS:": wa2[364:2800],
         # For Function APX, the list contains one entry Variable length list of up to 21 entries; there is only 1 entry.
         # each is 116 bytes long, structured as follows
         # For Function APX - 21 x 116 = 2,436

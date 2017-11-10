@@ -99,7 +99,7 @@ def parse_1_1E_ext(wa2):
         "Radius of Circle": wa2[376:383],
         "Secant Location Related to Curve": wa2[383],  # L - Left, R - Right
         "Angle to From Node - Beta Value": wa2[384:389],  # Beta & Alpha Used to Calculate Coordinates
-        "Angle to To Node – Alpha Value": wa2[389:394],
+        "Angle to To Node - Alpha Value": wa2[389:394],
         "From LION Node ID": wa2[394:401],  # From Node
         "To LION Node ID": wa2[401:408],  # To Node
         "LION KEY FOR VANITY ADDRESS": {

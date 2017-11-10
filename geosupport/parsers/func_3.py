@@ -1,7 +1,6 @@
 
 def parse_3(wa2):
     # Work Area 2 (COW) - Function 3
-
     regular = {
         # "Internal Use": wa2[0:20],
         "Duplicate Key Flag or Continuous Parity": wa2[21],
@@ -15,10 +14,10 @@ def parse_3(wa2):
         "Number of Cross Streets at High Address End": wa2[61],
         "List of Cross Streets at High Address End (Up to five B5SCs, 6 bytes each)": wa2[62:92],  # Blank Filled
         "Cross Street Reversal Flag": wa2[92],
-        "LION KEY": wa2[93:103],
+        "LION KEY": {
         "LION Borough Code": wa2[93],
         "LION Face Code": wa2[94:98],
-        "LION Sequence Number": wa2[98:103],
+        "LION Sequence Number": wa2[98:103]},
         "Generated Record Flag": wa2[103],
         "Length of Segment in Feet": wa2[104:109],
         "Segment Azimuth": wa2[109:112],

@@ -15,8 +15,9 @@ Install Geosupport Desktop Edition:
 
 **Windows users:** Ensure you select the correct Geosupport installation that corresponds to the Python interpreter you are using. Ex., Python 32-bit will only work with Geosupport 32-bit.
 
-`python-geosupport` requires certain environmental variables to be set. This should be handled by the Geosupport Desktop installation process. However, if you encounter issues, please check that the `GEOFILES` variable is set to the `fls` directory of your installation and the Geosupport `bin` directory is in the `PATH`.
-
+Additionally, you should check that the following environmental variables are set:
+* `GEOFILES` = the `fls` directory of your Geosupport installation. (ex. `C:\Program Files (x86)\Geosupport Desktop Edition\fls\`)
+* The Geospport `bin` directory is in the `PATH`. (ex. `C:\Program Files (x86)\Geosupport Desktop Edition\bin`)
 
 **Linux users:** Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRARY_PATH` environmental variables of the `fls` and `lib` directories like so:
 
@@ -95,9 +96,6 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
     ```
 
     *The `boro` argument can be borough code, borough name or a common borough abbreviation.
-
-
-    *For more information on outputs, see [geosupport/parsers](https://github.com/ishiland/python-geosupport/tree/master/geosupport/parsers).
 
 ### Running tests
 ```

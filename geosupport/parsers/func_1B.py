@@ -1,6 +1,5 @@
-
 def parse_1B(wa2):
-    return{
+    return {
         # Work Area 2 (COW) - Function 1B
         # "Internal Use": wa2[0:20],
         "Continuous Parity Indicator/Duplicate Address Indicator": wa2[21],
@@ -18,7 +17,9 @@ def parse_1B(wa2):
         "Special Address Generated Record Flag": wa2[118],
         "Side of Street Indicator": wa2[119],
         "Segment Length in Feet": wa2[120:125],
-        "Spatial X-Y Coordinates of Address": wa2[125:139],
+        # "Spatial X-Y Coordinates of Address": wa2[125:139], 09835090199926
+        "X Coordinate - Address": wa2[125:132],
+        "Y Coordinate - Address": wa2[132:139],
         "Reserved for Possible Z Coordinate": wa2[139:146],
         "Community Development Eligibility Indicator": wa2[146],
         "Marble Hill/Rikers Island Alternative Borough Flag": wa2[147],
@@ -75,17 +76,19 @@ def parse_1B(wa2):
         "BOE LGC Pointer": wa2[308],
         "Segment Azimuth": wa2[309:312],
         "Segment Orientation": wa2[312],
-        "SPATIAL COORDINATES OF SEGMENT": wa2[313:355],
-        "X Coordinate, Low Address End": wa2[313:320],
-        "Y Coordinate, Low Address End": wa2[320:327],
-        # "Z Coordinate, Low Address End": wa2[327:334],  # Not Implemented
-        "X Coordinate, High Address End": wa2[334:341],
-        "Y Coordinate, High Address End": wa2[341:348],
-        # "Z Coordinate, High Address End": wa2[348:355],  # Not Implemented
-        "SPATIAL COORDINATES OF CENTER OF CURVATURE": wa2[355:376],
-        "X Coordinate": wa2[355:362],
-        "Y Coordinate": wa2[362:369],
-        # "Z Coordinate": wa2[369:376],  # Not Implemented
+        "SPATIAL COORDINATES OF SEGMENT": {
+            "X Coordinate, Low Address End": wa2[313:320],
+            "Y Coordinate, Low Address End": wa2[320:327],
+            # "Z Coordinate, Low Address End": wa2[327:334],  # Not Implemented
+            "X Coordinate, High Address End": wa2[334:341],
+            "Y Coordinate, High Address End": wa2[341:348],
+            # "Z Coordinate, High Address End": wa2[348:355],  # Not Implemented
+        },
+        "SPATIAL COORDINATES OF CENTER OF CURVATURE": {
+            "X Coordinate": wa2[355:362],
+            "Y Coordinate": wa2[362:369],
+            # "Z Coordinate": wa2[369:376],  # Not Implemented
+        },
         "Radius of Circle": wa2[376:383],
         "Secant Location Related to Curve": wa2[383],  # L - Left, R - Right
         "Angle to From Node - Beta Value": wa2[384:389],  # Beta & Alpha Used to Calculate Coordinates
@@ -159,9 +162,9 @@ def parse_1B(wa2):
         "Continuous Parity Indicator / Duplicate Address Indicator": wa2[1521],
         "Low House Number of Defining Address Range": wa2[1522:1533],  # Sort Format
         "BOROUGH BLOCK LOT (BBL)": {  # Billing BBL if Condo
-        "Borough Code": wa2[1533],
-        "Tax Block": wa2[1534:1539],
-        "Tax Lot": wa2[1539:1543]},
+            "Borough Code": wa2[1533],
+            "Tax Block": wa2[1534:1539],
+            "Tax Lot": wa2[1539:1543]},
         # "Filler for Tax Lot Version Number": wa2[1543],  # Not Implemented
         "RPAD Self-Check Code (SCC) for BBL": wa2[1544],
         # # "Filler": wa2[1545],
@@ -173,7 +176,8 @@ def parse_1B(wa2):
         "Vacant Lot Flag": wa2[1557],
         "Irregularly-Shaped Lot Flag": wa2[1558],
         "Marble Hill/Rikers Island Alternate Borough Flag": wa2[1559],
-        "List of Geographic Identifiers Overflow Flag": wa2[1560],  # When = 'E', there are more than 21 addrs for Fn 1B (based on Fn 1A)
+        "List of Geographic Identifiers Overflow Flag": wa2[1560],
+    # When = 'E', there are more than 21 addrs for Fn 1B (based on Fn 1A)
         # "STROLLING KEY": wa2[1561:1579],  # Not Implemented
         "Borough": wa2[1561],
         "5-Digit Street Code of ON- Street": wa2[1562:1567],
@@ -195,21 +199,23 @@ def parse_1B(wa2):
         # "Filler - Tax Log Version No. of High BBL": wa2[1634],  # Not Implemented
         # # "Filler": wa2[1635:1649],
         "Cooperative ID Number": wa2[1650:1653],
-        "SBVP (SANBORN MAP IDENTIFIER)": wa2[1654:1662],
+        "SBVP (SANBORN MAP IDENTIFIER)": {
         "Sanborn Borough Code": wa2[1654],
         "Volume Number": wa2[1655:1657],
         "Volume Number Suffix": wa2[1657],
         "Page Number": wa2[1658:1661],
-        "Page Number Suffix": wa2[1661],
+        "Page Number Suffix": wa2[1661]
+    },
         "DCP Commercial Study Area": wa2[1662:1667],
         "Tax Map Number Section & Volume": wa2[1667:1672],
         # "Reserved for Tax Map Page Number": wa2[1672:1675],  # Not Implemented
         # # "Filler": wa2[1676:1678],
-        "Latitude - centroid": wa2[1679:1687],
-        "Longitude - centroid": wa2[1688:1699],
-        "XCoord - centroid": wa2[1699:1706],
-        "YCoord - centroid": wa2[1706:1713],
-        # "X-Y Coordinates of Lot Centroid": wa2[1699:1713],
+        "Coordinates of Lot Centroid": {
+            "Latitude": wa2[1679:1687],
+            "Longitude": wa2[1688:1699],
+            "X Coordinate": wa2[1699:1706],
+            "Y Coordinate": wa2[1706:1713],
+        },
         "Business Improvement District (BID)": wa2[1713:1719],
         "TPAD BIN Status": wa2[1719],  # TPAD Request
         "TPAD New BIN": wa2[1720:1727],  # TPAD Request

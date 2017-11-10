@@ -13,7 +13,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='python-geosupport',
-    version='0.0.8',
+    version='0.0.9',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for the NYC Geosupport Desktop application',
     long_description="""

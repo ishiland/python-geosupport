@@ -17,7 +17,7 @@ Install Geosupport Desktop Edition:
 
 Additionally, you should check that the following environmental variables are set:
 * `GEOFILES` = the `fls` directory of your Geosupport installation. (ex. `C:\Program Files (x86)\Geosupport Desktop Edition\fls\`)
-* The Geospport `bin` directory is in the `PATH`. (ex. `C:\Program Files (x86)\Geosupport Desktop Edition\bin`)
+* The Geosupport `bin` directory is in the `PATH`. (ex. `C:\Program Files (x86)\Geosupport Desktop Edition\bin`)
 
 **Linux users:** Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRARY_PATH` environmental variables of the `fls` and `lib` directories like so:
 

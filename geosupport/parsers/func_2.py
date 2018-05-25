@@ -1,6 +1,6 @@
 def parse_2(wa2):
     # Work Area 2 (COW) - Function 2
-    return{
+    return {
         "Internal Use": wa2[0:21],
         "Intersection Replication Counter": wa2[21],
         "DCP-Preferred LGC for Street 1": wa2[22:24],
@@ -60,7 +60,7 @@ def parse_2(wa2):
     }
 
 def parse_2W(wa2):
-    return {
+    wide =  {
     # Work Area 2 (COW) - Function 2W (Wide)
     # "Same as regular work area 2 for Function 2": wa2[0:199],
     # "Filler": wa2[200:221],
@@ -82,3 +82,6 @@ def parse_2W(wa2):
     "Longitude": wa2[3615:3626],
     # "Filler": wa2[3626:3999],
     }
+    wide = wide.copy()
+    wide.update(parse_2(wa2))
+    return wide

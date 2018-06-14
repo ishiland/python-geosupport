@@ -1,7 +1,6 @@
 # python-geosupport
 
 A Python library for geocoding with NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
-Geocode your data in fast and securely.
 
 
 ## Getting Started
@@ -109,7 +108,7 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
 ```
 
 ### Known Issues
-* The single address input is experimental to issues.
+* The single address input is experimental and subject to issues. Contributions to this feature are welcome.
 
 ### TODO
 * Improve single address input parsing

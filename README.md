@@ -40,18 +40,19 @@ $ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
 
 3. Geocode with:
 
-    **Street address - single input** - [Function 1B](https://nycplanning.github.io/Geosupport-UPG/appendices/appendix01/#function-1b) (Boro or zip is optional)
-    ```python
-    result = g.address(address="125 Worth st, NY, NY")
 
-    result = g.address(address="125 Worth st", boro=1)
-    ```
     **Street address** - [Function 1B](https://nycplanning.github.io/Geosupport-UPG/appendices/appendix01/#function-1b) (Must provide zip code or borough)
     ```python
     result = g.address(house_number="125", street="Worth st", zip=10013)
 
     result = g.address(house_number="125", street="Worth st", boro='MANHATTAN')
      ```
+    **Street address (single input)** - [Function 1B](https://nycplanning.github.io/Geosupport-UPG/appendices/appendix01/#function-1b) (Boro or zip is optional)
+    ```python
+    result = g.address(address="125 Worth st, NY, NY")
+
+    result = g.address(address="125 Worth st", boro=1)
+    ```
     **Street address point** - [Function AP](https://nycplanning.github.io/Geosupport-UPG/appendices/appendix01/#function-ap) (Must provide zip code or borough)
     ```python
     result = g.address_point(house_number="125", street="Worth st", zip=10013)

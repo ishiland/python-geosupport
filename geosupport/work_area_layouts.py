@@ -1,3 +1,4 @@
+from functools import partial
 import glob
 from os import path
 
@@ -16,6 +17,7 @@ WORK_AREA_LENGTHS = {
         'regular': 1363,
         'extended': 2800,
         'long': 17750,
+        'long+tpad': 17750,
     },
     '1B': {
         'regular': 4300
@@ -59,17 +61,16 @@ def create_wa2(flags):
 
     return ' ' * length
 
-def LGI(v):
+def list_of_workareas(name, length, v):
     output = []
-    l = 116
     i = 0
     # While the next entry isn't blank
-    while v[i:i+l].strip() != '':
+    while v[i:i+length].strip() != '':
         output.append(parse_workarea(
-            WORK_AREA_LAYOUTS['output']['LGI'],
-            v[i:i+l]
+            WORK_AREA_LAYOUTS['output'][name],
+            v[i:i+length]
         ))
-        i += l
+        i += length
 
     return output
 
@@ -86,9 +87,12 @@ def borough(v):
     return v
 
 FORMATTERS = {
-    'tpad': lambda v: 'Y' if v else 'N',
-    'long_work_area_2': lambda v: 'L' if v else '',
-    'LGI': LGI,
+    'tpad': lambda v: 'Y' if v.strip() else 'N',
+    'long_work_area_2': lambda v: 'L' if v.strip() else '',
+    'LGI': partial(list_of_workareas, 'LGI', 53),
+    'LGI-extended': partial(list_of_workareas, 'LGI-extended', 116),
+    'BINs': partial(list_of_workareas, 'BINs', 7),
+    'BINs-tpad': partial(list_of_workareas, 'BINs-tpad', 8),
     'borough': borough,
     '': lambda v: '' if v is None else str(v).strip().upper()
 }
@@ -110,7 +114,7 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
 
     if '-' in name:
         functions, mode = name.split('-')
-        mode = '_' + mode
+        mode = '-' + mode
     else:
         functions = name
         mode = ''
@@ -119,7 +123,9 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
     for function in functions:
         WORK_AREA_LAYOUTS[directory][function + mode] = layout
 
-    df = pd.read_csv(csv, encoding='latin-1').fillna('')
+    df = pd.read_csv(
+        csv, encoding='latin-1', dtype={'from': int, 'to': int}
+    ).fillna('')
 
     for i,row in df.iterrows():
         name = row['name'].strip().strip(':').strip()
@@ -130,7 +136,6 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
 
         alt_names = [n.strip() for n in row['alt_names'].split(',') if n]
 
-        #print('$ ', name, alt_names)
         v = {
             'i': (row['from'] - 1, row['to']),
             'formatter': FORMATTERS[row['formatter']]
@@ -142,6 +147,8 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
             layout[name] = v
             for n in alt_names:
                 layout[n] = v
+
+#print(WORK_)
 
 def get_flags(layout, wa1):
     flags = {
@@ -156,10 +163,14 @@ def get_flags(layout, wa1):
 
     if flags['mode_switch'] == 'X':
         flags['mode'] = 'extended'
-    elif flags['long_work_area_2'] == 'Y':
+    elif (flags['long_work_area_2'] == 'L') and (flags['tpad'] == 'Y'):
+        flags['mode'] = 'long+tpad'
+    elif flags['long_work_area_2'] == 'L':
         flags['mode'] = 'long'
     else:
         flags['mode'] = 'regular'
+
+    print(flags)
 
     return flags
 
@@ -218,7 +229,8 @@ def parse_output(flags, wa1, wa2):
         WORK_AREA_LAYOUTS['output'][flags['function']], wa2
     ))
 
-    function_mode = flags['function'] + '_' + flags['mode']
+    function_mode = flags['function'] + '-' + flags['mode']
+
     if function_mode in WORK_AREA_LAYOUTS['output']:
         output.update(parse_workarea(
             WORK_AREA_LAYOUTS['output'][function_mode], wa2

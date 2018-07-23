@@ -19,3 +19,4 @@ V - Vanity Address 
 O - Out-of-Sequence Address 
 Blank – Normal",,,
 TPAD BIN Status,1,50,50,TPAD Request,,,
+Street Name,32,51,82,,,,

@@ -77,7 +77,8 @@ def parse_WA1(wa1):
         "UNIT - SORT FORMAT": {  # 1*
             "Unit - Type": wa1[666:670],  # 1*
             "Unit - Identifier": wa1[670:680],  # 1*
-            "Unit - Display Format": wa1[680:694]},  # 1*
+            "Unit - Display Format": wa1[680:694]  # 1*
+        },
         "Filler": wa1[694:705],
         "NIN28": wa1[705:711],  # Not Implemented
         "Street Attribute Indicator": wa1[712],  # Internal Use

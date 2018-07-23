@@ -7,3 +7,4 @@ from .func_3 import parse_3, parse_3_ext, parse_3_aux_seg, parse_3_ext_aux
 from .func_3C import parse_3C, parse_3C_ext, parse_C_aux_seg, parse_3C_ext_aux_seg
 from .func_3S import parse_3S
 from .func_AP import parse_AP, parse_AP_ext
+#from .input import format_wa1_input

@@ -2,9 +2,9 @@ import sys
 import usaddress
 from usaddress import RepeatedLabelError, OrderedDict
 from .parsers import *
+from .work_area_layouts import format_input, parse_output, GeosupportError
 
-
-class Geocode(object):
+class Geosupport(object):
     def __init__(self):
         self.py_version = sys.version_info[0]
         try:
@@ -32,7 +32,7 @@ class Geocode(object):
                 'You are currently using a {}-bit Python interpreter. Is the installed '
                 'version of Geosupport {}-bit?'.format(e, self.py_bit, self.py_bit))
 
-    def _call_geolib(self, wa1, wa2, func):
+    def _call_geolib(self, flags, wa1, wa2):
         """
         Calls the Geosupport libs & encodes/deocodes strings for Python 3.
         :param wa1: Work Area 1
@@ -57,7 +57,11 @@ class Geocode(object):
             wa1 = str(wa1, 'utf8')
             wa2 = str(wa2, 'utf8')
 
-        return self._merge_wa(parse_WA1(wa1), globals()["parse_" + func](wa2))
+        print(wa1)
+        print(wa2)
+
+        #return self._merge_wa(parse_WA1(wa1), globals()["parse_" + func](wa2))
+        return parse_output(flags, wa1, wa2)
 
     @staticmethod
     def _parse_sfs(ad):
@@ -82,6 +86,15 @@ class Geocode(object):
         except AttributeError as e:
             print(e)
 
+
+    def call(self, kwargs):
+        flags, wa1, wa2 = format_input(kwargs)
+        result = self._call_geolib(flags, wa1, wa2)
+        if int(result['Geosupport Return Code (GRC)']) > 1:
+            raise GeosupportError(result['Message'])
+        return result
+
+
     def address(self, address=None, house_number=None, street=None, zip=None, boro=None):
         """
         Function 1B processes an input address. Zip code, Boro code or Boro name must be provided in addition to a house
@@ -94,6 +107,7 @@ class Geocode(object):
         :param boro: borough name or borough code. Optional
         :return: dictionary of results
         """
+        func = '1B'
         if address:
             try:
                 usaddress_parsed = usaddress.tag(address)
@@ -115,14 +129,15 @@ class Geocode(object):
             if boro:
                 if len(str(boro).strip()) > 1:
                     boro = self._borocode_from_boroname(boro)
-        func = '1B'
-        wa1 = '{}{}{}{}{}{}'.format(func,
-                                    self._rightpad(house_number, 54),
-                                    self._rightpad(boro or ' ', 11),
-                                    self._rightpad(street, 145),
-                                    'C',
-                                    zip)
-        wa1 = self._rightpad(wa1, 1200)
+
+        wa1, wa2 = format_input(dict(
+            function_code=func,
+            house_number=house_number,
+            borough=boro,
+            street_name=street,
+            zip_code=zip
+        ))
+
         wa2 = ' ' * 4300
         return self._call_geolib(wa1, wa2, func)
 
@@ -133,14 +148,15 @@ class Geocode(object):
         :param place: A Non-Addressable Placename
         :return: a dictionary of results
         """
+        func = '1B'
         if len(str(boro).strip()) > 1:
             boro = self._borocode_from_boroname(boro)
-        func = '1B'
-        wa1 = '{}{}{}{}'.format(self._rightpad(func, 56),
-                                self._rightpad(boro, 11),
-                                self._rightpad(place, 145),
-                                'C')
-        wa1 = self._rightpad(wa1, 1200)
+
+        wa1 = format_input(dict(
+            function_code=func,
+            borough=boro,
+            street_name=place
+        ))
         wa2 = ' ' * 4300
         return self._call_geolib(wa1, wa2, func)
 
@@ -153,22 +169,35 @@ class Geocode(object):
         :param tpad: tpad switch (optional)
         :return: a dictionary of results
         """
+        func = 'BL'
         if len(str(boro).strip()) > 1:
             boro = self._borocode_from_boroname(boro)
-        if tpad:
+
+        '''if tpad:
             tpad = 'Y'
         else:
             tpad = 'N'
-        func = 'BL'
+
         wa1 = '{}{}{}{}{}'.format(self._rightpad(func, 185),
                                   boro,
                                   self._rightpad(block, 5),
                                   self._rightpad(lot, 137),
                                   tpad)
         # Long Work Area 2 Flag - 315 'L'
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 1363
-        return self._call_geolib(wa1, wa2, '1A_' + func + '_BN')
+        wa1 = self._rightpad(wa1, 1200)'''
+
+        wa1, wa2 = format_input(dict(
+            func=func,
+            bbl_borough=boro,
+            bbl_block=block,
+            bbl_lot=lot,
+            tpad=tpad,
+            #long_work_area_2='L',
+            mode_switch='X'
+        ))
+        #print(wa1)
+        #wa2 = ' ' * 17750
+        return self._call_geolib(wa1, wa2, func)#'1A_' + func + '_BN')
 
     def bin(self, bin, tpad=True):
         """

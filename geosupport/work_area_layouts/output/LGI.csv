@@ -1,0 +1,22 @@
+name,size,from,to,comment,parent,alt_names,formatter
+Low House Number,16,1,16,Display format,,,
+High House Number,16,17,32,Display format,,,
+Borough Code,1,33,33,Start of B7SC,,,
+5-Digit Street Code,5,34,38,,,,
+DCP-Preferred Local Group Code (LGC),2,39,40,,,,
+Building Identification Number,7,41,47,,,,
+Side of Street Indicator,1,48,48,"L - Left, R - Right",,,
+Geographic Identifier Entry Type Code,1,49,49,"N - NAP (Simplex)
+G - Complex NAP
+X - Constituent Entity of Complex NAP
+B - NAUB
+F - Frontage 
+W - Blank Wall 
+Q - Pseudo Address 
+T - Tunnel
+U - Misc. Structure
+V - Vanity Address 
+O - Out-of-Sequence Address 
+Blank – Normal",,,
+TPAD BIN Status,1,50,50,TPAD Request,,,
+Street Name,32,51,82,,,,

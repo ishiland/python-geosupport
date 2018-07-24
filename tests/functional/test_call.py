@@ -147,6 +147,32 @@ class TestCall(TestCase):
             '1001680032'
         )
 
+    def test_ap(self):
+        result = self.geosupport.call({
+            'function': 'ap',
+            'house_number': '125',
+            'street_name': 'Worth St',
+            'borough_code': 'Mn',
+        })
+
+        self.assertDictSubsetEqual({
+            'Number of Entries in List of Geographic Identifiers': '0001',
+            'Address Point ID': '001002108'
+        }, result)
+
+    def test_ap_extended(self):
+        result = self.geosupport.call({
+            'function': 'ap',
+            'house_number': '125',
+            'street_name': 'Worth St',
+            'borough_code': 'Mn',
+            'mode_switch': 'X'
+        })
+
+        self.assertTrue(
+            'Street Name' in result['LIST OF GEOGRAPHIC IDENTIFIERS'][0]
+        )
+
     def test_1b(self):
         result = self.geosupport.call({
             'function': '1b',

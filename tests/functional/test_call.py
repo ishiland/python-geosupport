@@ -146,3 +146,18 @@ class TestCall(TestCase):
             result['BOROUGH BLOCK LOT (BBL)']['BOROUGH BLOCK LOT (BBL)'],
             '1001680032'
         )
+
+    def test_1b(self):
+        result = self.geosupport.call({
+            'function': '1b',
+            'house_number': '125',
+            'street_name': 'Worth St',
+            'borough_code': 'Mn',
+        })
+
+        self.assertDictSubsetEqual({
+            'Physical ID': '0079828',
+            'From LION Node ID': '0015487',
+            'To LION Node ID': '0015490',
+            'Blockface ID': '0212261942'
+        }, result)

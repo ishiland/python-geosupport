@@ -206,4 +206,4 @@ Warning Code,,2,1749,1750,,,
 Return Code,,2,1751,1752,,,
 Filler,,108,1753,1860,,,
 Number of Entries in List of Geographic Identifiers,,4,1861,1864,Maximum is 21,,
-LIST OF GEOGRAPHIC IDENTIFIERS:,,2436,1865,4300,"Maximum is 21 entries. 21 x 116 = 2436 Variable length list of up to 21 entries; each is 116 bytes long, structured as follows:",,LGI
+LIST OF GEOGRAPHIC IDENTIFIERS:,,2436,1865,4300,"Maximum is 21 entries. 21 x 116 = 2436 Variable length list of up to 21 entries; each is 116 bytes long, structured as follows:",,LGI-extended

@@ -91,7 +91,7 @@ class Geosupport(object):
         flags, wa1, wa2 = format_input(kwargs)
         result = self._call_geolib(flags, wa1, wa2)
         if int(result['Geosupport Return Code (GRC)']) > 1:
-            raise GeosupportError(result['Message'])
+            raise GeosupportError(result['Message'] + ' ' + result['Message 2'])
         return result
 
 

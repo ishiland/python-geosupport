@@ -1,46 +1,46 @@
-name,parent,size,from,to,comment,alt_names,formatter
-Geosupport Function Code,,2,1,2,All,"func, function, function_code",
-House Number - Display Format,,16,3,18,"1, 1A, 1B, 1E, AP",house_number,
-House Number - Sort Format,,11,19,29,"1, 1A, 1B, 1E, AP, D*",,
-Low House Number - Display Format,,16,30,45,Internal Use,,
-Low House Number - Sort Format,,11,46,56,"D*, Internal Use",,
-"B10SC-1 (includes Borough Code 1, B5SC-1 and B7SC-1):",,11,57,67,See next 2 entries,"borough, borough_1",borough
-Borough Code-1,,1,57,57,"Required for All Functions but BL, BN. Ignored if Fn 2 has Node Number input","borough_code, borough_code_1",borough
-10SC-1,,10,58,67,"All but 1N, B*","street_code, street_code_1",
-Street Name-1,,32,68,99,"All but BL, BN, D*","street_name, street, street_name_1, on",
-"B10SC-2 (includes Borough Code 2, B5SC-2 and B7SC-2):",,11,100,110,"2, 3*, D*",borough_2,borough
-Borough Code-2,,1,100,100,"2, 3*, D*",borough_code_2,borough
-10SC-2,,10,101,110,"2, 3*, D*",street_code_2,
-Street Name-2,,32,111,142,"2, 3*","street_name_2, from",
-"B10SC-3 (includes Borough Code 3, B5SC-3 and B7SC-3):",,11,143,153,"3*, D*",borough_3,borough
-Borough Code-3,,1,143,143,"3*, D*",borough_code_3,borough
-10SC-3,,10,144,153,"3*, D*",street_code_3,
-Street Name-3,,32,154,185,3*,"street_name_3, to",
-BOROUGH BLOCK LOT (BBL),,10,186,195,BL,bbl,
-Borough Code,,1,186,186,BL,bbl_borough,
-Tax Block,,5,187,191,BL,bbl_block,
-Tax Lot,,4,192,195,BL,bbl_lot,
-Filler for Tax Lot Version Number,,1,196,196,Not Implemented,,
-Building Identification Number (BIN),,7,197,203,BN,bin,
-Compass Direction,,1,204,204,"2, 3C, 3S",compass_direction,
-Compass Direction for 2ndIntersection,,1,205,205,3S,compass_direction_2,
-Node Number,,7,206,212,"2, 2W","node, node_number",
-Work Area Format Indicator,,1,213,213,All,work_area_format,
-ZIP Code Input,,5,214,218,"1*, AP","zip, zip_code",
-Unit Input,,14,219,232,1*,,
-Filler,,82,233,314,,,
-Long Work Area 2 Flag,,1,315,315,"1A, BL",long_work_area_2,long_work_area_2
-House Number Justification Flag,,1,316,316,Not Implemented,,
-House Number Normalization Length,,2,317,318,Not Implemented,,
-House Number Normalization Override Flag,,1,319,319,Internal Use,,
-Street Name Normalization Length Limit (SNL),,2,320,321,All but B*,,
-Street Name Normalization Format Flag,,1,322,322,All but B*,,
-Cross Street Names Flag a.k.a. Expanded Format Flag,,1,323,323,"1, 1A, 1B, 1E, 2, 3, 3C",,
-Roadbed Request Switch,,1,324,324,"1, 1B, 1E, 3S (Limited)",,
-Reserved for Internal Use,,1,325,325,Internal GRC Flag,,
-Auxiliary Segment Switch,,1,326,326,"3, 3C","auxseg, segaux, auxiliary_segment_switch",
-Browse Flag,,1,327,327,"1*, 2, 3, 3C, BB, BF",,
-Real Streets Only Flag,,1,328,328,3S,,
-TPAD Switch,,1,329,329,"1A, 1B, BL, BN",tpad,tpad
-Mode Switch,,1,330,330,"1, 1E, 1A, 3, 3C, AP",mode_switch,
-WTO Switch,,1,331,331,All,,
+name,size,from,to,comment,parent,alt_names,formatter
+Geosupport Function Code,2,1,2,All,,"func, function, function_code",
+House Number - Display Format,16,3,18,"1, 1A, 1B, 1E, AP",,house_number,
+House Number - Sort Format,11,19,29,"1, 1A, 1B, 1E, AP, D*",,,
+Low House Number - Display Format,16,30,45,Internal Use,,,
+Low House Number - Sort Format,11,46,56,"D*, Internal Use",,,
+"B10SC-1 (includes Borough Code 1, B5SC-1 and B7SC-1):",11,57,67,See next 2 entries,,"borough, borough_1",borough
+Borough Code-1,1,57,57,"Required for All Functions but BL, BN. Ignored if Fn 2 has Node Number input",,"borough_code, borough_code_1",borough
+10SC-1,10,58,67,"All but 1N, B*",,"street_code, street_code_1",
+Street Name-1,32,68,99,"All but BL, BN, D*",,"street_name, street, street_name_1, on",
+"B10SC-2 (includes Borough Code 2, B5SC-2 and B7SC-2):",11,100,110,"2, 3*, D*",,borough_2,borough
+Borough Code-2,1,100,100,"2, 3*, D*",,borough_code_2,borough
+10SC-2,10,101,110,"2, 3*, D*",,street_code_2,
+Street Name-2,32,111,142,"2, 3*",,"street_name_2, from",
+"B10SC-3 (includes Borough Code 3, B5SC-3 and B7SC-3):",11,143,153,"3*, D*",,borough_3,borough
+Borough Code-3,1,143,143,"3*, D*",,borough_code_3,borough
+10SC-3,10,144,153,"3*, D*",,street_code_3,
+Street Name-3,32,154,185,3*,,"street_name_3, to",
+BOROUGH BLOCK LOT (BBL),10,186,195,BL,,bbl,
+Borough Code,1,186,186,BL,,bbl_borough,
+Tax Block,5,187,191,BL,,bbl_block,
+Tax Lot,4,192,195,BL,,bbl_lot,
+Filler for Tax Lot Version Number,1,196,196,Not Implemented,,,
+Building Identification Number (BIN),7,197,203,BN,,bin,
+Compass Direction,1,204,204,"2, 3C, 3S",,compass_direction,
+Compass Direction for 2ndIntersection,1,205,205,3S,,compass_direction_2,
+Node Number,7,206,212,"2, 2W",,"node, node_number",
+Work Area Format Indicator,1,213,213,All,,work_area_format,
+ZIP Code Input,5,214,218,"1*, AP",,"zip, zip_code",
+Unit Input,14,219,232,1*,,,
+Filler,82,233,314,,,,
+Long Work Area 2 Flag,1,315,315,"1A, BL",,long_work_area_2,long_work_area_2
+House Number Justification Flag,1,316,316,Not Implemented,,,
+House Number Normalization Length,2,317,318,Not Implemented,,,
+House Number Normalization Override Flag,1,319,319,Internal Use,,,
+Street Name Normalization Length Limit (SNL),2,320,321,All but B*,,,
+Street Name Normalization Format Flag,1,322,322,All but B*,,,
+Cross Street Names Flag a.k.a. Expanded Format Flag,1,323,323,"1, 1A, 1B, 1E, 2, 3, 3C",,,
+Roadbed Request Switch,1,324,324,"1, 1B, 1E, 3S (Limited)",,,
+Reserved for Internal Use,1,325,325,Internal GRC Flag,,,
+Auxiliary Segment Switch,1,326,326,"3, 3C",,"auxseg, segaux, auxiliary_segment_switch",auxseg
+Browse Flag,1,327,327,"1*, 2, 3, 3C, BB, BF",,,
+Real Streets Only Flag,1,328,328,3S,,,
+TPAD Switch,1,329,329,"1A, 1B, BL, BN",,tpad,tpad
+Mode Switch,1,330,330,"1, 1E, 1A, 3, 3C, AP",,mode_switch,
+WTO Switch,1,331,331,All,,,

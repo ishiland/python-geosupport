@@ -316,3 +316,65 @@ class TestCall(TestCase):
         self.assertEqual(len(result['Segment IDs']), 2)
         self.assertTrue('0023578' in result['Segment IDs'])
         self.assertTrue('0032059' in result['Segment IDs'])
+
+    def test_3c(self):
+        result = self.geosupport.call({
+            'function': '3c',
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St',
+            'compass_direction': 'E'
+        })
+
+        self.assertDictSubsetEqual({
+            'From Node': '0015487',
+            'To Node': '0020353',
+            'Side-of-Street Indicator': 'R'
+        }, result)
+
+        self.assertTrue('Segment IDs' not in result)
+
+    def test_3c_auxseg(self):
+        result = self.geosupport.call({
+            'function': '3c',
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St',
+            'compass_direction': 'E',
+            'auxseg': 'Y'
+        })
+
+        self.assertDictSubsetEqual({
+            'From Node': '0015487',
+            'To Node': '0020353',
+            'Side-of-Street Indicator': 'R'
+        }, result)
+
+        self.assertEqual(len(result['Segment IDs']), 2)
+        self.assertTrue('0023578' in result['Segment IDs'])
+        self.assertTrue('0032059' in result['Segment IDs'])
+
+    def test_3c_extended_auxseg(self):
+        result = self.geosupport.call({
+            'function': '3c',
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St',
+            'compass_direction': 'E',
+            'auxseg': 'Y',
+            'mode_switch': 'X'
+        })
+
+        self.assertDictSubsetEqual({
+            'From Node': '0015487',
+            'To Node': '0020353',
+            'Side-of-Street Indicator': 'R',
+            'Blockface ID': '0212262072'
+        }, result)
+
+        self.assertEqual(len(result['Segment IDs']), 2)
+        self.assertTrue('0023578' in result['Segment IDs'])
+        self.assertTrue('0032059' in result['Segment IDs'])

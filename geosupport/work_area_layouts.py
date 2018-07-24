@@ -74,6 +74,14 @@ def list_of_workareas(name, length, v):
 
     return output
 
+def list_of_items(length, v):
+    output = []
+    i = 0
+    while v[i:i+length].strip() != '':
+        output.append(v[i:i+length].strip())
+        i += length
+    return output
+
 def borough(v):
     v = str(v).strip()
     boroughs = {'MANHATTAN': 1, 'MN': 1, 'NEW YORK': 1, 'NY': 1,
@@ -93,6 +101,9 @@ FORMATTERS = {
     'LGI-extended': partial(list_of_workareas, 'LGI-extended', 116),
     'BINs': partial(list_of_workareas, 'BINs', 7),
     'BINs-tpad': partial(list_of_workareas, 'BINs-tpad', 8),
+    'B5SCs': partial(list_of_items, 6),
+    'B7SCs': partial(list_of_items, 8),
+    'street_names': partial(list_of_items, 32),
     'borough': borough,
     '': lambda v: '' if v is None else str(v).strip().upper()
 }

@@ -187,3 +187,16 @@ class TestCall(TestCase):
             'To LION Node ID': '0015490',
             'Blockface ID': '0212261942'
         }, result)
+
+    def test_2(self):
+        result = self.geosupport.call({
+            'function': 2,
+            'borough_code': 'MN',
+            'street_name': 'Worth St',
+            'street_name_2': 'Centre St'
+        })
+
+        self.assertDictSubsetEqual({
+            'LION Node Number': '0015490',
+            'Number of Intersecting Streets': '2'
+        }, result)

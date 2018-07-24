@@ -90,8 +90,9 @@ class Geosupport(object):
     def call(self, kwargs):
         flags, wa1, wa2 = format_input(kwargs)
         result = self._call_geolib(flags, wa1, wa2)
-        if int(result['Geosupport Return Code (GRC)']) > 1:
-            raise GeosupportError(result['Message'] + ' ' + result['Message 2'])
+        return_code = result['Geosupport Return Code (GRC)']
+        if not return_code.isdigit() or int(return_code) > 1:
+            raise GeosupportError(result['Message'] + ' ' + result['Message 2'], result)
         return result
 
 

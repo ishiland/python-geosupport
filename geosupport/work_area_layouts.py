@@ -5,7 +5,9 @@ from os import path
 import pandas as pd
 
 class GeosupportError(Exception):
-    pass
+    def __init__(self, message, result):
+        super(GeosupportError, self).__init__(message)
+        self.result = result
 
 WORK_AREA_LENGTHS = {
     'WA1': 1200,
@@ -61,6 +63,7 @@ def create_wa2(flags):
 
     return ' ' * length
 
+
 def list_of_workareas(name, length, v):
     output = []
     i = 0
@@ -94,6 +97,21 @@ def borough(v):
 
     return v
 
+def node_list(v):
+    length = 160
+    output = []
+    i = 0
+    while v[i:i+length].strip() != '':
+        length2 = 32
+        output2 = []
+        j = 0
+        while v[i+j:i+j+length2].strip() != '':
+            output2.append(list_of_items(8, v[i+j:i+j+length2]))
+            j += length2
+        output.append(output2)
+        i += length
+    return output
+
 FORMATTERS = {
     'tpad': lambda v: 'Y' if v.strip() else 'N',
     'long_work_area_2': lambda v: 'L' if v.strip() else '',
@@ -101,12 +119,18 @@ FORMATTERS = {
     'LGI-extended': partial(list_of_workareas, 'LGI-extended', 116),
     'BINs': partial(list_of_workareas, 'BINs', 7),
     'BINs-tpad': partial(list_of_workareas, 'BINs-tpad', 8),
-    'B5SCs': partial(list_of_items, 6),
-    'B7SCs': partial(list_of_items, 8),
-    'street_names': partial(list_of_items, 32),
+    'node_list': node_list,
     'borough': borough,
     '': lambda v: '' if v is None else str(v).strip().upper()
 }
+
+def get_formatter(name):
+    if name in FORMATTERS:
+        return FORMATTERS[name]
+    elif name.isdigit():
+        return partial(list_of_items, int(name))
+
+    raise Exception("%s is not a valid formatter" % name)
 
 directory = path.join(
     path.abspath(path.dirname(__file__)),
@@ -135,7 +159,7 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
         WORK_AREA_LAYOUTS[directory][function + mode] = layout
 
     df = pd.read_csv(
-        csv, encoding='latin-1', dtype={'from': int, 'to': int}
+        csv, encoding='latin-1', dtype={'from': int, 'to': int, 'formatter': str}
     ).fillna('')
 
     for i,row in df.iterrows():
@@ -149,7 +173,7 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
 
         v = {
             'i': (row['from'] - 1, row['to']),
-            'formatter': FORMATTERS[row['formatter']]
+            'formatter': get_formatter(row['formatter'])
         }
 
         if parent:
@@ -206,7 +230,7 @@ def format_input(kwargs):
     flags = get_flags(layout, wa1)
 
     if flags['function'] not in WORK_AREA_LENGTHS:
-        raise GeosupportError('INVALID FUNCTION CODE')
+        raise GeosupportError('INVALID FUNCTION CODE', {})
 
     wa2 = create_wa2(flags)
 

@@ -35,5 +35,5 @@ Warning Code,,2,715,716,All (not used),,
 Geosupport Return Code (GRC),,2,717,718,All,,
 Message,,80,719,798,All,,
 Number of Street Codes and Street Names in List,,2,799,800,"1*, 2, 3*, BB, BF; (Up to 10)",,
-List of Street Codes,,80,801,880,"1*, 2, 3*, BB, BF; (10 B7SC's)",,B7SCs
-List of Street Names,,320,881,1200,"1*, 2, 3*, BB, BF; (10 Street Name Fields, 32 Bytes Each)",,street_names
+List of Street Codes,,80,801,880,"1*, 2, 3*, BB, BF; (10 B7SC's)",,8
+List of Street Names,,320,881,1200,"1*, 2, 3*, BB, BF; (10 Street Name Fields, 32 Bytes Each)",,32

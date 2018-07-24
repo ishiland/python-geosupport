@@ -200,3 +200,50 @@ class TestCall(TestCase):
             'LION Node Number': '0015490',
             'Number of Intersecting Streets': '2'
         }, result)
+
+    def test_2_more_than_2_intersections(self):
+        with self.assertRaises(GeosupportError) as cm:
+            result = self.geosupport.call({
+                'function': '2',
+                'borough_code': 'BK',
+                'street_name': 'E 19 St',
+                'street_name_2': 'Dead End'
+            })
+
+        self.assertEqual(
+            str(cm.exception),
+            'STREETS INTERSECT MORE THAN TWICE-USE FUNCTION 2W TO FIND RELATED NODES '
+        )
+
+    def test_2W_more_than_2_intersections(self):
+        with self.assertRaises(GeosupportError) as cm:
+            result = self.geosupport.call({
+                'function': '2w',
+                'borough_code': 'BK',
+                'street_name': 'grand army plaza oval',
+                'street_name_2': 'plaza street east'
+            })
+
+        self.assertEqual(
+            str(cm.exception),
+            'STREETS INTERSECT MORE THAN TWICE - USE NODE AS INPUT '
+        )
+
+        self.assertEqual(len(cm.exception.result['List of Nodes']), 4)
+        self.assertEqual(len(cm.exception.result['B7SCs For Nodes']), 4)
+
+        self.assertEqual(cm.exception.result['Node Number'], '')
+
+    def test_2W_with_node(self):
+        result = self.geosupport.call({
+            'function': '2w',
+            'node': '0104434'
+        })
+
+        self.assertTrue(
+            'GRAND ARMY PLAZA OVAL' in result['List of Street Names']
+        )
+
+        self.assertTrue(
+            'PLAZA STREET' in result['List of Street Names']
+        )

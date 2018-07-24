@@ -247,3 +247,72 @@ class TestCall(TestCase):
         self.assertTrue(
             'PLAZA STREET' in result['List of Street Names']
         )
+
+    def test_3(self):
+        result = self.geosupport.call({
+            'function': 3,
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St'
+        })
+
+        self.assertDictSubsetEqual({
+            'From Node': '0015487',
+            'To Node': '0020353'
+        }, result)
+
+        self.assertTrue('Segment IDs' not in result)
+
+    def test_3_auxseg(self):
+        result = self.geosupport.call({
+            'function': 3,
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St',
+            'auxseg': 'Y'
+        })
+
+        self.assertEqual(len(result['Segment IDs']), 2)
+        self.assertTrue('0023578' in result['Segment IDs'])
+        self.assertTrue('0032059' in result['Segment IDs'])
+
+    def test_3_extended(self):
+        result = self.geosupport.call({
+            'function': 3,
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St',
+            'mode_switch': 'X'
+        })
+
+        self.assertDictSubsetEqual({
+            'From Node': '0015487',
+            'To Node': '0020353',
+            'Left NTA Name': 'SOHO-TRIBECA-CIVIC CENTER-LITTLE ITALY'
+        }, result)
+
+        self.assertTrue('Segment IDs' not in result)
+
+    def test_3_extended_auxseg(self):
+        result = self.geosupport.call({
+            'function': 3,
+            'borough_code': 'MN',
+            'on': 'Lafayette St',
+            'from': 'Worth st',
+            'to': 'Leonard St',
+            'auxseg': 'Y',
+            'mode_switch': 'X'
+        })
+
+        self.assertDictSubsetEqual({
+            'From Node': '0015487',
+            'To Node': '0020353',
+            'Left NTA Name': 'SOHO-TRIBECA-CIVIC CENTER-LITTLE ITALY'
+        }, result)
+
+        self.assertEqual(len(result['Segment IDs']), 2)
+        self.assertTrue('0023578' in result['Segment IDs'])
+        self.assertTrue('0032059' in result['Segment IDs'])

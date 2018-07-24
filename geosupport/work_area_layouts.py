@@ -56,7 +56,7 @@ AUXILIARY_SEGMENT_LENGTH = 500
 def create_wa2(flags):
     length = WORK_AREA_LENGTHS[flags['function']][flags['mode']]
 
-    if flags.get('auxiliary_segment_switch', '') == 'Y':
+    if flags.get('auxseg', '') == 'Y':
        length += AUXILIARY_SEGMENT_LENGTH
 
     print('********', flags['function'], length)
@@ -114,6 +114,7 @@ def node_list(v):
 
 FORMATTERS = {
     'tpad': lambda v: 'Y' if v.strip() else 'N',
+    'auxseg': lambda v: 'Y' if v.strip() else 'N',
     'long_work_area_2': lambda v: 'L' if v.strip() else '',
     'LGI': partial(list_of_workareas, 'LGI', 53),
     'LGI-extended': partial(list_of_workareas, 'LGI-extended', 116),
@@ -191,8 +192,8 @@ def get_flags(layout, wa1):
         'mode_switch': parse_field(layout['mode_switch'], wa1),
         'long_work_area_2': parse_field(layout['long_work_area_2'], wa1),
         'tpad': parse_field(layout['tpad'], wa1),
-        'auxiliary_segment_switch': parse_field(
-            layout['auxiliary_segment_switch'], wa1
+        'auxseg': parse_field(
+            layout['auxseg'], wa1
         )
     }
 
@@ -269,6 +270,11 @@ def parse_output(flags, wa1, wa2):
     if function_mode in WORK_AREA_LAYOUTS['output']:
         output.update(parse_workarea(
             WORK_AREA_LAYOUTS['output'][function_mode], wa2
+        ))
+
+    if flags['auxseg'] == 'Y':
+        output.update(parse_workarea(
+            WORK_AREA_LAYOUTS['output']['AUXSEG'], wa2[-500:]
         ))
 
     return output

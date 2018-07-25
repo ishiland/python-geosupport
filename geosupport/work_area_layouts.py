@@ -44,7 +44,10 @@ WORK_AREA_LENGTHS = {
     },
     '3S': {
         'regular': 19274
-    }
+    },
+    'D': None,
+    'DG': None,
+    'DN': None
 }
 
 for key in list(WORK_AREA_LENGTHS.keys()):
@@ -54,12 +57,13 @@ for key in list(WORK_AREA_LENGTHS.keys()):
 AUXILIARY_SEGMENT_LENGTH = 500
 
 def create_wa2(flags):
+    if WORK_AREA_LENGTHS[flags['function']] is None:
+        return None
+
     length = WORK_AREA_LENGTHS[flags['function']][flags['mode']]
 
     if flags.get('auxseg', '') == 'Y':
        length += AUXILIARY_SEGMENT_LENGTH
-
-    print('********', flags['function'], length)
 
     return ' ' * length
 
@@ -184,6 +188,8 @@ for csv in glob.glob(path.join(directory, '*', '*.csv')):
             layout[name] = v
             for n in alt_names:
                 layout[n] = v
+                layout[n.upper()] = v
+                layout[n.lower()] = v
 
 #print(WORK_)
 
@@ -206,8 +212,6 @@ def get_flags(layout, wa1):
         flags['mode'] = 'long'
     else:
         flags['mode'] = 'regular'
-
-    print(flags)
 
     return flags
 
@@ -262,12 +266,13 @@ def parse_output(flags, wa1, wa2):
 
     output.update(parse_workarea(WORK_AREA_LAYOUTS['output']['WA1'], wa1))
 
-    output.update(parse_workarea(
-        WORK_AREA_LAYOUTS['output'][flags['function']], wa2
-    ))
+    function = flags['function']
+    if function in WORK_AREA_LAYOUTS['output']:
+        output.update(parse_workarea(
+            WORK_AREA_LAYOUTS['output'][function], wa2
+        ))
 
-    function_mode = flags['function'] + '-' + flags['mode']
-
+    function_mode = function + '-' + flags['mode']
     if function_mode in WORK_AREA_LAYOUTS['output']:
         output.update(parse_workarea(
             WORK_AREA_LAYOUTS['output'][function_mode], wa2

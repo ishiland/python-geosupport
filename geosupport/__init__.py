@@ -57,8 +57,8 @@ class Geosupport(object):
             wa1 = str(wa1, 'utf8')
             wa2 = str(wa2, 'utf8')
 
-        print(wa1)
-        print(wa2)
+        #print(wa1)
+        #print(wa2)
 
         #return self._merge_wa(parse_WA1(wa1), globals()["parse_" + func](wa2))
         return parse_output(flags, wa1, wa2)

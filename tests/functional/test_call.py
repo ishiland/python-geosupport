@@ -393,3 +393,27 @@ class TestCall(TestCase):
             len(result['LIST OF INTERSECTIONS']),
             int(result['Number of Intersections'])
         )
+
+    def test_D(self):
+        result = self.geosupport.call({
+            'function': 'D',
+            'B7SC': '145490'
+        })
+
+        self.assertEqual(result['First Street Name Normalized'], 'WORTH STREET')
+
+    def test_DG(self):
+        result = self.geosupport.call({
+            'function': 'DG',
+            'b7sc': '14549001'
+        })
+
+        self.assertEqual(result['First Street Name Normalized'], 'WORTH STREET')
+
+    def test_DN(self):
+        result = self.geosupport.call({
+            'function': 'DN',
+            'B7SC': '14549001010'
+        })
+
+        self.assertEqual(result['First Street Name Normalized'], 'WORTH STREET')

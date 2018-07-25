@@ -1,7 +1,5 @@
 from functools import partial
 import sys
-import usaddress
-from usaddress import RepeatedLabelError, OrderedDict
 from .work_area_layouts import format_input, parse_output, GeosupportError
 
 FUNCTION_ALT_NAMES = {
@@ -93,29 +91,6 @@ class Geosupport(object):
 
         return parse_output(flags, wa1, wa2)
 
-    @staticmethod
-    def _parse_sfs(ad):
-        """
-        Parses a single address input using the usaddress library. A work in progress.
-        :param ad: usaddress parsed address
-        :return: results
-        """
-        try:
-            if ad[0]:
-                house_number = ad[0].get('AddressNumber', None)
-                street_name = ad[0].get('StreetName', None)
-                if 'StreetNamePreDirectional' in ad[0]:
-                    street_name = ad[0]['StreetNamePreDirectional'] + ' ' + street_name
-                if 'StreetNamePreType' in ad[0]:
-                    street_name = ad[0]['StreetNamePreType'] + ' ' + street_name
-                if 'StreetNamePostType' in ad[0]:
-                    street_name = street_name + ' ' + ad[0]['StreetNamePostType']
-                zip_code = ad[0].get('ZipCode', None)
-                city = ad[0].get('PlaceName', None)
-                return {'houseNumber': house_number, 'streetName': street_name, 'zipCode': zip_code, 'city': city}
-        except AttributeError as e:
-            print(e)
-
     def __getattr__(self, name):
         if name in FUNCTIONS:
             return partial(self.call, function=FUNCTIONS[name])
@@ -133,5 +108,8 @@ class Geosupport(object):
         result = self._call_geolib(flags, wa1, wa2)
         return_code = result['Geosupport Return Code (GRC)']
         if not return_code.isdigit() or int(return_code) > 1:
-            raise GeosupportError(result['Message'] + ' ' + result['Message 2'], result)
+            raise GeosupportError(
+                result['Message'] + ' ' + result['Message 2'],
+                result
+            )
         return result

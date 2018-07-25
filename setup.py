@@ -46,5 +46,5 @@ Ex:
         'Programming Language :: Python :: 3.6',
     ],
     test_suite="tests",
-    install_requires=['usaddress']
+    install_requires=[]
 )

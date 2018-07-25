@@ -47,9 +47,11 @@ WORK_AREA_LENGTHS = {
     },
     'N*': None,
     '1N': None,
+    'BB': None,
+    'BF': None,
     'D': None,
     'DG': None,
-    'DN': None,
+    'DN': None
 }
 
 for key in list(WORK_AREA_LENGTHS.keys()):

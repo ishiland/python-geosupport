@@ -434,3 +434,21 @@ class TestCall(TestCase):
         })
 
         self.assertEqual(result['First Street Name Normalized'], 'FAKE CIRCLE')
+
+    def test_BF(self):
+        result = self.geosupport.call({
+            'func': 'BF',
+            'borough_code': 'MN',
+            'street': 'WORTH'
+        })
+
+        self.assertTrue('WORTH STREET' in result['List of Street Names'])
+
+    def test_BB(self):
+        result = self.geosupport.call({
+            'func': 'BB',
+            'borough_code': 'MN',
+            'street': 'WORTH'
+        })
+
+        self.assertTrue('WORLDWIDE PLAZA' in result['List of Street Names'])

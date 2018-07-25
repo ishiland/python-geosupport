@@ -417,3 +417,20 @@ class TestCall(TestCase):
         })
 
         self.assertEqual(result['First Street Name Normalized'], 'WORTH STREET')
+
+    def test_1N(self):
+        result = self.geosupport.call({
+            'function': '1N',
+            'borough_code': 'MN',
+            'street': 'Worth str'
+        })
+
+        self.assertEqual(result['First Street Name Normalized'], 'WORTH STREET')
+
+    def test_Nstar(self):
+        result = self.geosupport.call({
+            'function': 'N*',
+            'street': 'fake cir'
+        })
+
+        self.assertEqual(result['First Street Name Normalized'], 'FAKE CIRCLE')

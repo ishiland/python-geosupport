@@ -45,9 +45,11 @@ WORK_AREA_LENGTHS = {
     '3S': {
         'regular': 19274
     },
+    'N*': None,
+    '1N': None,
     'D': None,
     'DG': None,
-    'DN': None
+    'DN': None,
 }
 
 for key in list(WORK_AREA_LENGTHS.keys()):
@@ -120,6 +122,8 @@ FORMATTERS = {
     'tpad': lambda v: 'Y' if v.strip() else 'N',
     'auxseg': lambda v: 'Y' if v.strip() else 'N',
     'long_work_area_2': lambda v: 'L' if v.strip() else '',
+    'roadbed_request_switch': lambda v: 'R' if v.strip() else '',
+    'real_streets_only': lambda v: 'R' if v.strip() else '',
     'LGI': partial(list_of_workareas, 'LGI', 53),
     'LGI-extended': partial(list_of_workareas, 'LGI-extended', 116),
     'BINs': partial(list_of_workareas, 'BINs', 7),

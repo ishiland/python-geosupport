@@ -22,8 +22,8 @@ Tax Block,5,187,191,BL,,bbl_block,
 Tax Lot,4,192,195,BL,,bbl_lot,
 Filler for Tax Lot Version Number,1,196,196,Not Implemented,,,
 Building Identification Number (BIN),7,197,203,BN,,bin,
-Compass Direction,1,204,204,"2, 3C, 3S",,compass_direction,
-Compass Direction for 2ndIntersection,1,205,205,3S,,compass_direction_2,
+Compass Direction,1,204,204,"2, 3C, 3S",,"compass_direction_1, compass_direction",
+Compass Direction for 2nd Intersection,1,205,205,3S,,compass_direction_2,
 Node Number,7,206,212,"2, 2W",,"node, node_number",
 Work Area Format Indicator,1,213,213,All,,work_area_format,
 ZIP Code Input,5,214,218,"1*, AP",,"zip, zip_code",
@@ -33,14 +33,14 @@ Long Work Area 2 Flag,1,315,315,"1A, BL",,long_work_area_2,long_work_area_2
 House Number Justification Flag,1,316,316,Not Implemented,,,
 House Number Normalization Length,2,317,318,Not Implemented,,,
 House Number Normalization Override Flag,1,319,319,Internal Use,,,
-Street Name Normalization Length Limit (SNL),2,320,321,All but B*,,,
+Street Name Normalization Length Limit (SNL),2,320,321,All but B*,,snl,
 Street Name Normalization Format Flag,1,322,322,All but B*,,,
 Cross Street Names Flag a.k.a. Expanded Format Flag,1,323,323,"1, 1A, 1B, 1E, 2, 3, 3C",,,
-Roadbed Request Switch,1,324,324,"1, 1B, 1E, 3S (Limited)",,,
+Roadbed Request Switch,1,324,324,"1, 1B, 1E, 3S (Limited)",,roadbed_request_switch,roadbed_request_switch
 Reserved for Internal Use,1,325,325,Internal GRC Flag,,,
 Auxiliary Segment Switch,1,326,326,"3, 3C",,"auxseg, segaux, auxiliary_segment_switch",auxseg
 Browse Flag,1,327,327,"1*, 2, 3, 3C, BB, BF",,,
-Real Streets Only Flag,1,328,328,3S,,real_streets_only,
+Real Streets Only Flag,1,328,328,3S,,real_streets_only,real_streets_only
 TPAD Switch,1,329,329,"1A, 1B, BL, BN",,tpad,tpad
 Mode Switch,1,330,330,"1, 1E, 1A, 3, 3C, AP",,mode_switch,
 WTO Switch,1,331,331,All,,,

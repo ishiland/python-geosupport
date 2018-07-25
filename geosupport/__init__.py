@@ -1,8 +1,39 @@
+from functools import partial
 import sys
 import usaddress
 from usaddress import RepeatedLabelError, OrderedDict
-from .parsers import *
 from .work_area_layouts import format_input, parse_output, GeosupportError
+
+FUNCTION_ALT_NAMES = {
+    '1': [],
+    '1a': [],
+    '1b': ['address'],
+    '1e': [],
+    '1n': ['street_name_to_street_code', 'get_street_code'],
+    '2': ['intersection'],
+    '2w': ['intersections', 'intersection_wide'],
+    '3': ['street_segment'],
+    '3c': ['blockface'],
+    '3s': ['street_stretch'],
+    'ap': ['address_point'],
+    'bb': ['browse_back'],
+    'bf': ['browse_forward'],
+    'bl': ['bbl', 'tax_lot', 'lot'],
+    'bn': ['bin', 'building'],
+    'd': ['get_street_name'],
+    'dg': [],
+    'dn': [],
+    'n*': ['normalize_street_name']
+}
+
+FUNCTIONS = {}
+
+for function, alt_names in FUNCTION_ALT_NAMES.items():
+    FUNCTIONS[function] = function
+    FUNCTIONS[function.upper()] = function
+    for name in alt_names:
+        FUNCTIONS[name] = function
+        FUNCTIONS[name.upper()] = function
 
 class Geosupport(object):
     def __init__(self):
@@ -60,7 +91,6 @@ class Geosupport(object):
         #print(wa1)
         #print(wa2)
 
-        #return self._merge_wa(parse_WA1(wa1), globals()["parse_" + func](wa2))
         return parse_output(flags, wa1, wa2)
 
     @staticmethod
@@ -86,377 +116,22 @@ class Geosupport(object):
         except AttributeError as e:
             print(e)
 
+    def __getattr__(self, name):
+        if name in FUNCTIONS:
+            return partial(self.call, function=FUNCTIONS[name])
 
-    def call(self, kwargs):
-        flags, wa1, wa2 = format_input(kwargs)
+        raise AttributeError("'%s' object has no attribute '%s'" %(
+            self.__class__.__name__, name
+        ))
+
+    def __getitem__(self, name):
+        return self.__getattr__(name)
+
+    def call(self, kwargs_dict={}, **kwargs):
+        kwargs_dict.update(kwargs)
+        flags, wa1, wa2 = format_input(kwargs_dict)
         result = self._call_geolib(flags, wa1, wa2)
         return_code = result['Geosupport Return Code (GRC)']
         if not return_code.isdigit() or int(return_code) > 1:
             raise GeosupportError(result['Message'] + ' ' + result['Message 2'], result)
         return result
-
-
-    def address(self, address=None, house_number=None, street=None, zip=None, boro=None):
-        """
-        Function 1B processes an input address. Zip code, Boro code or Boro name must be provided in addition to a house
-        number and street name.
-
-        :param address: Input adddress to be parsed. Should include a house number and street name.
-        :param house_number: Required if no address.
-        :param street: Required if no address.
-        :param zip: 5 digit postal code. Optional
-        :param boro: borough name or borough code. Optional
-        :return: dictionary of results
-        """
-        func = '1B'
-        if address:
-            try:
-                usaddress_parsed = usaddress.tag(address)
-            except RepeatedLabelError as r:
-                usaddress_parsed = (OrderedDict([(t[1], t[0]) for t in r.parsed_string]), 'Street Address')
-            parsed = self._parse_sfs(usaddress_parsed)
-            if parsed:
-                house_number = parsed.get('houseNumber', None)
-                street = parsed.get('streetName', None)
-                if boro:
-                    if len(str(boro).strip()) > 1:
-                        boro = self._borocode_from_boroname(boro)
-                elif all(v is None for v in [zip, boro]):
-                    zip = parsed.get('zipCode', None)
-                    city = parsed.get('city', None)
-                    if city:
-                        boro = self._borocode_from_boroname(city)
-        elif house_number and street:
-            if boro:
-                if len(str(boro).strip()) > 1:
-                    boro = self._borocode_from_boroname(boro)
-
-        wa1, wa2 = format_input(dict(
-            function_code=func,
-            house_number=house_number,
-            borough=boro,
-            street_name=street,
-            zip_code=zip
-        ))
-
-        wa2 = ' ' * 4300
-        return self._call_geolib(wa1, wa2, func)
-
-    def place(self, place, boro):
-        """
-        Function 1B also processes a Non-Addressable Place name (NAP).
-        :param boro: borough code or borough name
-        :param place: A Non-Addressable Placename
-        :return: a dictionary of results
-        """
-        func = '1B'
-        if len(str(boro).strip()) > 1:
-            boro = self._borocode_from_boroname(boro)
-
-        wa1 = format_input(dict(
-            function_code=func,
-            borough=boro,
-            street_name=place
-        ))
-        wa2 = ' ' * 4300
-        return self._call_geolib(wa1, wa2, func)
-
-    def bbl(self, boro, block, lot, tpad=True):
-        """
-        Function BL processes an input Borough, Block and Lot.
-        :param boro: borough code or borough name
-        :param block: tax block
-        :param lot: tax lot
-        :param tpad: tpad switch (optional)
-        :return: a dictionary of results
-        """
-        func = 'BL'
-        if len(str(boro).strip()) > 1:
-            boro = self._borocode_from_boroname(boro)
-
-        '''if tpad:
-            tpad = 'Y'
-        else:
-            tpad = 'N'
-
-        wa1 = '{}{}{}{}{}'.format(self._rightpad(func, 185),
-                                  boro,
-                                  self._rightpad(block, 5),
-                                  self._rightpad(lot, 137),
-                                  tpad)
-        # Long Work Area 2 Flag - 315 'L'
-        wa1 = self._rightpad(wa1, 1200)'''
-
-        wa1, wa2 = format_input(dict(
-            func=func,
-            bbl_borough=boro,
-            bbl_block=block,
-            bbl_lot=lot,
-            tpad=tpad,
-            #long_work_area_2='L',
-            mode_switch='X'
-        ))
-        #print(wa1)
-        #wa2 = ' ' * 17750
-        return self._call_geolib(wa1, wa2, func)#'1A_' + func + '_BN')
-
-    def bin(self, bin, tpad=True):
-        """
-        Function BN processes an input Building Identification Number (BIN).
-        :param bin: input BIN (required)
-        :param tpad: TPAD Flag (optional)
-        :return: results
-        """
-        if tpad:
-            tpad = 'Y'
-        else:
-            tpad = 'N'
-        func = 'BN'
-        wa1 = '{}{}{}'.format(self._rightpad(func, 196),
-                              self._rightpad(bin, 126),
-                              tpad)
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 1363
-        return self._call_geolib(wa1, wa2, '1A_BL_' + func)
-
-    def intersection(self, street_1, street_2, boro, boro_2=None, compass_direction=None, node_number=None):
-        """
-        Function 2W processes input cross streets.
-        :param street_1: Intersection Street 1
-        :param street_2: Intersection Street 2
-        :param boro: borough code or borough name
-        :param boro_2: borough code or borough name of street_2 (optional)
-        :param compass_direction: Used to request information about only one side of the
-            street. Valid values are: N, S, E or W (optional)
-        :param node_number: (optional)
-        :param snl: Street Name Normalization Length Limit (optional)
-        :return: Dict of results
-        """
-        if len(str(boro).strip()) > 1:
-            boro = self._borocode_from_boroname(boro)
-        func = '2W'
-        wa1 = '{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),
-                                        self._rightpad(boro or ' ', 11),
-                                        self._rightpad(street_1, 32),
-                                        self._rightpad(boro_2 or ' ', 11),
-                                        self._rightpad(street_2, 93),
-                                        self._rightpad(compass_direction or ' ', 2),
-                                        self._rightpad(node_number or ' ', 7),
-                                        self._rightpad('C', 107)
-                                        )
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 4000
-        return self._call_geolib(wa1, wa2, func)
-
-    def street_segment(self, on_street, cross_street_1, cross_street_2, boro, cross_street_1_boro=None,
-                       cross_street_2_boro=None, compass_direction=None):
-        """
-        Function 3 processes Street Segment Defined by 'ON' Street and Two Cross Streets
-
-        :param on_street: street name of target street segment
-        :param cross_street_1: First cross street of street segment
-        :param cross_street_2: Second cross street of street segment
-        :param boro: borough code or borough name
-        :param cross_street_1_boro: Borough of first cross street (optional)
-        :param cross_street_2_boro: Borough of second cross street (optional)
-        :param compass_direction: Used to request information about only one side of the
-            street. Valid values are: N, S, E or W (optional)
-        :return: Dictionary of results
-        """
-        if len(str(boro).strip()) > 1:
-            boro = self._borocode_from_boroname(boro)
-
-        if cross_street_1_boro and len(str(cross_street_1_boro).strip()) > 1:
-            cross_street_1_boro = self._borocode_from_boroname(cross_street_1_boro)
-
-        if cross_street_2_boro and len(str(cross_street_2_boro).strip()) > 1:
-            cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
-        func = '3'
-        wa1 = '{}{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),  # 1-2
-                                            self._rightpad(boro or ' ', 11),  # 57
-                                            self._rightpad(on_street, 32),  # 68-99
-                                            self._rightpad(cross_street_1_boro or ' ', 11),  # 100
-                                            self._rightpad(cross_street_1, 32),  # 111-142
-                                            self._rightpad(cross_street_2_boro or ' ', 11),  # 143
-                                            self._rightpad(cross_street_2, 50),  # 154-185
-                                            self._rightpad(compass_direction or ' ', 9),  # 204
-                                            self._rightpad('C', 117),  # 213 (Work Area Format Indicator)
-                                            'X')  # extended mode
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 1000
-        return self._call_geolib(wa1, wa2, func)
-
-    def blockface(self, on_street, cross_street_1, cross_street_2, boro, compass_direction, cross_street_1_boro=None,
-                  cross_street_2_boro=None):
-        """
-        Function 3C processes Blockface Defined by 'ON' Street, Two Cross Streets and Compass Direction
-
-        :param on_street: street name of target blockface
-        :param cross_street_1: First cross street of blockface
-        :param cross_street_2: Second cross street of blockface
-        :param boro: borough code or borough name
-        :param cross_street_1_boro: Borough of first cross street (optional)
-        :param cross_street_2_boro: Borough of second cross street (optional)
-        :param compass_direction: Used to request information about only one side of the
-            street. Valid values are: N, S, E or W (optional)
-        :return: Dictionary of results
-        """
-        if len(str(boro).strip()) > 1:
-            boro = self._borocode_from_boroname(boro)
-
-        if cross_street_1_boro and len(str(cross_street_1_boro).strip()) > 1:
-            cross_street_1_boro = self._borocode_from_boroname(cross_street_1_boro)
-
-        if cross_street_2_boro and len(str(cross_street_2_boro).strip()) > 1:
-            cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
-
-        func = '3C'
-        wa1 = '{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),
-                                          self._rightpad(boro or ' ', 11),
-                                          self._rightpad(on_street, 32),
-                                          self._rightpad(cross_street_1_boro or ' ', 11),
-                                          self._rightpad(cross_street_1, 32),
-                                          self._rightpad(cross_street_2_boro or ' ', 11),
-                                          self._rightpad(cross_street_2, 50),
-                                          self._rightpad(compass_direction or ' ', 9),
-                                          self._rightpad('C', 117),  # 213 (Work Area Format Indicator)
-                                          'X')  # extended mode
-                                            # Cross Street Names Flag 323
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 850
-        return self._call_geolib(wa1, wa2, func)
-
-    def street_stretch(self, on_street, cross_street_1, cross_street_2, boro, compass_direction, compass_direction_2,
-                       cross_street_1_boro=None, cross_street_2_boro=None):
-        """
-        Function 3S processes Street Stretch Defined by 'ON' Street and Optionally Two Cross Streets
-
-        :param on_street: street name of target street stretch
-        :param cross_street_1: First cross street of street stretch
-        :param cross_street_2: Second cross street of street stretch
-        :param boro: borough code or borough name
-        :param cross_street_1_boro: Borough of first cross street (optional)
-        :param cross_street_2_boro: Borough of second cross street (optional)
-        :param compass_direction: Used to request information about only one side of the
-            street. Valid values are: N, S, E or W (optional)
-        :return: Dictionary of results
-        """
-        if len(str(boro).strip()) > 1:
-            boro = self._borocode_from_boroname(boro)
-
-        if cross_street_1_boro and len(str(cross_street_1_boro).strip()) > 1:
-            cross_street_1_boro = self._borocode_from_boroname(cross_street_1_boro)
-
-        if cross_street_2_boro and len(str(cross_street_2_boro).strip()) > 1:
-            cross_street_2_boro = self._borocode_from_boroname(cross_street_2_boro)
-
-        func = '3S'
-        wa1 = '{}{}{}{}{}{}{}{}{}'.format(self._rightpad(func, 56),
-                                          self._rightpad(boro or ' ', 11),
-                                          self._rightpad(on_street, 32),
-                                          self._rightpad(cross_street_1_boro or ' ', 11),
-                                          self._rightpad(cross_street_1, 32),
-                                          self._rightpad(cross_street_2_boro or ' ', 11),
-                                          self._rightpad(cross_street_2, 50),
-                                          compass_direction or ' ',
-                                          self._rightpad(compass_direction_2 or ' ', 8),
-                                          self._rightpad('C', 117),
-                                          )
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 19274
-        return self._call_geolib(wa1, wa2, func)
-
-    def address_point(self, address=None, house_number=None, street=None, zip=None, boro=None):
-        """
-        Function AP processes an input address point. Must be a valid actual address.
-        Zip code, Boro code or Boro name must be provided in addition to a house number and street name.
-        :param address: Input adddress to be parsed. Should include a house number and street name.
-        :param house_number: Required if no address.
-        :param street: Required if no address.
-        :param zip: 5 digit postal code. Optional
-        :param boro: borough name or borough code. Optional
-        :return: dictionary of results
-        """
-        if address:
-            try:
-                usaddress_parsed = usaddress.tag(address)
-            except RepeatedLabelError as r:
-                usaddress_parsed = (OrderedDict([(t[1], t[0]) for t in r.parsed_string]), 'Street Address')
-            parsed = self._parse_sfs(usaddress_parsed)
-            if parsed:
-                house_number = parsed.get('houseNumber', None)
-                street = parsed.get('streetName', None)
-                if boro:
-                    if len(str(boro).strip()) > 1:
-                        boro = self._borocode_from_boroname(boro)
-                elif all(v is None for v in [zip, boro]):
-                    zip = parsed.get('zipCode', None)
-                    city = parsed.get('city', None)
-                    if city:
-                        boro = self._borocode_from_boroname(city)
-        elif house_number and street:
-            if boro:
-                if len(str(boro).strip()) > 1:
-                    boro = self._borocode_from_boroname(boro)
-        func = 'AP'
-        wa1 = '{}{}{}{}{}{}{}'.format(func,
-                                      self._rightpad(house_number, 54),
-                                      self._rightpad(boro or ' ', 11),
-                                      self._rightpad(street, 145),
-                                      'C',
-                                      self._rightpad(zip, 116),
-                                      'X')
-        wa1 = self._rightpad(wa1, 1200)
-        wa2 = ' ' * 2800
-        return self._call_geolib(wa1, wa2, func)
-
-    @staticmethod
-    def _borocode_from_boroname(name):
-        """
-        a dictionary to lookup boro codes.
-        :param name: Borough name
-        :return: Borough code
-        """
-        name = name.strip()
-        boroughs = {'MANHATTAN': 1, 'MN': 1, 'NEW YORK': 1, 'NY': 1,
-                    'BRONX': 2, 'THE BRONX': 2, 'BX': 2,
-                    'BROOKLYN': 3, 'BK': 3, 'BKLYN': 3, 'KINGS': 3,
-                    'QUEENS': 4, 'QN': 4, 'QU': 4,
-                    'STATEN ISLAND': 5, 'SI': 5, 'STATEN IS': 5, 'RICHMOND': 5}
-        if name.upper() in boroughs:
-            boro_code = boroughs[name.upper()]
-        else:
-            boro_code = None
-        return boro_code
-
-    @staticmethod
-    def _rightpad(field, length):
-        """
-        Creates a string of specified length by adding whitespace to the right
-        """
-        field = str(field) + (' ' * (length - len(str(field))))
-        return field.upper()
-
-    def _merge_wa(self, wa1, wa2):
-        """
-         Merge wa1, wa2 results
-        :param wa1: Work Area 1 results
-        :param wa2: Work Area 2 results
-        :return: merged work area 1 & 2 results
-        """
-        wa = wa1.copy()
-        wa.update(wa2)
-        return {key: self.strip_dict(value)
-        if isinstance(value, dict)
-        else value.strip() for key, value in wa.items()}
-
-    def strip_dict(self, d):
-        """
-        Strips white space from geosupport results
-        :param d: dictionary
-        :return: dictionary w/ white space striped
-        """
-        return {key: self.strip_dict(value)
-        if isinstance(value, dict)
-        else value.strip()
-                for key, value in d.items()}

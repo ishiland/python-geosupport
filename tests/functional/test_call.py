@@ -317,7 +317,7 @@ class TestCall(TestCase):
         self.assertTrue('0023578' in result['Segment IDs'])
         self.assertTrue('0032059' in result['Segment IDs'])
 
-    def test_3c(self):
+    def test_3C(self):
         result = self.geosupport.call({
             'function': '3c',
             'borough_code': 'MN',
@@ -335,7 +335,7 @@ class TestCall(TestCase):
 
         self.assertTrue('Segment IDs' not in result)
 
-    def test_3c_auxseg(self):
+    def test_3C_auxseg(self):
         result = self.geosupport.call({
             'function': '3c',
             'borough_code': 'MN',
@@ -356,7 +356,7 @@ class TestCall(TestCase):
         self.assertTrue('0023578' in result['Segment IDs'])
         self.assertTrue('0032059' in result['Segment IDs'])
 
-    def test_3c_extended_auxseg(self):
+    def test_3C_extended_auxseg(self):
         result = self.geosupport.call({
             'function': '3c',
             'borough_code': 'MN',
@@ -378,3 +378,18 @@ class TestCall(TestCase):
         self.assertEqual(len(result['Segment IDs']), 2)
         self.assertTrue('0023578' in result['Segment IDs'])
         self.assertTrue('0032059' in result['Segment IDs'])
+
+    def test_3S(self):
+        result = self.geosupport.call({
+            'function': '3S',
+            'borough_code': 'MN',
+            'on': 'Broadway',
+            'from': 'worth st',
+            'to':  'Liberty st',
+        })
+
+        self.assertEqual(result['Number of Intersections'], '017')
+        self.assertEqual(
+            len(result['LIST OF INTERSECTIONS']),
+            int(result['Number of Intersections'])
+        )

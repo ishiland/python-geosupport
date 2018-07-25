@@ -120,6 +120,7 @@ FORMATTERS = {
     'LGI-extended': partial(list_of_workareas, 'LGI-extended', 116),
     'BINs': partial(list_of_workareas, 'BINs', 7),
     'BINs-tpad': partial(list_of_workareas, 'BINs-tpad', 8),
+    'intersections': partial(list_of_workareas, 'INTERSECTION', 55),
     'node_list': node_list,
     'borough': borough,
     '': lambda v: '' if v is None else str(v).strip().upper()

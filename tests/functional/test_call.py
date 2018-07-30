@@ -1,14 +1,9 @@
-#import unittest
-
-from geosupport import Geosupport, GeosupportError
+from geosupport import Geosupport
+from geosupport.error import GeosupportError
 
 from ..testcase import TestCase
 
 class TestCall(TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.geosupport = Geosupport()
 
     def test_invalid_function(self):
         with self.assertRaises(GeosupportError):
@@ -99,7 +94,7 @@ class TestCall(TestCase):
             'house_number': '125',
             'street_name': 'Worth St',
             'borough_code': 'Mn',
-            'long_work_area_2': 'Y',
+            'long_work_area_2': 'L',
         })
 
         self.assertEqual(
@@ -116,7 +111,7 @@ class TestCall(TestCase):
             'house_number': '125',
             'street_name': 'Worth St',
             'borough_code': 'Mn',
-            'long_work_area_2': 'Y',
+            'long_work_area_2': 'L',
             'tpad': 'Y'
         })
 
@@ -128,7 +123,7 @@ class TestCall(TestCase):
         result = self.geosupport.call({
             'function': 'bl',
             'bbl': '1001680032',
-            'long_work_area_2': 'Y'
+            'long_work_area_2': 'L'
         })
 
         self.assertEqual(

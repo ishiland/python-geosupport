@@ -40,10 +40,6 @@ class Geosupport(object):
     def _call_geolib(self, wa1, wa2):
         """
         Calls the Geosupport libs & encodes/deocodes strings for Python 3.
-        :param wa1: Work Area 1
-        :param wa2: Work Area 2
-        :param func: Function that determines the dictionary to return.
-        :return: Dictionary of results
         """
 
         # encode

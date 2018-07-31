@@ -4,9 +4,6 @@ from os import path
 
 from geosupport.config import FUNCTION_INFO_CSV, FUNCTION_INPUTS_CSV, WORK_AREA_LAYOUTS_PATH
 
-MODES = ['regular', 'extended', 'long', 'long+tpad']
-AUXILIARY_SEGMENT_LENGTH = 500
-
 class FunctionDict(dict):
 
     def __init__(self):
@@ -123,9 +120,6 @@ def function_help(function):
     return s
 
 def input_help():
-    #for i in INPUT:
-    #    s.append()
-
     s = [
         "\nThe following is a full list of inputs for Geosupport. "
         "It has the full name (followed by alternate names.)",
@@ -135,9 +129,6 @@ def input_help():
         "\nInputs",
         "="*40,
     ]
-    ''' + [
-        "%s (%s)" % (i['name'], ', '.join(i['alt_names'])) for i in INPUT
-    ]'''
 
     for i in INPUT:
         s.append("%s (%s)" % (i['name'], ', '.join(i['alt_names'])))
@@ -146,8 +137,6 @@ def input_help():
         s.append("Expected Values: %s\n" % i['value'])
 
     return '\n'.join(s)
-
-FUNCTIONS = load_function_info()
 
 def load_work_area_layouts():
     WORK_AREA_LAYOUTS = {}
@@ -211,4 +200,7 @@ def load_work_area_layouts():
 
     return WORK_AREA_LAYOUTS, INPUT
 
+MODES = ['regular', 'extended', 'long', 'long+tpad']
+AUXILIARY_SEGMENT_LENGTH = 500
+FUNCTIONS = load_function_info()
 WORK_AREA_LAYOUTS, INPUT = load_work_area_layouts()

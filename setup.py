@@ -29,7 +29,9 @@ Ex:
     """,
     author='Ian Shiland',
     author_email='ishiland@gmail.com',
-    packages=['geosupport', 'geosupport/function_info'],
+    packages=['geosupport'],
+    #package_data={'python-geosupport': ['geosupport/function_info/**']},
+    include_package_data=True,
     license='MIT',
     keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
     classifiers=[

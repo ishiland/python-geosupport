@@ -5,6 +5,7 @@
 /.idea/
 /__pycache__/
 /dist/
+/build/
 MANIFEST
 cover
 .coverage

@@ -85,6 +85,7 @@ def function_help(function):
     function = FUNCTIONS[function]
 
     s = [
+        "",
         "%s (%s)" % (function['function'], ', '.join(function['alt_names'])),
         "="*40,
         function['description'],
@@ -94,13 +95,21 @@ def function_help(function):
         "Modes: %s" % ', '.join([
             m for m in MODES if function[m] is not None
         ]),
-        "",
-        "Inputs",
+        "\nInputs",
         "="*40,
+        "\n".join([
+            "%s - %s" % (i['name'], i['comment']) for i in function['inputs']
+        ]),
+        "\nReference",
+        "="*40,
+        function['links'],
+        ""
     ]
 
-    for i in function['inputs']:
-        s.append("%s - %s" % (i['name'], i['comment']))
+    #for i in function['inputs']:
+    #    s.append("%s - %s" % (i['name'], i['comment']))
+
+    #s.append()
 
     s = "\n".join(s)
 

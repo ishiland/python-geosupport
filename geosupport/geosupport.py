@@ -83,6 +83,7 @@ class Geosupport(object):
     def __getattr__(self, name):
         if name in FUNCTIONS:
             p = partial(self.call, function=name)
+            p.help = partial(function_help, name)
             return p
 
         raise AttributeError("'%s' object has no attribute '%s'" %(

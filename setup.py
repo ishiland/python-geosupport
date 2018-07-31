@@ -29,7 +29,7 @@ Ex:
     """,
     author='Ian Shiland',
     author_email='ishiland@gmail.com',
-    packages=['geosupport', 'geosupport/parsers'],
+    packages=['geosupport', 'geosupport/function_info'],
     license='MIT',
     keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
     classifiers=[
@@ -46,5 +46,10 @@ Ex:
         'Programming Language :: Python :: 3.6',
     ],
     test_suite="tests",
-    install_requires=[]
+    extras_require={
+        'dev': [
+            'invoke',
+            'nose'
+        ]
+    }
 )

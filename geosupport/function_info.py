@@ -87,7 +87,7 @@ def list_functions():
         "    # Call address using the alternate name.\n"
         "    g.address(house_number=125, street_name='Worth St', borough_code='Mn')\n"
         "    # Call function 3 using the function code.\n"
-        "    g['3']({'borough_code': 'MN', 'on': '1 Av', 'from': '1 st', 'to': '2 st'})\n"
+        "    g['3']({'borough_code': 'MN', 'on': '1 Av', 'from': '1 st', 'to': '9 st'})\n"
         "\nUse Geosupport.help(<function>) or Geosupport.<function>.help() "
         "to read about specific function."
     )

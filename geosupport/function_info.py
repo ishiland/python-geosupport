@@ -78,7 +78,19 @@ def list_functions():
         ) for function in FUNCTIONS.values()
     ])
     s = ["List of functions (and alternate names):"] + s
-    s.append("\nUse Geosupport.help(<function>) to read about specific function.")
+    s.append(
+        "\nCall a function using the function code or alternate name using "
+        "Geosupport.<function>() or Geosupport['<function>']()."
+        "\n\nExample usage:\n"
+        "    from geosupport import Geosupport\n"
+        "    g = Geosupport()\n"
+        "    # Call address using the alternate name.\n"
+        "    g.address(house_number=125, street_name='Worth St', borough_code='Mn')\n"
+        "    # Call function 3 using the function code.\n"
+        "    g['3']({'borough_code': 'MN', 'on': '1 Av', 'from': '1 st', 'to': '2 st'})\n"
+        "\nUse Geosupport.help(<function>) or Geosupport.<function>.help() "
+        "to read about specific function."
+    )
     return '\n'.join(s)
 
 def function_help(function):
@@ -106,19 +118,40 @@ def function_help(function):
         ""
     ]
 
-    #for i in function['inputs']:
-    #    s.append("%s - %s" % (i['name'], i['comment']))
-
-    #s.append()
-
     s = "\n".join(s)
 
     return s
+
+def input_help():
+    #for i in INPUT:
+    #    s.append()
+
+    s = [
+        "\nThe following is a full list of inputs for Geosupport. "
+        "It has the full name (followed by alternate names.)",
+        "To use the full names, pass a dictionary of values to the "
+        "Geosupport functions. Many of the inputs also have alternate names "
+        "in parantheses, which can be passed as keyword arguments as well.",
+        "\nInputs",
+        "="*40,
+    ]
+    ''' + [
+        "%s (%s)" % (i['name'], ', '.join(i['alt_names'])) for i in INPUT
+    ]'''
+
+    for i in INPUT:
+        s.append("%s (%s)" % (i['name'], ', '.join(i['alt_names'])))
+        s.append("-"*40)
+        s.append("Functions: %s" % i['functions'])
+        s.append("Expected Values: %s\n" % i['value'])
+
+    return '\n'.join(s)
 
 FUNCTIONS = load_function_info()
 
 def load_work_area_layouts():
     WORK_AREA_LAYOUTS = {}
+    INPUT = []
 
     for csv in glob.glob(path.join(WORK_AREA_LAYOUTS_PATH, '*', '*.csv')):
         directory = path.basename(path.dirname(csv))
@@ -139,10 +172,6 @@ def load_work_area_layouts():
         for function in functions:
             WORK_AREA_LAYOUTS[directory][function + mode] = layout
 
-        '''df = pd.read_csv(
-            csv, encoding='latin-1', dtype={'from': int, 'to': int, 'formatter': str}
-        ).fillna('')'''
-
         with open(csv) as f:
             rows = DictReader(f)
 
@@ -159,7 +188,6 @@ def load_work_area_layouts():
 
                 v = {
                     'i': (int(row['from']) - 1, int(row['to'])),
-                    #'formatter': get_formatter(row['formatter'])
                     'formatter': row['formatter']
                 }
 
@@ -173,6 +201,14 @@ def load_work_area_layouts():
                     layout[n.upper()] = v
                     layout[n.lower()] = v
 
-    return WORK_AREA_LAYOUTS
+                if directory == 'input':
+                    INPUT.append({
+                        'name': name,
+                        'alt_names': alt_names,
+                        'functions': row['functions'],
+                        'value': row['value']
+                    })
 
-WORK_AREA_LAYOUTS = load_work_area_layouts()
+    return WORK_AREA_LAYOUTS, INPUT
+
+WORK_AREA_LAYOUTS, INPUT = load_work_area_layouts()

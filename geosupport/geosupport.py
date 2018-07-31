@@ -2,7 +2,7 @@ from functools import partial
 import sys
 
 from geosupport.error import GeosupportError
-from geosupport.function_info import FUNCTIONS, function_help, list_functions
+from geosupport.function_info import FUNCTIONS, function_help, list_functions, input_help
 from geosupport.io import format_input, parse_output, set_mode
 
 class Geosupport(object):
@@ -95,6 +95,8 @@ class Geosupport(object):
 
     def help(self, name=None):
         if name:
+            if name.upper() == 'INPUT':
+                return input_help()
             try:
                 return function_help(name)
             except KeyError:

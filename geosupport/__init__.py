@@ -1,1 +1,1 @@
-from geosupport.geosupport import Geosupport
+from .geosupport import Geosupport

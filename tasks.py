@@ -2,8 +2,8 @@ from invoke import task, run
 
 nosetests = 'nosetests --with-coverage --cover-package=geosupport --cover-html --cover-branches --cover-erase'
 
-@task()
-def test(test_type):
+@task
+def test(context, test_type):
     if test_type == 'unit':
         cmd = ' '.join([nosetests, 'tests/unit/*'])
         run('sh -c "%s"' % cmd)
@@ -17,5 +17,5 @@ def test(test_type):
         print("Unknown test suite '%s'. Choose one of: unit, functional, all." % test_type)
 
 @task
-def pylint():
+def pylint(context):
     run('sh -c "pylint geosupport"')

@@ -2,11 +2,9 @@ from functools import partial
 import glob
 from os import path
 
-import pandas as pd
-
-from geosupport.config import BOROUGHS
-from geosupport.error import GeosupportError
-from geosupport.function_info import (
+from .config import BOROUGHS
+from .error import GeosupportError
+from .function_info import (
     FUNCTIONS, AUXILIARY_SEGMENT_LENGTH, WORK_AREA_LAYOUTS
 )
 
@@ -153,7 +151,7 @@ def create_wa1(kwargs):
         length = i[1]-i[0]
         mv[i[0]:i[1]] = value.ljust(length)[:length].encode()
 
-    return b.decode()
+    return str(b.decode())
 
 def create_wa2(flags):
     length = FUNCTIONS[flags['function']][flags['mode']]

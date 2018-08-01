@@ -2,7 +2,7 @@ from csv import DictReader
 import glob
 from os import path
 
-from geosupport.config import FUNCTION_INFO_CSV, FUNCTION_INPUTS_CSV, WORK_AREA_LAYOUTS_PATH
+from .config import FUNCTION_INFO_CSV, FUNCTION_INPUTS_CSV, WORK_AREA_LAYOUTS_PATH
 
 class FunctionDict(dict):
 

@@ -1,9 +1,9 @@
 from functools import partial
 import sys
 
-from geosupport.error import GeosupportError
-from geosupport.function_info import FUNCTIONS, function_help, list_functions, input_help
-from geosupport.io import format_input, parse_output, set_mode
+from .error import GeosupportError
+from .function_info import FUNCTIONS, function_help, list_functions, input_help
+from .io import format_input, parse_output, set_mode
 
 class Geosupport(object):
     def __init__(self):
@@ -41,7 +41,6 @@ class Geosupport(object):
         """
         Calls the Geosupport libs & encodes/deocodes strings for Python 3.
         """
-
         # encode
         if self.py_version == 3:
             wa1 = bytes(str(wa1), 'utf8')

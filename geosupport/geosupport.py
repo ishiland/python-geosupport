@@ -59,7 +59,9 @@ class Geosupport(object):
 
         return wa1, wa2
 
-    def call(self, kwargs_dict={}, mode=None, **kwargs):
+    def call(self, kwargs_dict=None, mode=None, **kwargs):
+        if kwargs_dict is None:
+            kwargs_dict = {}
         kwargs_dict.update(kwargs)
         kwargs_dict.update(set_mode(mode))
 

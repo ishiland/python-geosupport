@@ -26,7 +26,7 @@ class FunctionDict(dict):
         )
 
 def load_function_info():
-    FUNCTIONS = FunctionDict()
+    functions = FunctionDict()
 
     alt_names = {}
 
@@ -52,21 +52,21 @@ def load_function_info():
 
             row['inputs'] = []
 
-            FUNCTIONS[function] = row
+            functions[function] = row
 
-    FUNCTIONS.alt_names = alt_names
+    functions.alt_names = alt_names
 
     with open(FUNCTION_INPUTS_CSV) as f:
         csv = DictReader(f)
 
         for row in csv:
             if row['function']:
-                FUNCTIONS[row['function']]['inputs'].append({
+                functions[row['function']]['inputs'].append({
                     'name': row['field'],
                     'comment': row['comments']
                 })
 
-    return FUNCTIONS
+    return functions
 
 def list_functions():
     s = sorted([
@@ -139,13 +139,13 @@ def input_help():
     return '\n'.join(s)
 
 def load_work_area_layouts():
-    WORK_AREA_LAYOUTS = {}
-    INPUT = []
+    work_area_layouts = {}
+    inputs = []
 
     for csv in glob.glob(path.join(WORK_AREA_LAYOUTS_PATH, '*', '*.csv')):
         directory = path.basename(path.dirname(csv))
-        if directory not in WORK_AREA_LAYOUTS:
-            WORK_AREA_LAYOUTS[directory] = {}
+        if directory not in work_area_layouts:
+            work_area_layouts[directory] = {}
 
         layout = {}
         name = path.basename(csv).split('.')[0]
@@ -159,7 +159,7 @@ def load_work_area_layouts():
 
         functions = functions.split('_')
         for function in functions:
-            WORK_AREA_LAYOUTS[directory][function + mode] = layout
+            work_area_layouts[directory][function + mode] = layout
 
         with open(csv) as f:
             rows = DictReader(f)
@@ -191,14 +191,14 @@ def load_work_area_layouts():
                     layout[n.lower()] = v
 
                 if directory == 'input':
-                    INPUT.append({
+                    inputs.append({
                         'name': name,
                         'alt_names': alt_names,
                         'functions': row['functions'],
                         'value': row['value']
                     })
 
-    return WORK_AREA_LAYOUTS, INPUT
+    return work_area_layouts, inputs
 
 MODES = ['regular', 'extended', 'long', 'long+tpad']
 AUXILIARY_SEGMENT_LENGTH = 500

@@ -1,6 +1,4 @@
 from functools import partial
-import glob
-from os import path
 
 from .config import BOROUGHS
 from .error import GeosupportError
@@ -143,7 +141,7 @@ def create_wa1(kwargs):
 
     layout = WORK_AREA_LAYOUTS['input']['WA1']
 
-    for key,value in kwargs.items():
+    for key, value in kwargs.items():
         formatter = get_formatter(layout[key]['formatter'])
         value = '' if value is None else str(formatter(value))
 
@@ -160,7 +158,7 @@ def create_wa2(flags):
         return None
 
     if flags['auxseg']:
-       length += AUXILIARY_SEGMENT_LENGTH
+        length += AUXILIARY_SEGMENT_LENGTH
 
     return ' ' * length
 
@@ -199,13 +197,13 @@ def parse_output(flags, wa1, wa2):
 
     output.update(parse_workarea(WORK_AREA_LAYOUTS['output']['WA1'], wa1))
 
-    function = flags['function']
-    if function in WORK_AREA_LAYOUTS['output']:
+    function_name = flags['function']
+    if function_name in WORK_AREA_LAYOUTS['output']:
         output.update(parse_workarea(
-            WORK_AREA_LAYOUTS['output'][function], wa2
+            WORK_AREA_LAYOUTS['output'][function_name], wa2
         ))
 
-    function_mode = function + '-' + flags['mode']
+    function_mode = function_name + '-' + flags['mode']
     if function_mode in WORK_AREA_LAYOUTS['output']:
         output.update(parse_workarea(
             WORK_AREA_LAYOUTS['output'][function_mode], wa2

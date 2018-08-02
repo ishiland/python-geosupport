@@ -109,3 +109,18 @@ class TestCallByName(TestCase):
 
         with self.assertRaises(AttributeError):
             self.geosupport['fake']({})
+
+    def test_call_invalid_key(self):
+        with self.assertRaises(KeyError):
+            self.geosupport.intersection(
+                borough_code='BK', street1='east 19 st', street_2='ave h'
+            )
+
+        with self.assertRaises(KeyError):
+            self.geosupport.intersection(
+                borough_code='BK', street_1='east 19 st', street2='ave h'
+            )
+
+        self.geosupport.intersection(
+            borough_code='BK', street_name_1='east 19 st', street_name_2='ave h'
+        )

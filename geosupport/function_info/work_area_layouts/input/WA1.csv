@@ -7,15 +7,15 @@ Low House Number - Sort Format,11,46,56,"D*, Internal Use",,,,
 "B10SC-1 (includes Borough Code 1, B5SC-1 and B7SC-1):",11,57,67,See next 2 entries,,"borough, borough_1,b5sc,b5sc_1,b7sc,b7sc_1,b10sc,b10sc_1",borough,
 Borough Code-1,1,57,57,"Required for All Functions but BL, BN. Ignored if Fn 2 has Node Number input",,"borough_code, borough_code_1",borough,"'1'=Manhattan, '2'=Bronx, '3'=Brooklyn, '4'=Queens, '5'=Staten Island"
 10SC-1,10,58,67,"All but 1N, B*",,"street_code, street_code_1",,
-Street Name-1,32,68,99,"All but BL, BN, D*",,"street_name, street, street_name_1, on",,
+Street Name-1,32,68,99,"All but BL, BN, D*",,"street_name, street, street_name_1, on, street_1",,
 "B10SC-2 (includes Borough Code 2, B5SC-2 and B7SC-2):",11,100,110,"2, 3*, D*",,"borough_2,b5sc_2,b7sc_2,b10sc_2",borough,
 Borough Code-2,1,100,100,"2, 3*, D*",,borough_code_2,borough,"'1'=Manhattan, '2'=Bronx, '3'=Brooklyn, '4'=Queens, '5'=Staten Island"
 10SC-2,10,101,110,"2, 3*, D*",,street_code_2,,
-Street Name-2,32,111,142,"2, 3*",,"street_name_2, from",,
+Street Name-2,32,111,142,"2, 3*",,"street_name_2, from, street_2",,
 "B10SC-3 (includes Borough Code 3, B5SC-3 and B7SC-3):",11,143,153,"3*, D*",,"borough_3,b5sc_3,b7sc_3,b10sc_3",borough,
 Borough Code-3,1,143,143,"3*, D*",,borough_code_3,borough,"'1'=Manhattan, '2'=Bronx, '3'=Brooklyn, '4'=Queens, '5'=Staten Island"
 10SC-3,10,144,153,"3*, D*",,street_code_3,,
-Street Name-3,32,154,185,3*,,"street_name_3, to",,
+Street Name-3,32,154,185,3*,,"street_name_3, to, street_3",,
 BOROUGH BLOCK LOT (BBL),10,186,195,BL,,bbl,,
 Borough Code,1,186,186,BL,,bbl_borough,,
 Tax Block,5,187,191,BL,,bbl_block,,

@@ -1,0 +1,3 @@
+name,size,from,to,comment,parent,alt_names,formatter
+Number of Buildings on Tax Lot,4,247,250,"Maximum of 2,500",,,
+LIST OF BUILDINGS ON TAX LOT:,17500,251,17750,"Maximum of 2,500 entries, each 7 bytes long. 7 x 2,500 = 17,500",,,BINs

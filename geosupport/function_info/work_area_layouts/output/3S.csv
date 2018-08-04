@@ -1,0 +1,7 @@
+name,size,from,to,comment,parent,alt_names,formatter
+Generic/Roadbed Street Name Indicator,1,3,3,G - Generic R - Roadbed,,,
+Borough Code,1,4,4,,,,
+5-Digit Street Code of 'On' Street,5,5,9,,,,
+LGC,2,10,11,,,,
+Number of Intersections,3,22,24,Maximum of 350,,,
+LIST OF INTERSECTIONS:,19250,25,19274,"Max. of 350 entries, each 55 bytes long: 350 x 55 = 19,250",,,intersections

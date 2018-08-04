@@ -1,0 +1,7 @@
+name,size,from,to,comment,parent,alt_names,formatter
+Marble Hill/Rikers Island Flag,1,1,1,,,,
+Distance from previous intersection in list,5,2,6,,,,
+Gap Flag,1,7,7,,,,
+Node Number,7,8,14,,,,
+Number of streets at this intersection,1,15,15,,,,
+List of Cross Streets at this Intersection,40,16,55,B7SC = B5SC + DCP Preferred LGC (Up to 5 B7SCs),,,8

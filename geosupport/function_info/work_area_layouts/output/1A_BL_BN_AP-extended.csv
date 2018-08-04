@@ -1,0 +1,7 @@
+name,size,from,to,comment,parent,alt_names,formatter
+Reason Code,1,247,247,Same as Work Area 1,,,
+Reason Code Qualifier,1,248,248,Same as Work Area 1,,,
+Warning Code,2,249,250,Not used,,,
+Return Code (GRC),2,251,252,Same as Work Area 1,,,
+Number of Entries in List of Geographic Identifiers,4,361,364,Maximum number is 21,,,
+LIST OF GEOGRAPHIC IDENTIFIERS:,2436,365,2800,"Maximum of 21 entries, each 116 bytes long: 116 x 21 = 2,436",,,LGI-extended

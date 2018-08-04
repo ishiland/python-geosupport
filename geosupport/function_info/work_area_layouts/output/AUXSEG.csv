@@ -1,0 +1,3 @@
+name,size,from,to,comment,parent,alt_names,formatter
+Segment Count,4,7,10,Number of Segments,,,
+Segment IDs,490,11,500,Up to 70 Segment IDs 7 bytes each; 7 x 70 = 490,,,7

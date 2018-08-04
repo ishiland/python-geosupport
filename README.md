@@ -173,8 +173,7 @@ $ invoke test all
 
 This project is licensed under the MIT License - see the [license.txt](license.txt) file for details
 
-## Acknowledgments
+## Contributors
+Thanks to [Jeremy Neiman](https://github.com/docmarionum1) for a major revision incorporating all Geosupport functions and parameters.
 
-* [Charles Wang](https://github.com/CharlesKWang/NYC-Geocoder) for his initial proof of concept in python
-* [Chris Whong](https://gist.github.com/chriswhong/2e5f0f41fc5d366ec902613251445b30) and [Noah Veltman](https://github.com/veltman/node-geosupport) for their work using Node.js
-* Datamade's [usaddress](https://github.com/datamade/usaddress)
+If you see any issue or would like to contribute, pull requests are welcome.

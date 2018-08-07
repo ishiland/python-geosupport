@@ -1,4 +1,4 @@
-# python-geosupport
+# python-geosupport [![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-2714/) [![Python 3+](https://img.shields.io/badge/python-3+-blue.svg)](https://www.python.org/downloads/release/python-360/) [![PyPI version](https://img.shields.io/pypi/v/python-geosupport.svg)](https://pypi.python.org/pypi/python-geosupport/)
 
 Python bindings for NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
 
@@ -176,4 +176,4 @@ This project is licensed under the MIT License - see the [license.txt](license.t
 ## Contributors
 Thanks to [Jeremy Neiman](https://github.com/docmarionum1) for a major revision incorporating all Geosupport functions and parameters.
 
-If you see any issue or would like to contribute, pull requests are welcome.
+If you see an issue or would like to contribute, pull requests are welcome.

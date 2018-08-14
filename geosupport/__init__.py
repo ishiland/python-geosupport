@@ -1,1 +1,1 @@
-from .geosupport import Geosupport
+from .geosupport import Geosupport, GeosupportError

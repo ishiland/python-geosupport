@@ -145,7 +145,7 @@ g.help('address')
 g.help('input')
 ```
 
-### Error Handling
+#### Error Handling
 
 python-geosupport will raise a `GeosupportError` when Geosupport returns an
 error code.  Sometimes there is more information returned, in which case the

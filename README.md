@@ -24,7 +24,7 @@ Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRA
 
 ```shell
 $ export GEOFILES=/var/geosupport/version-17c/fls
-$ export LD_LIBRARY_PATH=/var/geosupport/version-17c/lib/
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/geosupport/version-17c/lib/
 ```
 
 ### Install python-geosupport

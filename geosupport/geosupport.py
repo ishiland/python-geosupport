@@ -23,9 +23,7 @@ class Geosupport(object):
             elif self.platform.startswith('linux'):
                 import os
                 from ctypes import cdll
-                self.geolib = cdll.LoadLibrary(
-                    os.path.join(os.environ['LD_LIBRARY_PATH'], "libgeo.so")
-                )
+                self.geolib = cdll.LoadLibrary("libgeo.so")
             else:
                 raise Exception('This Operating System is currently not supported.')
         except OSError as e:

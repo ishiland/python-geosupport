@@ -1,46 +1,46 @@
 field,value,comments,function
 Borough Code-1 (or ZIP Code),,Required. (ZIP Code may be used instead of Borough Code),1
-House Number,,Required for address input except free-form addresses (see Chapter V.3). Typically not used for NAP input (see Chapter III.6).,1
+House Number,,Required for address input except free-form addresses (seeÂ Chapter V.3). Typically not used for NAP input (seeÂ Chapter III.6).,1
 Street-1,,Required.,1
-SNL,,Optional; default is 32. See Chapter III.2.,1
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,1
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,1
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,1
 Cross Street Names Flag,,Optional,1
-ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. See Chapter III.6 and Chapter V.6.",1
+ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. SeeÂ Chapter III.6Â andÂ Chapter V.6.",1
 Roadbed Request Switch,,Optional; default (blank) requests generic information.,1
-Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. See Chapter III.8,1
+Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. SeeÂ Chapter III.8,1
 ,,,
-Borough Code-1 (or ZIP Code),,Required. (ZIP Code may be used instead of Borough Code),1A
-House Number,,Required for address input except free-form addresses (see Chapter V.3). Typically not used for NAP input (see Chapter III.6).,1A
+Borough Code-1 (or ZIP Code),,Required.Â (ZIP Code may be used instead of Borough Code),1A
+House Number,,Required for address input except free-form addresses (seeÂ Chapter V.3). Typically not used for NAP input (seeÂ Chapter III.6).,1A
 Street-1,,Required.,1A
-SNL,,Optional; default is 32. See Chapter III.2.,1A
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,1A
 Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeChapter III.3.,1A
-ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. See Chapter III.6 andChapter V.6.",1A
-Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. Chapter III.8,1A
-Long WA2 Flag,,Optional; default (blank) is regular WA2. See Chapters II.5 and VI.6.,1A
-TPAD Request Switch,,Optional; may be used to request Transitional PAD information. See Chapter VI.11,1A
+ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. SeeÂ Chapter III.6Â andChapter V.6.",1A
+Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code.Â Chapter III.8,1A
+Long WA2 Flag,,Optional; default (blank) is regular WA2. SeeÂ Chapters II.5Â andÂ VI.6.,1A
+TPAD Request Switch,,Optional; may be used to request Transitional PAD information.Â See Chapter VI.11,1A
 ,,,
 Borough Code-1 (or ZIP Code),,Required. (ZIP Code may be used instead of Borough Code),1E
-House Number,,Required for address input except free-form addresses (see Chapter V.3). Typically not used for NAP input (see Chapter III.6).,1E
+House Number,,Required for address input except free-form addresses (seeÂ Chapter V.3). Typically not used for NAP input (seeÂ Chapter III.6).,1E
 Street-1,,Required.,1E
-SNL,,Optional; default is 32. See Chapter III.2.,1E
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,1E
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,1E
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,1E
 Cross Street Names Flag,,Optional,1E
-ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. See Chapter III.6 and Chapter V.6.",1E
+ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. SeeÂ Chapter III.6Â andÂ Chapter V.6.",1E
 Roadbed Request Switch,,Optional; default (blank) requests generic information.,1E
-Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. See Chapter III.8,1E
+Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. SeeÂ Chapter III.8,1E
 ,,,
 Borough Code-1 (or ZIP Code),,Required. (ZIP Code may be used instead of Borough Code),1B
 Street-1,,Required.,1B
-SNL,,Optional; default is 32. See Chapter III.2.,1B
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,1B
-ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. See Chapter III.6 and Chapter V.6.",1B
-Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. See Chapter III.8,1B
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,1B
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,1B
+ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. SeeÂ Chapter III.6Â andÂ Chapter V.6.",1B
+Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. SeeÂ Chapter III.8,1B
 ,,,
 Borough Code-1 (or ZIP Code),,Required.,1N
 Street Name-1,,Required. (Note: Street code input is not permitted for Function 1N.),1N
-SNL,,Optional; default is 32. See Chapter III.2.,1N
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,1N
-Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. See Chapter III.8,1N
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,1N
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,1N
+Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. SeeÂ Chapter III.8,1N
 ,,,
 Borough Code-1,,Required (unless Node Number is used as input). Specifies borough of Street Name 1.,2
 Street-1,,Required (unless Node Number is used as input). Specifies either of the two streets defining the intersection.,2
@@ -49,9 +49,9 @@ Street-2,,Required (unless Node Number is used as input). Specifies the other st
 Compass Direction,,"Required only when the two input streets intersect twice, in which case it designates which intersection to process",2
 Node Number,,Required when streets intersect more than twice. Optional at other nodes. May be used instead of borough and street names.,2
 SNL,,Optional; default is 32. See Chapter III.2,2
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,2
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,2
 Cross Street Names Flag,,Optional.,2
-Browse Flag ,,Optional; may be used to select output street names / codes. Default (blank) requests use of in,2
+Browse FlagÂ ,,Optional; may be used to select output street names / codes. Default (blank) requests use of in,2
 ,,,
 Borough Code-1,,Required (unless Node Number is used as input). Specifies borough of Street Name 1.,2W
 Street-1,,Required (unless Node Number is used as input). Specifies either of the two streets defining the intersection.,2W
@@ -60,36 +60,36 @@ Street-2,,Required (unless Node Number is used as input). Specifies the other st
 Compass Direction,,"Required only when the two input streets intersect twice, in which case it designates which intersection to process",2W
 Node Number,,Required when streets intersect more than twice. Optional at other nodes. May be used instead of borough and street names.,2W
 SNL,,Optional; default is 32. See Chapter III.2,2W
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,2W
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,2W
 Cross Street Names Flag,,Optional.,2W
-Browse Flag ,,Optional; may be used to select output street names / codes. Default (blank) requests use of in,2W
+Browse FlagÂ ,,Optional; may be used to select output street names / codes. Default (blank) requests use of in,2W
 ,,,
-Mode Switch,,Optional;. See Chapter II.7.,3
+Mode Switch,,Optional;. SeeÂ Chapter II.7.,3
 Borough Code-1,,Required. Specifies borough of Street Name-1.,3
 Street-1,,Required. Specifies 'on' street,3
 Borough Code-2,,Optional unless borough of Street Name-2 differs from that of Street Name-1. Specifies borough of Street Name-2. Default is Borough Code-1 value.,3
 Street-2,,Required. Specifies either cross street.,3
 Borough Code-3,,Optional unless borough of Street Name-3 differs from that of Street Name-1. Specifies borough of Street Name-3. Default is Borough Code-1 value.,3
 Street-3,,Required. Specifies other cross street.,3
-SNL,,Optional; default is 32. See Chapter III.2.,3
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,3
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,3
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,3
 Cross Street Names Flag,,Optional,3
-Auxiliary Segment Switch ,,Optional; default (blank) is regular mode. See Chapter II.6,3
-Browse Flag ,,Optional; may be used to select output street names / codes. Default (blank) requests use of input street names / codes. See Chapt,3
+Auxiliary Segment SwitchÂ ,,Optional; default (blank) is regular mode. SeeÂ Chapter II.6,3
+Browse FlagÂ ,,Optional; may be used to select output street names / codes. Default (blank) requests use of input street names / codes. SeeÂ Chapt,3
 ,,,
-Mode Switch,,Optional;. See Chapter II.7.,3C
+Mode Switch,,Optional;. SeeÂ Chapter II.7.,3C
 Borough Code-1,,Required. Specifies borough of Street Name-1.,3C
 Street-1,,Required. Specifies 'on' street,3C
 Borough Code-2,,Optional unless borough of Street Name-2 differs from that of Street Name-1. Specifies borough of Street Name-2. Default is Borough Code-1 value.,3C
 Street-2,,Required. Specifies either cross street.,3C
 Borough Code-3,,Optional unless borough of Street Name-3 differs from that of Street Name-1. Specifies borough of Street Name-3. Default is Borough Code-1 value.,3C
 Street-3,,Required. Specifies other cross street.,3C
-Compass Direction,,Required. Specifies side of street of blockface (relative to street's 'logical direction' - see Chapter VII.3).,3C
-SNL,,Optional; default is 32. See Chapter III.2.,3C
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,3C
+Compass Direction,,Required. Specifies side of street of blockface (relative to street's 'logical direction' - seeÂ Chapter VII.3).,3C
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,3C
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,3C
 Cross Street Names Flag,,Optional,3C
-Auxiliary Segment Switch ,,Optional; default (blank) is regular mode. See Chapter II.6,3C
-Browse Flag ,,Optional; may be used to select output street names / codes. Default (blank) requests use of input street names / codes. See Chapt,3C
+Auxiliary Segment SwitchÂ ,,Optional; default (blank) is regular mode. SeeÂ Chapter II.6,3C
+Browse FlagÂ ,,Optional; may be used to select output street names / codes. Default (blank) requests use of input street names / codes. SeeÂ Chapt,3C
 ,,,
 Borough Code-1,,Required. Specifies borough of Street-1.,3S
 Street-1,,Required. Specifies 'on' street.,3S
@@ -97,58 +97,58 @@ Street-2,,Optional. Specifies either cross street.,3S
 Compass Direction for First Intersection,,Required if Street-2 intersects Street-1 ('on'-street) twice. Identifies which of the two intersections is intended.,3S
 Street-3,,"Optional. Specifies other cross street. Must be specified if Street-2 is specified. If Street-2 and Street-3 are not specified, data for full length of street are returned in WA2.",3S
 Compass Direction for Second Intersection,,Required if Street-3 intersects Street-1 ('on'-street) twice. Identifies which of the two intersections is intended.,3S
-SNL,,Optional; default is 32. See Chapter III.2.,3S
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,3S
-Real Street Only Flag ,,Optional; default (blank) requests all streets. See Chapter VII.6.,3S
-Roadbed Request Switch,,Optional; default (blank) requests generic information See Chapter VII.6,3S
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,3S
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,3S
+Real Street Only FlagÂ ,,Optional; default (blank) requests all streets. SeeÂ Chapter VII.6.,3S
+Roadbed Request Switch,,Optional; default (blank) requests generic information SeeÂ Chapter VII.6,3S
 ,,,
-Borough Code-1 (or ZIP Code),,Required. (ZIP Code may be used instead of Borough Code),AP
-House Number,,Required for address input except free-form addresses (see Chapter V.3).,AP
+Borough Code-1 (or ZIP Code),,Required.Â (ZIP Code may be used instead of Borough Code),AP
+House Number,,Required for address input except free-form addresses (seeÂ Chapter V.3).,AP
 Street-1,,Required.,AP
-SNL,,Optional; default is 32. See Chapter III.2.,AP
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,AP
 Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeChapter III.3.,AP
-ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. See Chapter III.6 andChapter V.6.",AP
-Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code. Chapter III.8,AP
+ZIP Code,,"Optional; may be used instead of Borough Code, or to identify a DAPS. SeeÂ Chapter III.6Â andChapter V.6.",AP
+Browse Flag,,Optional; may be used to select output street name / code. Default (blank) requests use of input street name / code.Â Chapter III.8,AP
 ,,,
 Borough Code-1,,Required.,BB
 Street Name-1,,Required.,BB
-Browse Flag ,,Optional; default (blank) See Chapter III.7.,BB
+Browse FlagÂ ,,Optional; default (blank) See Chapter III.7.,BB
 ,,,
 Borough Code-1,,Required.,BF
 Street Name-1,,Required.,BF
-Browse Flag ,,Optional; default (blank) See Chapter III.7.,BF
+Browse FlagÂ ,,Optional; default (blank) See Chapter III.7.,BF
 ,,,
-Mode Switch,,Optional; See Chapter II.7.,BL
+Mode Switch,,Optional; SeeÂ Chapter II.7.,BL
 Borough-Block-Lot (BBL),,Required.,BL
-Long WA2 Flag,,Optional default (blank) is regular WA2. See Chapter II.5.,BL
-TPAD Request Switch ,,Optional; may be used to request Transitional PAD information. See Chapter VI.11,BL
+Long WA2 Flag,,Optional default (blank) is regular WA2. SeeÂ Chapter II.5.,BL
+TPAD Request SwitchÂ ,,Optional; may be used to request Transitional PAD information. SeeÂ ChapterÂ VI.11,BL
 ,,,
-Mode Switch,,Optional; See Chapter II.7.,BN
+Mode Switch,,Optional; SeeÂ Chapter II.7.,BN
 BIN,,Required,BN
 ,,,
 HNS-1,,Optional.,D
 HNS-2,,Optional.,D
-B5SC-1,,Optional unless B5SC-2 is nonblank. ,D
-B5SC-2,,Optional unless B5SC-3 is nonblank. ,D
+B5SC-1,,Optional unless B5SC-2 is nonblank.Â ,D
+B5SC-2,,Optional unless B5SC-3 is nonblank.Â ,D
 B5SC-3,,Optional,D
-SNL,,Optional; default is 32. See Chapter III.2.,D
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,D
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,D
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,D
 ,,,
 HNS-1,,Optional.,DG
 HNS-2,,Optional.,DG
-B7SC-1,,Optional unless B7SC-2 is nonblank. ,DG
-B7SC-2,,Optional unless B7SC-3 is nonblank. ,DG
+B7SC-1,,Optional unless B7SC-2 is nonblank.Â ,DG
+B7SC-2,,Optional unless B7SC-3 is nonblank.Â ,DG
 B7SC-3,,Optional,DG
-SNL,,Optional; default is 32. See Chapter III.2.,DG
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,DG
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,DG
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,DG
 ,,,
 HNS-1,,Optional.,DN
 HNS-2,,Optional.,DN
-B10SC-1,,Optional unless B10SC-2 is nonblank. ,DN
-B10SC-2,,Optional unless B10SC-3 is nonblank. ,DN
+B10SC-1,,Optional unless B10SC-2 is nonblank.Â ,DN
+B10SC-2,,Optional unless B10SC-3 is nonblank.Â ,DN
 B10SC-3,,Optional,DN
-SNL,,Optional; default is 32. See Chapter III.2.,DN
-Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. See Chapter III.3.,DN
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,DN
+Street Name Normalization Format Flag,,Optional; default (blank) requests sort format. SeeÂ Chapter III.3.,DN
 ,,,
 Street Name-1,,Required. (Note: Street code input is not permitted for Function 1N.),N*
-SNL,,Optional; default is 32. See Chapter III.2.,N*
+SNL,,Optional; default is 32. SeeÂ Chapter III.2.,N*

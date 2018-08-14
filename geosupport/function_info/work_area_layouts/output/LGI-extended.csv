@@ -10,13 +10,13 @@ Geographic Identifier Entry Type Code,1,49,49,"N - NAP (Simplex)
 G - Complex NAP
 X - Constituent Entity of Complex NAP
 B - NAUB
-F - Frontage 
-W - Blank Wall 
-Q - Pseudo Address 
+F - FrontageÂ 
+W - Blank WallÂ 
+Q - Pseudo AddressÂ 
 T - Tunnel
 U - Misc. Structure
-V - Vanity Address 
-O - Out-of-Sequence Address 
-Blank – Normal",,,
+V - Vanity AddressÂ 
+O - Out-of-Sequence AddressÂ 
+Blank Â– Normal",,,
 TPAD BIN Status,1,50,50,TPAD Request,,,
 Street Name,32,51,82,,,,

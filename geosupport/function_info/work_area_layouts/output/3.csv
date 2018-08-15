@@ -2,7 +2,7 @@ name,size,from,to,comment,parent,alt_names,formatter
 Duplicate Key Flag or Continuous Parity,1,22,22,,,,
 Locational Status of Segment,1,23,23,,,,
 County Boundary Indicator,1,24,24,,,,
-DCP-Preferred LGC for Street 1,2,25,26,‘On’ Street,,,
+DCP-Preferred LGC for Street 1,2,25,26,Â‘OnÂ’ Street,,,
 DCP-Preferred LGC for Street 2,2,27,28,Input Cross Street with Lower B5SC value,,,
 DCP-Preferred LGC for Street 3,2,29,30,Input Cross Street with Higher B5SC value,,,
 Number of Cross Streets at Low Address End,1,31,31,,,,

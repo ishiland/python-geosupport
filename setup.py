@@ -13,38 +13,31 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='python-geosupport',
-    version='1.0.0',
+    version='1.0.1',
     url='https://github.com/ishiland/python-geosupport',
-    description='Python bindings for the NYC Geosupport Desktop application',
+    description='Python bindings for NYC Geosupport Desktop Edition',
     long_description="""
-Call NYC Planning's Geosupport Desktop functions from Python.
-
-Ex:
-    >>> import geosupport
-    >>> g = geosupport.Geocode()
-    >>> g.address("125 Worth st NY, NY, 10013")
-    {'Latitude': '40.715428',
-     'Longitude': '-74.002673',
-    ...}
-    """,
+        # Import the library and create a `Geosupport` object.
+        from geosupport import Geosupport
+        g = Geosupport()
+        
+        # Call the address processing function by name
+        result = g.address(house_number=125, street_name='Worth St', borough_code='Mn')
+        """,
     author='Ian Shiland',
     author_email='ishiland@gmail.com',
     packages=['geosupport'],
     include_package_data=True,
     license='MIT',
-    keywords = ['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
+    keywords=['NYC', 'geocoder', 'python-geosupport', 'geosupport'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: MIT License',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite="tests",
     extras_require={

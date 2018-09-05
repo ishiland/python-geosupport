@@ -17,3 +17,5 @@ BOROUGHS = {
     'STATEN ISLAND': 5, 'SI': 5, 'STATEN IS': 5, 'RICHMOND': 5,
     '': '',
 }
+
+USER_CONFIG = '~/.python-geosupport.cfg'

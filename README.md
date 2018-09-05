@@ -161,6 +161,36 @@ except GeosupportError as e:
     print(e.result['List of Street Names']) # List of suggested alternate names
 ```
 
+#### Switching Between Multiple Versions of Geosupport
+
+<span style="color:red">**This feature is Windows only.  Linux doesn't support
+library path modifications during runtime.**</span>
+
+If you have multiple versions of geosupport and want to switch between them,
+you can either pass the installation path to `Geosupport`:
+
+```python
+g = Geosupport(geosupport_path="C:\\Program Files\\Geosupport 18C")
+```
+
+or create a `.python-geosupport.cfg` in your home directory that specifies
+the names and installation paths of the different versions.
+
+The `.python-geosupport.cfg` file looks like:
+
+```txt
+[versions]
+18b=C:\Program Files\Geosupport Desktop Edition
+18c=C:\Program Files\Geosupport 18C
+18c_32=C:\Program Files (x86)\Geosupport 18C
+```
+
+Then you can select the version by name:
+
+```python
+g = Geosupport(geosupport_version="18c")
+```
+
 ## Development
 
 ### Running tests

@@ -163,8 +163,8 @@ except GeosupportError as e:
 
 #### Switching Between Multiple Versions of Geosupport
 
-<span style="color:red">**This feature is Windows only.  Linux doesn't support
-library path modifications during runtime.**</span>
+:heavy_exclamation_mark: *This feature is Windows only.  Linux doesn't support 
+library path modifications during runtime.*
 
 If you have multiple versions of geosupport and want to switch between them,
 you can either pass the installation path to `Geosupport`:

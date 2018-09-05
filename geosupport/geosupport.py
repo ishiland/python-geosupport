@@ -24,10 +24,16 @@ class Geosupport(object):
         if geosupport_version is not None:
             config = ConfigParser()
             config.read(os.path.expanduser(USER_CONFIG))
-            versions = dict(config['versions'].items())
+            versions = dict(config.items('versions'))
             geosupport_path = versions[geosupport_version.lower()]
 
         if geosupport_path is not None:
+            if self.platform.startswith('linux'):
+                raise GeosupportError(
+                    "geosupport_path and geosupport_version not valid with "
+                    "linux. You must set LD_LIBRARY_PATH and GEOFILES "
+                    "before running python."
+                )
             os.environ['GEOFILES'] = os.path.join(geosupport_path, 'Fls\\')
             os.environ['PATH'] = ';'.join([
                 i for i in os.environ['PATH'].split(';') if

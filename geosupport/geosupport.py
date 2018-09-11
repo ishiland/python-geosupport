@@ -1,33 +1,74 @@
 from functools import partial
+import os
 import sys
 
+try:
+    from configparser import ConfigParser # Python 3
+except:
+    from ConfigParser import ConfigParser # Python 2
+
+from .config import USER_CONFIG
 from .error import GeosupportError
 from .function_info import FUNCTIONS, function_help, list_functions, input_help
 from .io import format_input, parse_output, set_mode
 
+GEOLIB = None
+
 class Geosupport(object):
-    def __init__(self):
+    def __init__(self, geosupport_path=None, geosupport_version=None):
+        global GEOLIB
         self.py_version = sys.version_info[0]
         self.platform = sys.platform
         self.py_bit = '64' if (sys.maxsize > 2 ** 32) else '32'
 
+        if geosupport_version is not None:
+            config = ConfigParser()
+            config.read(os.path.expanduser(USER_CONFIG))
+            versions = dict(config.items('versions'))
+            geosupport_path = versions[geosupport_version.lower()]
+
+        if geosupport_path is not None:
+            if self.platform.startswith('linux'):
+                raise GeosupportError(
+                    "geosupport_path and geosupport_version not valid with "
+                    "linux. You must set LD_LIBRARY_PATH and GEOFILES "
+                    "before running python."
+                )
+            os.environ['GEOFILES'] = os.path.join(geosupport_path, 'Fls\\')
+            os.environ['PATH'] = ';'.join([
+                i for i in os.environ['PATH'].split(';') if
+                'GEOSUPPORT' not in i.upper()
+            ])
+            os.environ['PATH'] += ';' + os.path.join(geosupport_path, 'bin')
+
         try:
             if self.platform == 'win32':
+                from ctypes import windll, cdll, WinDLL, wintypes
+
+                if GEOLIB is not None:
+                    kernel32 = WinDLL('kernel32')
+                    kernel32.FreeLibrary.argtypes = [wintypes.HMODULE]
+                    kernel32.FreeLibrary(GEOLIB._handle)
+
                 if self.py_bit == '64':
-                    from ctypes import cdll
                     self.geolib = cdll.LoadLibrary("NYCGEO.dll")
                 else:
-                    # must use windll for 32-bit Windows binaries
-                    from ctypes import windll
                     self.geolib = windll.LoadLibrary("NYCGEO.dll")
             elif self.platform.startswith('linux'):
-                import os
                 from ctypes import cdll
+
+                if GEOLIB is not None:
+                    cdll.LoadLibrary('libdl.so').dlclose(GEOLIB._handle)
+
                 self.geolib = cdll.LoadLibrary("libgeo.so")
             else:
-                raise Exception('This Operating System is currently not supported.')
+                raise GeosupportError(
+                    'This Operating System is currently not supported.'
+                )
+
+            GEOLIB = self.geolib
         except OSError as e:
-            sys.exit(
+            raise GeosupportError(
                 '%s\n'
                 'You are currently using a %s-bit Python interpreter. '
                 'Is the installed version of Geosupport %s-bit?' % (

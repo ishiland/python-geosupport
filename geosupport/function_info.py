@@ -90,7 +90,7 @@ def list_functions():
     )
     return '\n'.join(s)
 
-def function_help(function):
+def function_help(function, return_as_string=False):
     function = FUNCTIONS[function]
 
     s = [
@@ -117,7 +117,10 @@ def function_help(function):
 
     s = "\n".join(s)
 
-    return s
+    if return_as_string:
+        return s
+    else:
+        print(s)
 
 def input_help():
     s = [

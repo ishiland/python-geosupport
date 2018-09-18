@@ -11,20 +11,17 @@ except ImportError:
 
 here = path.abspath(path.dirname(__file__))
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='python-geosupport',
-    version='1.0.1',
+    version='1.0.2',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for NYC Geosupport Desktop Edition',
-    long_description="""
-        # Import the library and create a `Geosupport` object.
-        from geosupport import Geosupport
-        g = Geosupport()
-        
-        # Call the address processing function by name
-        result = g.address(house_number=125, street_name='Worth St', borough_code='Mn')
-        """,
-    author='Ian Shiland',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    author='Ian Shiland, Jeremy Neiman',
     author_email='ishiland@gmail.com',
     packages=['geosupport'],
     include_package_data=True,

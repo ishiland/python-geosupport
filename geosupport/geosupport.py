@@ -129,13 +129,18 @@ class Geosupport(object):
     def __getitem__(self, name):
         return self.__getattr__(name)
 
-    def help(self, name=None):
+    def help(self, name=None, return_as_string=False):
         if name:
             if name.upper() == 'INPUT':
-                return input_help()
+                return_val = input_help()
             try:
-                return function_help(name)
+                return_val = function_help(name, return_as_string)
             except KeyError:
-                return "Function '%s' does not exist." % name
+                return_val = "Function '%s' does not exist." % name
         else:
-            return list_functions()
+            return_val = list_functions()
+
+        if return_as_string:
+            return return_val
+        elif return_val:
+            print(return_val)

@@ -1,4 +1,3 @@
-from os import path
 
 try:
     from setuptools import setup
@@ -9,7 +8,6 @@ except ImportError:
         "for installing setuptools"
     )
 
-here = path.abspath(path.dirname(__file__))
 
 with open("README.md", "r") as fh:
     long_description = fh.read()

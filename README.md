@@ -23,7 +23,7 @@ Additionally, you should check that the following environmental variables are se
 Extract the .zip to a folder of your choice and set the `GEOFILES` and `LD_LIBRARY_PATH` environmental variables of the `fls` and `lib` directories:
 
 ```shell
-$ export GEOFILES=/var/geosupport/version-17c/fls
+$ export GEOFILES=/var/geosupport/version-17c/fls/
 $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/geosupport/version-17c/lib/
 ```
 

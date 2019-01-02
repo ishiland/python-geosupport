@@ -66,9 +66,8 @@ class TestCall(TestCase):
             '1001680032'
         )
 
-        self.assertEqual(
-            result['Number of Entries in List of Geographic Identifiers'],
-            '0004'
+        self.assertTrue(
+            int(result['Number of Entries in List of Geographic Identifiers']) >= 1 
         )
 
         self.assertTrue(

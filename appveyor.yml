@@ -1,0 +1,68 @@
+version: '1.0.{build}'
+
+environment:
+
+#  GEO_VERSION: '18b'
+
+  matrix:
+    # Windows w/64 bit python 3.5
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      PYTHON: "C:\\Python35-x64"
+      PYTHON_ARCH: "64"
+      GEO_VERSION: '18b'
+
+    # Windows w/64 bit python 2.7
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      PYTHON: "C:\\Python27-x64"
+      PYTHON_ARCH: "64"
+      GEO_VERSION: '18b'
+
+    # Windows w/32 bit Geo & python 3.5
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      PYTHON: "C:\\Python35"
+      PYTHON_ARCH: "32"
+      GEO_VERSION: '18b'
+
+    # Windows w/32 bit Geo & python 2.7
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      PYTHON: "C:\\Python27"
+      PYTHON_ARCH: "32"
+      GEO_VERSION: '18b'
+
+    # Ubuntu - python 3
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      PYTHON: "3.6"
+      GEO_VERSION: '18b'
+
+    # Ubuntu - python 2.7
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      PYTHON: "2.7"
+      GEO_VERSION: '18b'
+
+    # Ubuntu - python 3 w/Geosupport 18c
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      PYTHON: "3.6"
+      GEO_VERSION: '18c'
+
+    # Ubuntu - python 3 w/Geosupport 18d
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      PYTHON: "3.6"
+      GEO_VERSION: '18d'
+
+
+init:
+  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - cmd: "%PYTHON%/python -V"
+  - cmd: "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
+
+stack: python %PYTHON%
+
+build_script:
+  - ps: .\appveyor\build.ps1
+
+test_script:
+  - python setup.py test
+#  - pip install -e .[dev]
+#  - invoke test all
+
+

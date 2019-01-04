@@ -1,7 +1,7 @@
-import io
 import sys
 
 from ..testcase import TestCase
+
 
 class TestHelp(TestCase):
 
@@ -26,7 +26,14 @@ class TestHelp(TestCase):
         self.assertEqual(h, "Function 'fake' does not exist.")
 
     def test_print(self):
-        h = io.StringIO()
+
+        try:
+            import StringIO  # python 2
+            h = StringIO.StringIO()
+        except ImportError:
+            import io  # python 3
+            h = io.StringIO()
+
         sys.stdout = h
 
         o = self.geosupport.help()

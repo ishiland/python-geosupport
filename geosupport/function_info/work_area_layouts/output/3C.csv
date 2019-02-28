@@ -50,11 +50,11 @@ Election District (ED),3,245,247,,,,
 Assembly District (AD),2,248,249,,,,
 Police Patrol Borough,2,250,251,,,,
 Borough Code,1,253,253,Internal Use,,,
-1990 Census Tract,6,254,259,,,,
-2010 Census Tract,6,260,265,,,,
+1990 Census Tract,6,254,259,,,,CT
+2010 Census Tract,6,260,265,,,,CT
 2010 Census Block,4,266,269,,,,
 2010 Census Block Suffix,1,270,270,Not Implemented,,,
-2000 Census Tract,6,271,276,,,,
+2000 Census Tract,6,271,276,,,,CT
 2000 Census Block,4,277,280,,,,
 2000 Census Block Suffix,1,281,281,,,,
 Neighborhood Tabulation Area (NTA),4,289,292,,,,

@@ -87,6 +87,9 @@ FORMATTERS = {
     'intersections': list_of_workareas('INTERSECTION', 55),
     'node_list': list_of_nodes,
 
+    # Census Tract formatter
+    'CT': lambda v: '' if v is None else v.replace(' ', '0'),
+    
     # Default formatter
     '': lambda v: '' if v is None else str(v).strip().upper()
 }

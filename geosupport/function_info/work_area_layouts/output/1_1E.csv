@@ -52,11 +52,11 @@ Segment Type Code,1,212,212,,,,
 Alley or Cross Street List Flag,1,213,213,A - Alley Split X - Cross Street ,,,
 Coincidence Segment Count,1,214,214,,,,
 Borough of Census Tract,1,217,217,Internal,,,
-1990 Census Tract,6,218,223,,,,
-2010 Census Tract,6,224,229,,,,
+1990 Census Tract,6,218,223,,,,CT
+2010 Census Tract,6,224,229,,,,CT
 2010 Census Block,4,230,233,,,,
 2010 Census Block Suffix,1,234,234,Not Implemented,,,
-2000 Census Tract,6,235,240,,,,
+2000 Census Tract,6,235,240,,,,CT
 2000 Census Block,4,241,244,,,,
 2000 Census Block Suffix,1,245,245,,,,
 Neighborhood Tabulation Area (NTA),4,246,249,,,,

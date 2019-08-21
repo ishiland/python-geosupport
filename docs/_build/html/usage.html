@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; python-geosupport  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Error Handling" href="errors.html" />
+    <link rel="prev" title="Configuration" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> python-geosupport
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calling-geosupport-functions">Calling Geosupport Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Interactive Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="related.html">Related Projects</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">python-geosupport</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<span id="id1"></span><h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the library and create a `Geosupport` object.</span>
+<span class="kn">from</span> <span class="nn">geosupport</span> <span class="kn">import</span> <span class="n">Geosupport</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Geosupport</span><span class="p">()</span>
+
+<span class="c1"># Call the address processing function by name</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">address</span><span class="p">(</span><span class="n">house_number</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">street_name</span><span class="o">=</span><span class="s1">&#39;Worth St&#39;</span><span class="p">,</span> <span class="n">borough_code</span><span class="o">=</span><span class="s1">&#39;Mn&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">result</span></code> is a dictionary with the output from Geosupport. For example:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;2010 Census Block&#39;</span><span class="o">:</span> <span class="s1">&#39;1012&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2010 Census Tract&#39;</span><span class="o">:</span> <span class="s1">&#39;31&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Assembly District&#39;</span><span class="o">:</span> <span class="s1">&#39;65&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Atomic Polygon&#39;</span><span class="o">:</span> <span class="s1">&#39;112&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;B10SC - First Borough and Street Code&#39;</span><span class="o">:</span> <span class="s1">&#39;14549001010&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;BOE Preferred B7SC&#39;</span><span class="o">:</span> <span class="s1">&#39;14549001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;BOE Preferred Street Name&#39;</span><span class="o">:</span> <span class="s1">&#39;WORTH STREET&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;BOROUGH BLOCK LOT (BBL)&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;BOROUGH BLOCK LOT (BBL)&#39;</span><span class="o">:</span> <span class="s1">&#39;1001680032&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Borough Code&#39;</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Tax Block&#39;</span><span class="o">:</span> <span class="s1">&#39;00168&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Tax Lot&#39;</span><span class="o">:</span> <span class="s1">&#39;0032&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;Blockface ID&#39;</span><span class="o">:</span> <span class="s1">&#39;0212261942&#39;</span><span class="p">,</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-geosupport-functions">
+<h2>Calling Geosupport Functions<a class="headerlink" href="#calling-geosupport-functions" title="Permalink to this headline">¶</a></h2>
+<p><cite>python-geosupport</cite> is flexible with how you call functions. You can use either Geosupport function codes or human readable alternate names, and access them either through python object attribute notation or dictionary item notation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Different ways of calling function 3S which processes street stretches</span>
+<span class="n">g</span><span class="o">.</span><span class="n">street_stretch</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">g</span><span class="p">[</span><span class="s1">&#39;street_stretch&#39;</span><span class="p">](</span><span class="o">...</span><span class="p">)</span>
+<span class="n">g</span><span class="p">[</span><span class="s1">&#39;3S&#39;</span><span class="p">](</span><span class="o">...</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">call</span><span class="p">({</span><span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="s1">&#39;3S&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="s1">&#39;3S&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can pass arguments as a dictionary, keyword arguments.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a dictionary with short names</span>
+<span class="n">g</span><span class="o">.</span><span class="n">street_stretch</span><span class="p">({</span><span class="s1">&#39;borough_code&#39;</span><span class="p">:</span> <span class="s1">&#39;MN&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">:</span> <span class="s1">&#39;1 Av&#39;</span><span class="p">,</span> <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;1 st&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">:</span> <span class="s1">&#39;2 st&#39;</span><span class="p">})</span>
+<span class="c1"># Use keyword arguments with short names</span>
+<span class="n">g</span><span class="o">.</span><span class="n">street_stretch</span><span class="p">(</span>
+    <span class="n">borough_code</span><span class="o">=</span><span class="s1">&#39;MN&#39;</span><span class="p">,</span> <span class="n">street_name_1</span><span class="o">=</span><span class="s1">&#39;1 Av&#39;</span><span class="p">,</span>
+    <span class="n">street_name_2</span><span class="o">=</span><span class="s1">&#39;1 st&#39;</span><span class="p">,</span> <span class="n">street_name_3</span><span class="o">=</span><span class="s1">&#39;9 st&#39;</span>
+<span class="p">)</span>
+<span class="c1"># Use dictionary with full names</span>
+<span class="n">g</span><span class="o">.</span><span class="n">street_stretch</span><span class="p">({</span>
+    <span class="s1">&#39;Borough Code-1&#39;</span><span class="p">:</span> <span class="s1">&#39;MN&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Street Name-1&#39;</span><span class="p">:</span> <span class="s1">&#39;1 Av&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Street Name-2&#39;</span><span class="p">:</span> <span class="s1">&#39;1 st&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Street Name-3&#39;</span><span class="p">:</span> <span class="s1">&#39;9 st&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mode">
+<h2>Mode<a class="headerlink" href="#mode" title="Permalink to this headline">¶</a></h2>
+<p>A number of Geosupport functions support several modes: Exetended, Long, and TPAD Long. You can set the flags individually as you would with using Geosupport directly, but python-geosupport makes it easier with the <code class="docutils literal notranslate"><span class="pre">mode</span></code> argument. <code class="docutils literal notranslate"><span class="pre">mode</span></code> can be one of <code class="docutils literal notranslate"><span class="pre">regular</span></code> (default), <code class="docutils literal notranslate"><span class="pre">extended</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code> and <code class="docutils literal notranslate"><span class="pre">long+tpad</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Call BL (Block and Lot) function in long mode</span>
+<span class="n">g</span><span class="o">.</span><span class="n">BL</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;long&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">BL</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;long+tpad&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="c1"># With TPAD</span>
+
+<span class="c1"># Call 3 (Street Segment) function in extended mode</span>
+<span class="n">g</span><span class="o">.</span><span class="n">street_segment</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;extended&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="errors.html" class="btn btn-neutral float-right" title="Error Handling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ian Shiland, Jeremy Neiman
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='python-geosupport',
-    version='1.0.5',
+    version='1.0.6',
     url='https://github.com/ishiland/python-geosupport',
     description='Python bindings for NYC Geosupport Desktop Edition',
     long_description=long_description,

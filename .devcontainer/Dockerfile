@@ -9,9 +9,9 @@ ARG INSTALL_NODE="false"
 ARG NODE_VERSION="lts/*"
 
 # Geosupport release versions, change args in devcontainer.json to build against a new version
-ARG RELEASE=21a
+ARG RELEASE=21c
 ARG MAJOR=21
-ARG MINOR=1
+ARG MINOR=3
 ARG PATCH=0
 
 RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi

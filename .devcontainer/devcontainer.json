@@ -7,13 +7,13 @@
 		"context": "..",
 		"args": { 
 			// Update 'VARIANT' to pick a Python version: 3, 3.6, 3.7, 3.8, 3.9
-			"VARIANT": "3.8",
+			"VARIANT": "3.9",
 			// Options
 			"INSTALL_NODE": "false",
 			"NODE_VERSION": "lts/*",
-			"RELEASE": "21a",
+			"RELEASE": "21c",
 			"MAJOR": "21",
-			"MINOR": "1",
+			"MINOR": "3",
 			"PATCH": "0",
 		}
 	},

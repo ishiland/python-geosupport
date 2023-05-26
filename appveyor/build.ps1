@@ -1,8 +1,8 @@
 # Variables to help determine new naming convention in download string - currently only testing different geosupport versions in linux
 # New naming convention example: linux_geo18d_184.zip
-$legacyVersions = @('18a', '18b', '18c')
+$legacyVersions = @('23a', '22a', '21a')
 $subVersions = 'a', 'b', 'c', 'd', 'e', 'f'
-$BASE_URL = 'https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/'
+$BASE_URL = 'https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/'
 
 # DL function modified from https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor/install.ps1
 function Download($filename, $url)
@@ -101,7 +101,7 @@ elseif ($isLinux)
             if ($version -eq $env:GEO_VERSION.Substring(2))
             {
                 $idx = [array]::indexOf($subVersions, $version) + 1
-                $FILENAME = "linux_geo$( $env:GEO_VERSION )_$($env:GEO_VERSION.Substring(0, 2) )$( $idx ).zip"
+                $FILENAME = "linux_geo$( $env:GEO_VERSION )_$($env:GEO_VERSION.Substring(0, 2) )_$( $idx ).zip"
             }
         }
     }

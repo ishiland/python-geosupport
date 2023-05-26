@@ -3,6 +3,7 @@
 # Minor edits by torreyma: https://github.com/torreyma
 #
 from geosupport import Geosupport, GeosupportError
+from nycparser import Parser
 import pandas as pd
 from multiprocessing import Pool, cpu_count
 from functools import partial
@@ -12,11 +13,13 @@ import numpy as np
 Example of how to use python-geosupport, Pandas and Multiprocessing to speed up geocoding workflows. 
 """
 
-# For Windows:
-g = Geosupport(geosupport_path="C:\\Program Files (x86)\\Geosupport Desktop Edition")
-# On linux, geosupport location is set in environment variables GEOFILES and LD_LIBRARY_PATH.
+g = Geosupport()
+p = Parser()
 
 cpus = cpu_count()
+
+INPUT_CSV = '/examples/data/input.csv'
+OUTPUT_CSV = '/examples/data/output-pandas-multiprocessing.csv'
 
 
 def geo_by_address(row):
@@ -27,15 +30,17 @@ def geo_by_address(row):
     :return: Pandas Series with lat, lon & Geosupport message.
     """
     try:
-        result = g.address(house_number=row['PHN'], street_name=row['STREET'], zip=row['ZIP_CODE']) # Adjust these to match your data column names
+        # parse the address to separate PHN and street
+        parsed = p.address(row['Address'])
+        # geocode
+        result = g.address(house_number=parsed['PHN'], street_name=parsed['STREET'], borough=row['Borough'])
         lat = result.get("Latitude")
         lon = result.get('Longitude')
         msg = result.get('Message')
     except GeosupportError as ge:
-        lat = "Error"
-        lon = "Error"
+        lat = ""
+        lon = ""
         msg = str(ge)
-        pass
     return pd.Series([lat, lon, msg])
   
   
@@ -59,13 +64,13 @@ def parallelize_on_rows(data, func, num_of_processes=cpus):
 if __name__ == '__main__':
   
     # read in csv
-    df = pd.read_csv('INPUT.csv')
+    df = pd.read_csv(INPUT_CSV)
     
     # add 3 Geosupport columns - Latitude, Longitude and Geosupport message
     df[['lat', 'lon', 'msg']] = parallelize_on_rows(df, geo_by_address)
 
     # output to csv with the 3 new columns.
-    df.to_csv('OUTPUT.csv')
+    df.to_csv(OUTPUT_CSV)
 
 
 

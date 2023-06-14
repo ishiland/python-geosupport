@@ -9,6 +9,7 @@ $BASE_URL = 'https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/by
 # win 64:  https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/gde_23b_x64.zip
 # win x86:  https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/gde_23b.zip
 
+
 # DL function modified from https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor/install.ps1
 function Download($filename, $url)
 {
@@ -136,3 +137,5 @@ elseif ($isLinux)
 
     Write-Host "Install complete."
 }
+
+Get-ChildItem env:

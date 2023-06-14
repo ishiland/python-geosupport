@@ -8,22 +8,25 @@ branches:
 
 environment:
 
-  GEO_VERSION: '23b'
+#  GEO_VERSION: '18b'
 
   matrix:
     # Windows w/64 bit python 3.11
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       PYTHON: "C:\Python311-x64"
       PYTHON_ARCH: "64"
+      GEO_VERSION: '23b'
 
     # Windows w/32 bit Geo & python 3.11
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       PYTHON: "C:\Python311"
       PYTHON_ARCH: "32"
+      GEO_VERSION: '23b'
 
     # Ubuntu - python 3
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
       PYTHON: "3.11.3"
+      GEO_VERSION: '23b'
 
 
 init:

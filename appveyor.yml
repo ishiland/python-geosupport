@@ -30,7 +30,7 @@ environment:
 
     # Windows python 3.11
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      PYTHON: "C:\Python311-x64"
+      PYTHON: "C:\\Python311-x64"
       PYTHON_ARCH: "64"
 #    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
 #      PYTHON: "C:\Python311"
@@ -42,9 +42,9 @@ environment:
 #      PYTHON: "3.11.2"
 
 
-#init:
-#  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-#  - cmd: "%PYTHON%/python -V"
+init:
+  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - cmd: "%PYTHON%/python -V"
 #  - cmd: "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 #stack: python %PYTHON%

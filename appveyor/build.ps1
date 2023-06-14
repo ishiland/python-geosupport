@@ -139,3 +139,4 @@ elseif ($isLinux)
 }
 
 Get-ChildItem env:
+Get-Item Env:PATH

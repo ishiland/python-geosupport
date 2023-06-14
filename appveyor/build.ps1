@@ -4,6 +4,11 @@ $legacyVersions = @('23a', '22a', '21a')
 $subVersions = 'a', 'b', 'c', 'd', 'e', 'f'
 $BASE_URL = 'https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/'
 
+# example url formats:
+# linux: https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/linux_geo23a_23_1.zip
+# win 64:  https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/gde_23b_x64.zip
+# win x86:  https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/gde_23b.zip
+
 # DL function modified from https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor/install.ps1
 function Download($filename, $url)
 {
@@ -53,7 +58,7 @@ if ($isWindows)
 
         $LOCALDIR = 'geosupport-install-x64'
         $TARGETDIR = 'C:\Program Files\Geosupport Desktop Edition'
-        $FILENAME = "gde64_$( $env:GEO_VERSION ).zip"
+        $FILENAME = "gde_$( $env:GEO_VERSION )_x64.zip"
         $URL = "$( $BASE_URL )$( $FILENAME )"
     }
     elseif ($env:PYTHON_ARCH -eq '32')

@@ -1,6 +1,7 @@
 # from: https://gist.github.com/ishiland/824ddd386fcd0b90fc55aea573a28b22
 # written by ishiland: https://github.com/ishiland
-# Minor edits by torreyma: https://github.com/torreyma
+# derived from: https://stackoverflow.com/a/53135031/3641153
+# minor edits by torreyma: https://github.com/torreyma
 #
 from geosupport import Geosupport, GeosupportError
 import pandas as pd
@@ -14,7 +15,8 @@ Example of how to use python-geosupport, Pandas and Multiprocessing to speed up 
 
 # For Windows:
 g = Geosupport(geosupport_path="C:\\Program Files (x86)\\Geosupport Desktop Edition")
-# On linux, geosupport location is set in environment variables GEOFILES and LD_LIBRARY_PATH.
+# On linux: comment above line and uncomment line below. Set environment variables GEOFILES and LD_LIBRARY_PATH to indicate location of the fls/ and lib/ directories.
+# g = Geosupport()
 
 cpus = cpu_count()
 
@@ -52,17 +54,13 @@ def run_on_subset(func, data_subset):
     return data_subset.apply(func, axis=1)
 
 
-def parallelize_on_rows(data, func, num_of_processes=cpus):
-    return parallelize(data, partial(run_on_subset, func), num_of_processes)
-
-
 if __name__ == '__main__':
   
     # read in csv
     df = pd.read_csv('INPUT.csv')
     
     # add 3 Geosupport columns - Latitude, Longitude and Geosupport message
-    df[['lat', 'lon', 'msg']] = parallelize_on_rows(df, geo_by_address)
+    df[['lat', 'lon', 'msg']] = parallelize(df, partial(run_on_subset, geo_by_address))
 
     # output to csv with the 3 new columns.
     df.to_csv('OUTPUT.csv')

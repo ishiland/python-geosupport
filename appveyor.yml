@@ -8,7 +8,7 @@ branches:
 
 environment:
 
-  GEO_VERSION: '18b'
+  GEO_VERSION: '23b'
 
   matrix:
     # Windows w/64 bit python 3.11
@@ -21,9 +21,9 @@ environment:
       PYTHON: "C:\Python311"
       PYTHON_ARCH: "32"
 
-    # Ubuntu - python 3
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
-      PYTHON: "3.11.3"
+    # Ubuntu - python 3.11
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004 # Ubuntu 20.04 LTS (Focal Fossa)
+      PYTHON: "3.11.2"
 
 
 #init:
@@ -31,7 +31,7 @@ environment:
 #  - cmd: "%PYTHON%/python -V"
 #  - cmd: "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
-stack: python %PYTHON%
+#stack: python %PYTHON%
 
 build_script:
   - ps: .\appveyor\build.ps1

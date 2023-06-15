@@ -14,18 +14,18 @@ environment:
 
     # Windows python 2.7
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      PYTHON: "C:\Python27-x64"
+      PYTHON: "C:\\Python27-x64"
       PYTHON_ARCH: "64"
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      PYTHON: "C:\Python27"
+      PYTHON: "C:\\Python27"
       PYTHON_ARCH: "32"
 
     # Windows python 3.8
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      PYTHON: "C:\Python38-x64"
+      PYTHON: "C:\\Python38-x64"
       PYTHON_ARCH: "64"
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      PYTHON: "C:\Python38"
+      PYTHON: "C:\\Python38"
       PYTHON_ARCH: "32"
 
     # Windows python 3.11
@@ -33,7 +33,7 @@ environment:
       PYTHON: "C:\\Python311-x64"
       PYTHON_ARCH: "64"
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      PYTHON: "C:\Python311"
+      PYTHON: "C:\\Python311"
       PYTHON_ARCH: "32"
 
 

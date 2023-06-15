@@ -42,9 +42,9 @@ environment:
       PYTHON: "3.11.2"
 
 
-init:
-  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-  - cmd: "%PYTHON%/python -V"
+#init:
+#  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+#  - cmd: "%PYTHON%/python -V"
 #  - cmd: "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 #stack: python %PYTHON%

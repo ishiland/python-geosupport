@@ -72,13 +72,14 @@ if ($isWindows)
 
     # download
     Write-Host "Downloading $env:PYTHON_ARCH bit Geosupport version $env:GEO_VERSION for Windows..."
+    $DOWNLOAD_FILE = Download $FILENAME $URL
 
     # extract
     Write-Host "Extracting..."
     unzip $FILENAME -d $LOCALDIR
 
     # delete .zip
-    Remove-Item $FILENAME
+    rm $FILENAME
 
     # silently install Geosupport Desktop
     Write-Host "Installing..."
@@ -124,11 +125,11 @@ elseif ($isLinux)
     unzip $FILENAME -d $LOCALDIR
 
     # get the first child directory name of the unzipped geosupport install dir
-    $GEO_DIR_CHILD_NAME = Get-ChildItem $LOCALDIR -Recurse | Where-Object { $_.FullName -like "*$( $env:GEO_VERSION )*" } | Select-Object -First 1 | Select-Object -expand Name
+    $GEO_DIR_CHILD_NAME = Get-ChildItem $LOCALDIR -Recurse | Where-Object { $_.FullName -like "*$( $env:GEO_VERSION )*" } | Select-Object -First 1 | select -expand Name
     $INSTALL_PATH = "$( $pwd )/$( $LOCALDIR )/$( $GEO_DIR_CHILD_NAME )"
 
     # delete .zip
-    Remove-Item $FILENAME
+    rm $FILENAME
 
     # set Geosupport Environmental variables
     $env:GEOFILES = "$( $INSTALL_PATH )/fls/"
@@ -136,3 +137,4 @@ elseif ($isLinux)
 
     Write-Host "Install complete."
 }
+

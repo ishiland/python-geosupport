@@ -11,6 +11,7 @@ from .config import USER_CONFIG
 from .error import GeosupportError
 from .function_info import FUNCTIONS, function_help, list_functions, input_help
 from .io import format_input, parse_output, set_mode
+from .sysutils import build_win_dll_path
 
 GEOLIB = None
 
@@ -50,10 +51,13 @@ class Geosupport(object):
                     kernel32.FreeLibrary.argtypes = [wintypes.HMODULE]
                     kernel32.FreeLibrary(GEOLIB._handle)
 
+                # get the full path to the NYCGEO.dll
+                nyc_geo_dll_path = build_win_dll_path(geosupport_path)
+
                 if self.py_bit == '64':
-                    self.geolib = cdll.LoadLibrary("NYCGEO.dll")
+                    self.geolib = cdll.LoadLibrary(nyc_geo_dll_path)
                 else:
-                    self.geolib = windll.LoadLibrary("NYCGEO.dll")
+                    self.geolib = windll.LoadLibrary(nyc_geo_dll_path)
             elif self.platform.startswith('linux'):
                 from ctypes import cdll
 

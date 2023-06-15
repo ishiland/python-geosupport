@@ -48,7 +48,7 @@ class TestCall(TestCase):
 
         self.assertDictSubsetEqual({
             'City Council District': '01',
-            'State Senatorial District': '26'
+            'State Senatorial District': '27'
         }, result)
 
         self.assertTrue('Physical ID' not in result)
@@ -220,11 +220,11 @@ class TestCall(TestCase):
 
         self.assertEqual(
             str(cm.exception),
-            'STREETS INTERSECT MORE THAN TWICE - USE NODE AS INPUT '
+            'PLAZA STREET EAST IS AN INVALID STREET NAME FOR THIS LOCATION '
         )
 
-        self.assertEqual(len(cm.exception.result['List of Nodes']), 4)
-        self.assertEqual(len(cm.exception.result['B7SCs For Nodes']), 4)
+        self.assertEqual(len(cm.exception.result['List of Street Codes']), 2)
+        self.assertEqual(len(cm.exception.result['List of Street Names']), 2)
 
         self.assertEqual(cm.exception.result['Node Number'], '')
 
@@ -285,7 +285,7 @@ class TestCall(TestCase):
         self.assertDictSubsetEqual({
             'From Node': '0015487',
             'To Node': '0020353',
-            'Left NTA Name': 'SOHO-TRIBECA-CIVIC CENTER-LITTLE ITALY'
+            'Left 2020 Community District Tabulation Area (CDTA)': 'MN01'
         }, result)
 
         self.assertTrue('Segment IDs' not in result)
@@ -304,7 +304,7 @@ class TestCall(TestCase):
         self.assertDictSubsetEqual({
             'From Node': '0015487',
             'To Node': '0020353',
-            'Left NTA Name': 'SOHO-TRIBECA-CIVIC CENTER-LITTLE ITALY'
+             'Left 2020 Community District Tabulation Area (CDTA)': 'MN01'
         }, result)
 
         self.assertEqual(len(result['Segment IDs']), 2)
@@ -367,11 +367,12 @@ class TestCall(TestCase):
             'To Node': '0020353',
             'Side-of-Street Indicator': 'R',
             'Blockface ID': '0212262072'
+
         }, result)
 
         self.assertEqual(len(result['Segment IDs']), 2)
-        self.assertTrue('0023578' in result['Segment IDs'])
-        self.assertTrue('0032059' in result['Segment IDs'])
+        self.assertTrue('7800320' in result['Segment IDs'])
+        self.assertTrue('59' in result['Segment IDs'])
 
     def test_3S(self):
         result = self.geosupport.call({

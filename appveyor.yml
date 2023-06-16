@@ -42,10 +42,12 @@ environment:
 #      PYTHON: "3.11.2"
 
 
+# the specified version of python is not automatically added to the path, need to set that here. Then do
 # some sanity checks to make sure we are using the correct python
 init:
-  - cmd: %PYTHON%/python -V
-  - cmd: %PYTHON%/python -c "import sys;print('64 Bit' if sys.maxsize  > 2**32 else '32 bit')"
+  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - cmd: %PYTHON%\\python -V
+  - cmd: %PYTHON%\\python -c "import sys;print('64 Bit' if sys.maxsize  > 2**32 else '32 bit')"
 
 #stack: python %PYTHON%
 
@@ -53,7 +55,7 @@ build_script:
   - ps: .\appveyor\build.ps1
 
 test_script:
-  - %PYTHON%/python setup.py test
+  - %PYTHON%\\python setup.py test
 #  - pip install -e .[dev]
 #  - invoke test all
 

@@ -1,5 +1,7 @@
 version: '1.0.{build}'
 
+# see https://packaging.python.org/en/latest/guides/supporting-windows-using-appveyor/
+
 branches:
   # whitelist
   only:
@@ -13,33 +15,33 @@ environment:
   matrix:
 
     # Windows python 2.7
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-#      PYTHON: "C:\\Python27-x64"
-#      PYTHON_ARCH: "64"
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-#      PYTHON: "C:\\Python27"
-#      PYTHON_ARCH: "32"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      PYTHON: "C:\\Python27-x64"
+      PYTHON_ARCH: "64"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      PYTHON: "C:\\Python27"
+      PYTHON_ARCH: "32"
 
     # Windows python 3.8
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      PYTHON: "C:\\Python38-x64"
-#      PYTHON_ARCH: "64"
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-#      PYTHON: "C:\\Python38"
-#      PYTHON_ARCH: "32"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: "C:\\Python38-x64"
+      PYTHON_ARCH: "64"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      PYTHON: "C:\\Python38"
+      PYTHON_ARCH: "32"
 
     # Windows python 3.11
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python311-x64"
       PYTHON_ARCH: "64"
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-#      PYTHON: "C:\\Python311"
-#      PYTHON_ARCH: "32"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      PYTHON: "C:\\Python311"
+      PYTHON_ARCH: "32"
 
 
-#    # Ubuntu - python 3.11
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
-#      PYTHON: "3.11.2"
+    # Ubuntu - python 3.11
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+      PYTHON: "3.11.2"
 
 
 # the specified version of python is not automatically added to the path, need to set that here. Then do
@@ -49,13 +51,16 @@ init:
   - cmd: python -V
   - cmd: python -c "import sys;print('64 Bit' if sys.maxsize  > 2**32 else '32 bit')"
 
-#stack: python %PYTHON%
+#install:
+#  - "%PYTHON%/Scripts/pip.exe install nose"
+#  - "%PYTHON%/Scripts/pip.exe install coverage"
 
+# download geosupport
 build_script:
   - ps: .\appveyor\build.ps1
 
 test_script:
-    python setup.py test
+  - python setup.py test
 #  - pip install -e .[dev]
 #  - invoke test all
 

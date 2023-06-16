@@ -11,6 +11,7 @@ class TestSysUtils(TestCase):
         """ test that the dll path is created from the provided geosupport path"""
         dll_path = build_win_dll_path(geosupport_path=r'C:\somewhere\on\my\pc')
         self.assertEqual(dll_path.lower(), r'c:\somewhere\on\my\pc\bin\nycgeo.dll')
+        pass
 
     @skipUnless(sys.platform.startswith("win"), "requires Windows")
     @mock.patch.dict(os.environ, {
@@ -21,6 +22,7 @@ class TestSysUtils(TestCase):
             mocked_listdir.return_value = ['geo.dll', 'docs', 'nycgeo.exe', 'nycgeo.dll']
             dll_path = build_win_dll_path(geosupport_path=None)
             self.assertEqual(dll_path.lower(), r'c:\another\place\on\my\pc\bin\nycgeo.dll')
+            pass
 
     @skipUnless(sys.platform.startswith("win"), "requires Windows")
     @mock.patch.dict(os.environ, {"PATH": "just a bunch of nonsense"})
@@ -29,3 +31,4 @@ class TestSysUtils(TestCase):
         with self.assertRaises(Exception) as context:
             build_win_dll_path(geosupport_path=None)
             self.assertTrue('Unable to locate the nycgeo.dll' in context.exception)
+        pass

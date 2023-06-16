@@ -13,39 +13,38 @@ environment:
   matrix:
 
     # Windows python 2.7
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      PYTHON: "C:\\Python27-x64"
-      PYTHON_ARCH: "64"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      PYTHON: "C:\\Python27"
-      PYTHON_ARCH: "32"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#      PYTHON: "C:\\Python27-x64"
+#      PYTHON_ARCH: "64"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#      PYTHON: "C:\\Python27"
+#      PYTHON_ARCH: "32"
 
     # Windows python 3.8
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      PYTHON: "C:\\Python38-x64"
-      PYTHON_ARCH: "64"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      PYTHON: "C:\\Python38"
-      PYTHON_ARCH: "32"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+#      PYTHON: "C:\\Python38-x64"
+#      PYTHON_ARCH: "64"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+#      PYTHON: "C:\\Python38"
+#      PYTHON_ARCH: "32"
 
     # Windows python 3.11
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       PYTHON: "C:\\Python311-x64"
       PYTHON_ARCH: "64"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      PYTHON: "C:\\Python311"
-      PYTHON_ARCH: "32"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+#      PYTHON: "C:\\Python311"
+#      PYTHON_ARCH: "32"
 
 
 #    # Ubuntu - python 3.11
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
-      PYTHON: "3.11.2"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
+#      PYTHON: "3.11.2"
 
 
-#init:
-#  - cmd: set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
-#  - cmd: "%PYTHON%/python -V"
-#  - cmd: "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
+init:
+  - ps: "python -V"
+  - ps: python -c "import sys;print('64 Bit' if sys.maxsize  > 2**32 else '32 bit')"
 
 #stack: python %PYTHON%
 

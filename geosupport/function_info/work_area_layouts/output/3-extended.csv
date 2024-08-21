@@ -1,5 +1,5 @@
 name,size,from,to,comment,parent,alt_names,formatter
-List of 4 LGCs for Street 1,8,451,458,Â‘OnÂ’ Street,,,2
+List of 4 LGCs for Street 1,8,451,458,‘On’ Street,,,2
 List of 4 LGCs for Street 2,8,459,466,Input Cross Street with Lower B5SC,,,2
 List of 4 LGCs for Street 3,8,467,474,Input Cross Street with Higher B5SC,,,2
 Left Health Center District,2,475,476,,,,
@@ -26,7 +26,7 @@ From Y Coordinate,7,694,700,,FROM SPATIAL COORDINATES:,,
 TO SPATIAL COORDINATES:,14,701,714,To Node,,,
 To X Coordinate,7,701,707,,TO SPATIAL COORDINATES:,,
 To Y Coordinate,7,708,714,,TO SPATIAL COORDINATES:,,
-Latitude of From Intersection,9,715,713,,,,
+Latitude of From Intersection,9,715,723,,,,
 Longitude of From Intersection,11,724,734,,,,
 Latitude of To Intersection,9,735,743,,,,
 Longitude of To Intersection,11,744,754,,,,
@@ -39,8 +39,8 @@ Bike Lane 2,2,781,782,,,,
 Street Width Maximum,3,783,785,,,,
 Bike Traffic Direction,2,786,787,,,,
 Speed Limit,2,788,789,,,,
-Left PUMA Code,2,790,794,,,,
-Right PUMA Code,2,795,799,,,,
+Left PUMA Code,5,790,794,,,,
+Right PUMA Code,5,795,799,,,,
 Left Police Sector,4,800,803,,,,
 Right Police Sector,4,804,807,,,,
 Truck Route Type,1,808,808,,,,

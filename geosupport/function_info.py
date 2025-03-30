@@ -1,34 +1,35 @@
 from csv import DictReader
 import glob
 from os import path
+from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 
 from .config import FUNCTION_INFO_CSV, FUNCTION_INPUTS_CSV, WORK_AREA_LAYOUTS_PATH
 
 class FunctionDict(dict):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super(FunctionDict, self).__init__()
-        self.alt_names = {}
+        self.alt_names: Dict[str, str] = {}
 
-    def __getitem__(self, name):
+    def __getitem__(self, name: str) -> Any:
         name = str(name).strip().upper()
         if self.alt_names and name in self.alt_names:
             name = self.alt_names[name]
 
         return super(FunctionDict, self).__getitem__(name)
 
-    def __contains__(self, name):
-        name = str(name).strip().upper()
+    def __contains__(self, name: object) -> bool:
+        name_str = str(name).strip().upper()
 
         return (
-            (name in self.alt_names) or
-            (super(FunctionDict, self).__contains__(name))
+            (name_str in self.alt_names) or
+            (super(FunctionDict, self).__contains__(name_str))
         )
 
-def load_function_info():
+def load_function_info() -> FunctionDict:
     functions = FunctionDict()
 
-    alt_names = {}
+    alt_names: Dict[str, str] = {}
 
     with open(FUNCTION_INFO_CSV) as f:
         csv = DictReader(f)
@@ -68,7 +69,7 @@ def load_function_info():
 
     return functions
 
-def list_functions():
+def list_functions() -> str:
     s = sorted([
         "%s (%s)" % (
             function['function'], ', '.join(function['alt_names'])
@@ -90,7 +91,7 @@ def list_functions():
     )
     return '\n'.join(s)
 
-def function_help(function, return_as_string=False):
+def function_help(function: str, return_as_string: bool = False) -> Optional[str]:
     function = FUNCTIONS[function]
 
     s = [
@@ -121,8 +122,9 @@ def function_help(function, return_as_string=False):
         return s
     else:
         print(s)
+        return None
 
-def input_help():
+def input_help() -> str:
     s = [
         "\nThe following is a full list of inputs for Geosupport. "
         "It has the full name (followed by alternate names.)",
@@ -141,16 +143,16 @@ def input_help():
 
     return '\n'.join(s)
 
-def load_work_area_layouts():
-    work_area_layouts = {}
-    inputs = []
+def load_work_area_layouts() -> Tuple[Dict[str, Dict[str, Any]], List[Dict[str, Any]]]:
+    work_area_layouts: Dict[str, Dict[str, Any]] = {}
+    inputs: List[Dict[str, Any]] = []
 
     for csv in glob.glob(path.join(WORK_AREA_LAYOUTS_PATH, '*', '*.csv')):
         directory = path.basename(path.dirname(csv))
         if directory not in work_area_layouts:
             work_area_layouts[directory] = {}
 
-        layout = {}
+        layout: Dict[str, Any] = {}
         name = path.basename(csv).split('.')[0]
 
         if '-' in name:
@@ -203,7 +205,7 @@ def load_work_area_layouts():
 
     return work_area_layouts, inputs
 
-MODES = ['regular', 'extended', 'long', 'long+tpad']
-AUXILIARY_SEGMENT_LENGTH = 500
+MODES: List[str] = ['regular', 'extended', 'long', 'long+tpad']
+AUXILIARY_SEGMENT_LENGTH: int = 500
 FUNCTIONS = load_function_info()
 WORK_AREA_LAYOUTS, INPUT = load_work_area_layouts()

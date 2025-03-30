@@ -1,4 +1,5 @@
 from functools import partial
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union, cast
 
 from .config import BOROUGHS
 from .error import GeosupportError
@@ -6,8 +7,8 @@ from .function_info import (
     FUNCTIONS, AUXILIARY_SEGMENT_LENGTH, WORK_AREA_LAYOUTS
 )
 
-def list_of(length, callback, v):
-    output = []
+def list_of(length: int, callback: Callable[[str], Any], v: str) -> List[Any]:
+    output: List[Any] = []
     i = 0
     # While the next entry isn't blank
     while v[i:i+length].strip() != '':
@@ -16,23 +17,23 @@ def list_of(length, callback, v):
 
     return output
 
-def list_of_items(length):
+def list_of_items(length: int) -> Callable[[str], List[str]]:
     return partial(list_of, length, lambda v: v.strip())
 
-def list_of_workareas(name, length):
+def list_of_workareas(name: str, length: int) -> Callable[[str], List[Dict[str, Any]]]:
     return partial(
         list_of, length,
         lambda v: parse_workarea(WORK_AREA_LAYOUTS['output'][name], v)
     )
 
-def list_of_nodes(v):
+def list_of_nodes(v: str) -> List[List[List[str]]]:
     return list_of(
         160,
         lambda w: list_of(32, list_of_items(8), w),
         v
     )
 
-def borough(v):
+def borough(v: Optional[Union[str, int]]) -> str:
     if v:
         v2 = str(v).strip().upper()
 
@@ -46,14 +47,14 @@ def borough(v):
     else:
         return ''
 
-def function(v):
+def function(v: str) -> str:
     v = str(v).upper().strip()
     if v in FUNCTIONS:
         v = FUNCTIONS[v]['function']
     return v
 
-def flag(true, false):
-    def f(v):
+def flag(true: str, false: str) -> Callable[[Optional[Union[bool, str]]], str]:
+    def f(v: Optional[Union[bool, str]]) -> str:
         if type(v) == bool:
             return true if v else false
 
@@ -64,7 +65,7 @@ def flag(true, false):
 
     return f
 
-FORMATTERS = {
+FORMATTERS: Dict[str, Any] = {
     # Format input
     'function': function,
     'borough': borough,
@@ -94,14 +95,14 @@ FORMATTERS = {
     '': lambda v: '' if v is None else str(v).strip().upper()
 }
 
-def get_formatter(name):
+def get_formatter(name: str) -> Callable:
     if name in FORMATTERS:
         return FORMATTERS[name]
     elif name.isdigit():
         return list_of_items(int(name))
 
-def set_mode(mode):
-    flags = {}
+def set_mode(mode: Optional[str]) -> Dict[str, bool]:
+    flags: Dict[str, bool] = {}
     if mode:
         if mode == 'extended':
             flags['mode_switch'] = True
@@ -112,7 +113,7 @@ def set_mode(mode):
 
     return flags
 
-def get_mode(flags):
+def get_mode(flags: Dict[str, bool]) -> str:
     if flags['mode_switch']:
         return 'extended'
     elif flags['long_work_area_2'] and flags['tpad']:
@@ -122,7 +123,7 @@ def get_mode(flags):
     else:
         return 'regular'
 
-def get_flags(wa1):
+def get_flags(wa1: str) -> Dict[str, Any]:
     layout = WORK_AREA_LAYOUTS['input']['WA1']
 
     flags = {
@@ -137,7 +138,7 @@ def get_flags(wa1):
 
     return flags
 
-def create_wa1(kwargs):
+def create_wa1(kwargs: Dict[str, Any]) -> str:
     kwargs['work_area_format'] = 'C'
     b = bytearray(b' '*1200)
     mv = memoryview(b)
@@ -154,7 +155,7 @@ def create_wa1(kwargs):
 
     return str(b.decode())
 
-def create_wa2(flags):
+def create_wa2(flags: Dict[str, Any]) -> Optional[str]:
     length = FUNCTIONS[flags['function']][flags['mode']]
 
     if length is None:
@@ -165,7 +166,7 @@ def create_wa2(flags):
 
     return ' ' * length
 
-def format_input(kwargs):
+def format_input(kwargs: Dict[str, Any]) -> Tuple[Dict[str, Any], str, Optional[str]]:
     wa1 = create_wa1(kwargs)
 
     flags = get_flags(wa1)
@@ -177,13 +178,13 @@ def format_input(kwargs):
 
     return flags, wa1, wa2
 
-def parse_field(field, wa):
+def parse_field(field: Dict[str, Any], wa: str) -> Any:
     i = field['i']
     formatter = get_formatter(field['formatter'])
     return formatter(wa[i[0]:i[1]])
 
-def parse_workarea(layout, wa):
-    output = {}
+def parse_workarea(layout: Dict[str, Any], wa: str) -> Dict[str, Any]:
+    output: Dict[str, Any] = {}
 
     for key in layout:
         if 'i' in layout[key]:
@@ -195,10 +196,13 @@ def parse_workarea(layout, wa):
 
     return output
 
-def parse_output(flags, wa1, wa2):
-    output = {}
+def parse_output(flags: Dict[str, Any], wa1: str, wa2: Optional[str]) -> Dict[str, Any]:
+    output: Dict[str, Any] = {}
 
     output.update(parse_workarea(WORK_AREA_LAYOUTS['output']['WA1'], wa1))
+
+    if wa2 is None:
+        return output
 
     function_name = flags['function']
     if function_name in WORK_AREA_LAYOUTS['output']:

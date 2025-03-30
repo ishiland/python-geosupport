@@ -1,7 +1,8 @@
 import os
+from typing import Optional
 
 
-def build_win_dll_path(geosupport_path=None, dll_filename='nycgeo.dll'):
+def build_win_dll_path(geosupport_path: Optional[str] = None, dll_filename: str = 'nycgeo.dll') -> str:
     """"
     Windows specific function to return full path of the nycgeo.dll
     example: 'C:\\Program Files\\Geosupport Desktop Edition\\Bin\\NYCGEO.dll'

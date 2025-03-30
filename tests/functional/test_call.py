@@ -265,7 +265,8 @@ class TestCall(TestCase):
             'on': 'Lafayette St',
             'from': 'Worth st',
             'to': 'Leonard St',
-            'auxseg': 'Y'
+            'auxseg': 'Y',
+            'mode_switch': 'X'
         })
 
         self.assertEqual(len(result['Segment IDs']), 2)
@@ -337,7 +338,8 @@ class TestCall(TestCase):
             'from': 'Worth st',
             'to': 'Leonard St',
             'compass_direction': 'E',
-            'auxseg': 'Y'
+            'auxseg': 'Y',
+            'mode_switch': 'X'
         })
 
         self.assertDictSubsetEqual({
@@ -347,8 +349,8 @@ class TestCall(TestCase):
         }, result)
 
         self.assertEqual(len(result['Segment IDs']), 2)
-        self.assertTrue('0023578' in result['Segment IDs'])
-        self.assertTrue('0032059' in result['Segment IDs'])
+        self.assertTrue('7800320' in result['Segment IDs'])
+        self.assertTrue('59' in result['Segment IDs'])
 
     def test_3C_extended_auxseg(self):
         result = self.geosupport.call({

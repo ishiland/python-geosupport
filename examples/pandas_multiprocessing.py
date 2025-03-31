@@ -1,5 +1,5 @@
 """
-Example of how to use python-geosupport, Pandas and Multiprocessing to speed up geocoding workflows. 
+Example of how to use python-geosupport, Pandas and Multiprocessing to speed up geocoding workflows.
 """
 
 import os

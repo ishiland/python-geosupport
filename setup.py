@@ -39,8 +39,6 @@ setup(
     extras_require={
         "dev": [
             "coverage",
-            "invoke>=1.1.1",
-            "nose",
             "black",
         ]
     },

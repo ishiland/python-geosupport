@@ -51,7 +51,7 @@ setup(
     extras_require={
         "dev": [
             "coverage",
-            "black",
+            "black==25.1.0",
         ]
     },
 )

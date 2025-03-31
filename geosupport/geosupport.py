@@ -9,7 +9,7 @@ from .config import USER_CONFIG, WA1_SIZE, WA2_SIZE
 from .error import GeosupportError
 from .function_info import FUNCTIONS, function_help, list_functions, input_help
 from .io import format_input, parse_output, set_mode
-from .platform_utils import load_geosupport_library  # New helper module
+from .platform_utils import load_geosupport_library
 
 # Set up module-level logging.
 logger = logging.getLogger(__name__)
@@ -18,9 +18,6 @@ handler = logging.StreamHandler()
 formatter = logging.Formatter("[%(levelname)s] %(asctime)s - %(name)s - %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
-
-# Global variable to hold the loaded Geosupport library.
-GEOLIB: Any = None
 
 
 class Geosupport:

@@ -21,7 +21,6 @@ jobs:
       - name: Install Geosupport Desktop (Windows)
         shell: pwsh
         run: |
-          # Construct the file name and URL for the Windows installer
           $FILENAME = "gde_${{ env.GEO_VERSION }}_x64.zip"
           $URL = "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILENAME"
           $LOCALDIR = "geosupport-install"
@@ -31,12 +30,13 @@ jobs:
           Invoke-WebRequest -Uri $URL -OutFile $FILENAME
           Expand-Archive -Path $FILENAME -DestinationPath $LOCALDIR
           
-          # The zip expands to a folder named "gde_${{ env.GEO_VERSION }}_x64", so reference that directory to run setup.exe
+          # Run the installer from the expected folder structure
           Start-Process -Wait -FilePath "$LOCALDIR\gde_${{ env.GEO_VERSION }}_x64\setup.exe" -Verb runAs -ArgumentList '/s', '/v"/qn"'
           
           # Update environment variables for subsequent steps
           echo "PATH=$TARGETDIR\bin;$env:PATH" >> $env:GITHUB_ENV
           echo "GEOFILES=$TARGETDIR\fls\\" >> $env:GITHUB_ENV
+        
       - name: Install dependencies
         run: pip install .
       - name: Run unit tests

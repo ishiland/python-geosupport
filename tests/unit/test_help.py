@@ -29,9 +29,11 @@ class TestHelp(TestCase):
 
         try:
             import StringIO  # python 2
+
             h = StringIO.StringIO()
         except ImportError:
             import io  # python 3
+
             h = io.StringIO()
 
         sys.stdout = h

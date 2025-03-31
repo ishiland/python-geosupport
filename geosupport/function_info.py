@@ -5,6 +5,7 @@ from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 
 from .config import FUNCTION_INFO_CSV, FUNCTION_INPUTS_CSV, WORK_AREA_LAYOUTS_PATH
 
+
 class FunctionDict(dict):
 
     def __init__(self) -> None:
@@ -21,10 +22,10 @@ class FunctionDict(dict):
     def __contains__(self, name: object) -> bool:
         name_str = str(name).strip().upper()
 
-        return (
-            (name_str in self.alt_names) or
-            (super(FunctionDict, self).__contains__(name_str))
+        return (name_str in self.alt_names) or (
+            super(FunctionDict, self).__contains__(name_str)
         )
+
 
 def load_function_info() -> FunctionDict:
     functions = FunctionDict()
@@ -34,24 +35,22 @@ def load_function_info() -> FunctionDict:
     with open(FUNCTION_INFO_CSV) as f:
         csv = DictReader(f)
         for row in csv:
-            function = row['function']
+            function = row["function"]
             for k in MODES:
                 if row[k]:
                     row[k] = int(row[k])
                 else:
                     row[k] = None
 
-            if row['alt_names']:
-                row['alt_names'] = [
-                    n.strip() for n in row['alt_names'].split(',')
-                ]
+            if row["alt_names"]:
+                row["alt_names"] = [n.strip() for n in row["alt_names"].split(",")]
             else:
-                row['alt_names'] = []
+                row["alt_names"] = []
 
-            for n in row['alt_names']:
+            for n in row["alt_names"]:
                 alt_names[n.upper()] = function
 
-            row['inputs'] = []
+            row["inputs"] = []
 
             functions[function] = row
 
@@ -61,20 +60,21 @@ def load_function_info() -> FunctionDict:
         csv = DictReader(f)
 
         for row in csv:
-            if row['function']:
-                functions[row['function']]['inputs'].append({
-                    'name': row['field'],
-                    'comment': row['comments']
-                })
+            if row["function"]:
+                functions[row["function"]]["inputs"].append(
+                    {"name": row["field"], "comment": row["comments"]}
+                )
 
     return functions
 
+
 def list_functions() -> str:
-    s = sorted([
-        "%s (%s)" % (
-            function['function'], ', '.join(function['alt_names'])
-        ) for function in FUNCTIONS.values()
-    ])
+    s = sorted(
+        [
+            "%s (%s)" % (function["function"], ", ".join(function["alt_names"]))
+            for function in FUNCTIONS.values()
+        ]
+    )
     s = ["List of functions (and alternate names):"] + s
     s.append(
         "\nCall a function using the function code or alternate name using "
@@ -89,31 +89,28 @@ def list_functions() -> str:
         "\nUse Geosupport.help(<function>) or Geosupport.<function>.help() "
         "to read about specific function."
     )
-    return '\n'.join(s)
+    return "\n".join(s)
+
 
 def function_help(function: str, return_as_string: bool = False) -> Optional[str]:
     function = FUNCTIONS[function]
 
     s = [
         "",
-        "%s (%s)" % (function['function'], ', '.join(function['alt_names'])),
-        "="*40,
-        function['description'],
+        "%s (%s)" % (function["function"], ", ".join(function["alt_names"])),
+        "=" * 40,
+        function["description"],
         "",
-        "Input: %s" % function['input'],
-        "Output: %s" % function['output'],
-        "Modes: %s" % ', '.join([
-            m for m in MODES if function[m] is not None
-        ]),
+        "Input: %s" % function["input"],
+        "Output: %s" % function["output"],
+        "Modes: %s" % ", ".join([m for m in MODES if function[m] is not None]),
         "\nInputs",
-        "="*40,
-        "\n".join([
-            "%s - %s" % (i['name'], i['comment']) for i in function['inputs']
-        ]),
+        "=" * 40,
+        "\n".join(["%s - %s" % (i["name"], i["comment"]) for i in function["inputs"]]),
         "\nReference",
-        "="*40,
-        function['links'],
-        ""
+        "=" * 40,
+        function["links"],
+        "",
     ]
 
     s = "\n".join(s)
@@ -124,6 +121,7 @@ def function_help(function: str, return_as_string: bool = False) -> Optional[str
         print(s)
         return None
 
+
 def input_help() -> str:
     s = [
         "\nThe following is a full list of inputs for Geosupport. "
@@ -132,37 +130,38 @@ def input_help() -> str:
         "Geosupport functions. Many of the inputs also have alternate names "
         "in parantheses, which can be passed as keyword arguments as well.",
         "\nInputs",
-        "="*40,
+        "=" * 40,
     ]
 
     for i in INPUT:
-        s.append("%s (%s)" % (i['name'], ', '.join(i['alt_names'])))
-        s.append("-"*40)
-        s.append("Functions: %s" % i['functions'])
-        s.append("Expected Values: %s\n" % i['value'])
+        s.append("%s (%s)" % (i["name"], ", ".join(i["alt_names"])))
+        s.append("-" * 40)
+        s.append("Functions: %s" % i["functions"])
+        s.append("Expected Values: %s\n" % i["value"])
 
-    return '\n'.join(s)
+    return "\n".join(s)
+
 
 def load_work_area_layouts() -> Tuple[Dict[str, Dict[str, Any]], List[Dict[str, Any]]]:
     work_area_layouts: Dict[str, Dict[str, Any]] = {}
     inputs: List[Dict[str, Any]] = []
 
-    for csv in glob.glob(path.join(WORK_AREA_LAYOUTS_PATH, '*', '*.csv')):
+    for csv in glob.glob(path.join(WORK_AREA_LAYOUTS_PATH, "*", "*.csv")):
         directory = path.basename(path.dirname(csv))
         if directory not in work_area_layouts:
             work_area_layouts[directory] = {}
 
         layout: Dict[str, Any] = {}
-        name = path.basename(csv).split('.')[0]
+        name = path.basename(csv).split(".")[0]
 
-        if '-' in name:
-            functions, mode = name.split('-')
-            mode = '-' + mode
+        if "-" in name:
+            functions, mode = name.split("-")
+            mode = "-" + mode
         else:
             functions = name
-            mode = ''
+            mode = ""
 
-        functions = functions.split('_')
+        functions = functions.split("_")
         for function in functions:
             work_area_layouts[directory][function + mode] = layout
 
@@ -170,19 +169,17 @@ def load_work_area_layouts() -> Tuple[Dict[str, Dict[str, Any]], List[Dict[str, 
             rows = DictReader(f)
 
             for row in rows:
-                name = row['name'].strip().strip(':').strip()
+                name = row["name"].strip().strip(":").strip()
 
-                parent = row['parent'].strip().strip(':').strip()
-                if parent and 'i' in layout[parent]:
+                parent = row["parent"].strip().strip(":").strip()
+                if parent and "i" in layout[parent]:
                     layout[parent] = {parent: layout[parent]}
 
-                alt_names = [
-                    n.strip() for n in row['alt_names'].split(',') if n
-                ]
+                alt_names = [n.strip() for n in row["alt_names"].split(",") if n]
 
                 v = {
-                    'i': (int(row['from']) - 1, int(row['to'])),
-                    'formatter': row['formatter']
+                    "i": (int(row["from"]) - 1, int(row["to"])),
+                    "formatter": row["formatter"],
                 }
 
                 if parent:
@@ -195,17 +192,20 @@ def load_work_area_layouts() -> Tuple[Dict[str, Dict[str, Any]], List[Dict[str, 
                     layout[n.upper()] = v
                     layout[n.lower()] = v
 
-                if directory == 'input':
-                    inputs.append({
-                        'name': name,
-                        'alt_names': alt_names,
-                        'functions': row['functions'],
-                        'value': row['value']
-                    })
+                if directory == "input":
+                    inputs.append(
+                        {
+                            "name": name,
+                            "alt_names": alt_names,
+                            "functions": row["functions"],
+                            "value": row["value"],
+                        }
+                    )
 
     return work_area_layouts, inputs
 
-MODES: List[str] = ['regular', 'extended', 'long', 'long+tpad']
+
+MODES: List[str] = ["regular", "extended", "long", "long+tpad"]
 AUXILIARY_SEGMENT_LENGTH: int = 500
 FUNCTIONS = load_function_info()
 WORK_AREA_LAYOUTS, INPUT = load_work_area_layouts()

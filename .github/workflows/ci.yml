@@ -23,7 +23,7 @@ jobs:
         run: |
           $FILENAME = "gde_${{ env.GEO_VERSION }}_x64.zip"
           $URL = "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILENAME"
-          $LOCALDIR = "geosupport-install"
+          $LOCALDIR = "gde_${{ env.GEO_VERSION }}_x64"
           $TARGETDIR = "C:\Program Files\Geosupport Desktop Edition"
           
           # Download and extract the installer
@@ -31,7 +31,7 @@ jobs:
           Expand-Archive -Path $FILENAME -DestinationPath $LOCALDIR
           
           # Run the installer from the expected folder structure
-          Start-Process -Wait -FilePath "$LOCALDIR\gde_${{ env.GEO_VERSION }}_x64\setup.exe" -Verb runAs -ArgumentList '/s', '/v"/qn"'
+          Start-Process -Wait -FilePath "$LOCALDIR\setup.exe" -Verb runAs -ArgumentList '/s', '/v"/qn"'
           
           # Update environment variables for subsequent steps
           echo "PATH=$TARGETDIR\bin;$env:PATH" >> $env:GITHUB_ENV

@@ -31,8 +31,8 @@ jobs:
           Invoke-WebRequest -Uri $URL -OutFile $FILENAME
           Expand-Archive -Path $FILENAME -DestinationPath $LOCALDIR
           
-          # The zip expands to a folder named like "gde_25a", so reference that directory to run setup.exe
-          Start-Process -Wait -FilePath "$LOCALDIR\gde_${{ env.GEO_VERSION }}\setup.exe" -Verb runAs -ArgumentList '/s', '/v"/qn"'
+          # The zip expands to a folder named "gde_${{ env.GEO_VERSION }}_x64", so reference that directory to run setup.exe
+          Start-Process -Wait -FilePath "$LOCALDIR\gde_${{ env.GEO_VERSION }}_x64\setup.exe" -Verb runAs -ArgumentList '/s', '/v"/qn"'
           
           # Update environment variables for subsequent steps
           echo "PATH=$TARGETDIR\bin;$env:PATH" >> $env:GITHUB_ENV

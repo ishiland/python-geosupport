@@ -57,6 +57,6 @@ jobs:
         with:
           python-version: 3.11
       - name: Install code quality tools
-        run: pip install black flake8 mypy
+        run: pip install black
       - name: Check code formatting with black
         run: black --check .

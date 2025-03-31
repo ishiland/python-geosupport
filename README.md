@@ -1,11 +1,12 @@
 # python-geosupport 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5uocynec8e3maeeq?svg=true&branch=master)](https://ci.appveyor.com/project/ishiland/python-geosupport) [![PyPI version](https://img.shields.io/pypi/v/python-geosupport.svg)](https://pypi.python.org/pypi/python-geosupport/) [![3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-360/) 
+![Build status](https://github.com/ishiland/python-geosupport/actions/workflows/ci.yml/badge.svg) [![PyPI version](https://img.shields.io/pypi/v/python-geosupport.svg)](https://pypi.python.org/pypi/python-geosupport/) [![3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-360/) 
 
 
-Python bindings for NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
+Geocode NYC Addresses locally using Python bindings for NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
 
-### [Read the docs](https://python-geosupport.readthedocs.io/en/latest/) 
+## Documentation 
+Check out documentation for installing and usage [here](https://python-geosupport.readthedocs.io/en/latest/).
 
 ## Quickstart
 
@@ -39,6 +40,9 @@ result = g.address(house_number=125, street_name='Worth St', borough_code='Mn')
     ...
 }
 ```
+
+## Examples
+See the examples directory and accompanying [readme.md](examples/readme.md).
 
 ## License
 

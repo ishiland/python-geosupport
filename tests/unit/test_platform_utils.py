@@ -21,10 +21,11 @@ class TestSysUtils(TestCase):
     )
     def test_build_dll_path_with_geosupport_path_none(self):
         """test that the dll path is created when geosupport path is not provided"""
+
         # Create a function to selectively mock isdir for our test path
         def mock_isdir(path):
             return path.lower() == r"c:\another\place\on\my\pc\bin"
-        
+
         # Mock both isdir and listdir
         with mock.patch("os.path.isdir", side_effect=mock_isdir):
             with mock.patch("os.listdir") as mocked_listdir:

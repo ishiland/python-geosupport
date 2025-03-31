@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-windows-32bit:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11 (32-bit)
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          architecture: x86
+      - name: Install dependencies
+        run: pip install .
+      - name: Run unit tests
+        run: python -m unittest discover
+
+  test-windows-64bit:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11 (64-bit)
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          architecture: x64
+      - name: Install dependencies
+        run: pip install .
+      - name: Run unit tests
+        run: python -m unittest discover
+
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: pip install .
+      - name: Run unit tests
+        run: python -m unittest discover
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install code quality tools
+        run: pip install black flake8 mypy
+      - name: Check code formatting with black
+        run: black --check .

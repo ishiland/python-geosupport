@@ -7,22 +7,10 @@ on:
     branches: [ master ]
 
 jobs:
-  test-windows-32bit:
+  test-windows:
     runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.11 (32-bit)
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
-          architecture: x86
-      - name: Install dependencies
-        run: pip install .
-      - name: Run unit tests
-        run: python -m unittest discover
-
-  test-windows-64bit:
-    runs-on: windows-latest
+    env:
+      GEO_VERSION: 25a
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11 (64-bit)
@@ -30,6 +18,25 @@ jobs:
         with:
           python-version: 3.11
           architecture: x64
+      - name: Install Geosupport Desktop (Windows)
+        shell: pwsh
+        run: |
+          # Construct the file name and URL for the Windows installer
+          $FILENAME = "gde_${{ env.GEO_VERSION }}_x64.zip"
+          $URL = "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILENAME"
+          $LOCALDIR = "geosupport-install"
+          $TARGETDIR = "C:\Program Files\Geosupport Desktop Edition"
+          
+          # Download and extract the installer
+          Invoke-WebRequest -Uri $URL -OutFile $FILENAME
+          Expand-Archive -Path $FILENAME -DestinationPath $LOCALDIR
+          
+          # The zip expands to a folder named like "gde_25a", so reference that directory to run setup.exe
+          Start-Process -Wait -FilePath "$LOCALDIR\gde_${{ env.GEO_VERSION }}\setup.exe" -Verb runAs -ArgumentList '/s', '/v"/qn"'
+          
+          # Update environment variables for subsequent steps
+          echo "PATH=$TARGETDIR\bin;$env:PATH" >> $env:GITHUB_ENV
+          echo "GEOFILES=$TARGETDIR\fls\\" >> $env:GITHUB_ENV
       - name: Install dependencies
         run: pip install .
       - name: Run unit tests
@@ -37,12 +44,46 @@ jobs:
 
   test-linux:
     runs-on: ubuntu-latest
+    env:
+      GEO_VERSION: 25a
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
+      - name: Install Geosupport Desktop (Linux)
+        run: |
+          # Extract numeric part and the trailing letter from GEO_VERSION (e.g. "25a")
+          NUM="${GEO_VERSION:0:2}"
+          LETTER="${GEO_VERSION: -1}"
+          
+          # Map letter to the appropriate minor version number
+          case $LETTER in
+            a) MINOR=1;;
+            b) MINOR=2;;
+            c) MINOR=3;;
+            *) echo "Unsupported GEO_VERSION letter: $LETTER" && exit 1;;
+          esac
+          
+          # Build the filename based on GEO_VERSION; for example, for 25b it becomes linux_geo25b_25.2.zip
+          FILENAME="linux_geo${GEO_VERSION}_${NUM}.${MINOR}.zip"
+          URL="https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILENAME"
+          
+          LOCALDIR="geosupport-install-lx"
+          
+          # Download and extract the zip file
+          curl -L -o $FILENAME "$URL"
+          mkdir -p $LOCALDIR
+          unzip $FILENAME -d $LOCALDIR
+          
+          # Locate the extracted directory, which is named like "version-25b_25.2"
+          GEO_DIR=$(find $LOCALDIR -type d -name "version-${GEO_VERSION}_*" | head -n 1)
+          
+          # Set environment variables for GEOFILES and LD_LIBRARY_PATH
+          echo "GEOFILES=$GITHUB_WORKSPACE/$GEO_DIR/fls/" >> $GITHUB_ENV
+          echo "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/$GEO_DIR/lib/:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+      
       - name: Install dependencies
         run: pip install .
       - name: Run unit tests

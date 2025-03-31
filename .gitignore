@@ -12,3 +12,6 @@ MANIFEST
 cover
 .coverage
 coverage.xml
+gde/
+upg/
+docker/

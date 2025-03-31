@@ -1,13 +1,33 @@
 # python-geosupport 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5uocynec8e3maeeq?svg=true&branch=master)](https://ci.appveyor.com/project/ishiland/python-geosupport) [![PyPI version](https://img.shields.io/pypi/v/python-geosupport.svg)](https://pypi.python.org/pypi/python-geosupport/) [![Python 2.7 | 3.4+](https://img.shields.io/badge/python-2.7%20%7C%203.4+-blue.svg)](https://www.python.org/downloads/release/python-360/) 
+![Build status](https://github.com/ishiland/python-geosupport/actions/workflows/ci.yml/badge.svg) [![PyPI version](https://img.shields.io/pypi/v/python-geosupport.svg)](https://pypi.python.org/pypi/python-geosupport/) [![3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-360/) 
 
 
-Python bindings for NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
+Geocode NYC addresses locally using Python bindings for NYC Planning's [Geosupport Desktop Edition](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page).
 
-### [Read the docs](https://python-geosupport.readthedocs.io/en/latest/) 
+## Documentation 
+
+Check out documentation for installing and usage [here](https://python-geosupport.readthedocs.io/en/latest/).
+
+## Features
+
+- Pythonic interface to all Geosupport functions
+- Support for both Windows and Linux platforms
+- Secure and fast using local geocoding - no API calls required 
+- Built-in error handling for Geosupport return codes
+- Interactive help menu
+
+## Compatibility
+
+- Python 3.8+
+- Tested on Geosupport Desktop Edition 25a
+- Windows (64-bit & 32-bit) and Linux operating systems
 
 ## Quickstart
+
+```bash
+pip install python-geosupport
+```
 
 ```python
 # Import the library and create a `Geosupport` object.
@@ -40,11 +60,22 @@ result = g.address(house_number=125, street_name='Worth St', borough_code='Mn')
 }
 ```
 
+## Examples
+
+See the examples directory and accompanying [readme.md](examples/readme.md).
+
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`python -m unittest discover`)
+5. Run Black formatting (`black .`)
+6. Commit your changes (`git commit -m 'Add some amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
 ## License
 
 This project is licensed under the MIT License - see the [license.txt](license.txt) file for details
-
-## Contributors
-Thanks to [Jeremy Neiman](https://github.com/docmarionum1) for a major revision incorporating all Geosupport functions and parameters.
-
-If you see an issue or would like to contribute, pull requests are welcome.

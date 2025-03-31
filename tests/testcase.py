@@ -2,6 +2,7 @@ import unittest
 
 from geosupport import Geosupport
 
+
 class TestCase(unittest.TestCase):
 
     def assertDictSubsetEqual(self, subset, superset):

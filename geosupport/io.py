@@ -98,6 +98,7 @@ def get_formatter(name: str) -> Callable:
         return FORMATTERS[name]
     elif name.isdigit():
         return list_of_items(int(name))
+    return lambda v: "" if v is None else str(v).strip().upper()
 
 
 def set_mode(mode: Optional[str]) -> Dict[str, bool]:

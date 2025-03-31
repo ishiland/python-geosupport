@@ -1,7 +1,7 @@
 import os
 import sys
 from unittest import TestCase, mock, skipUnless
-from geosupport.sysutils import build_win_dll_path
+from geosupport.platform_utils import build_win_dll_path
 
 
 class TestSysUtils(TestCase):

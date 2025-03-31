@@ -1,6 +1,10 @@
 from os import path
 from typing import Dict, Union
 
+# Constants for work area sizes.
+WA1_SIZE: int = 1200
+WA2_SIZE: int = 32767  # Maximum size for WA2
+
 FUNCTION_INFO_PATH = path.join(path.abspath(path.dirname(__file__)), "function_info")
 
 FUNCTION_INFO_CSV = path.join(FUNCTION_INFO_PATH, "function_info.csv")

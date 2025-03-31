@@ -21,17 +21,23 @@ class TestSysUtils(TestCase):
     )
     def test_build_dll_path_with_geosupport_path_none(self):
         """test that the dll path is created when geosupport path is not provided"""
-        with mock.patch("os.listdir") as mocked_listdir:
-            mocked_listdir.return_value = [
-                "geo.dll",
-                "docs",
-                "nycgeo.exe",
-                "nycgeo.dll",
-            ]
-            dll_path = build_win_dll_path(geosupport_path=None)
-            self.assertEqual(
-                dll_path.lower(), r"c:\another\place\on\my\pc\bin\nycgeo.dll"
-            )
+        # Create a function to selectively mock isdir for our test path
+        def mock_isdir(path):
+            return path.lower() == r"c:\another\place\on\my\pc\bin"
+        
+        # Mock both isdir and listdir
+        with mock.patch("os.path.isdir", side_effect=mock_isdir):
+            with mock.patch("os.listdir") as mocked_listdir:
+                mocked_listdir.return_value = [
+                    "geo.dll",
+                    "docs",
+                    "nycgeo.exe",
+                    "nycgeo.dll",
+                ]
+                dll_path = build_win_dll_path(geosupport_path=None)
+                self.assertEqual(
+                    dll_path.lower(), r"c:\another\place\on\my\pc\bin\nycgeo.dll"
+                )
 
     @skipUnless(sys.platform.startswith("win"), "requires Windows")
     @mock.patch.dict(os.environ, {"PATH": "just a bunch of nonsense"})

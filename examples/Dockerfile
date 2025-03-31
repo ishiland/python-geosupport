@@ -1,6 +1,6 @@
 FROM nycplanning/docker-geosupport:latest
 
-RUN pip install pandas nyc-parser
+RUN pip install pandas nyc-parser tqdm
 
 WORKDIR /examples
 

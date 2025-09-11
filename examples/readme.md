@@ -1,23 +1,37 @@
 # Geosupport Examples
 
-Some examples to demonstrate different usages of python-geosupport. 
+Example scripts demonstrating python-geosupport usage.
 
-## Using Docker
-Use NYC Plannings [docker-geosupport](https://github.com/NYCPlanning/docker-geosupport) image to geocode your data.
+## Running Examples
 
-> nycplanning/docker-geosupport image will be automatically updated whenever there's a new major release or upad release on Bytes of the Big Apple
+### Basic Usage
 
-### Build
-```shell
-docker build . -t geosupport-examples 
+```bash
+# Run any example directly
+python handle_similar_street_names.py
+python pandas_simple.py
+python pandas_multiprocessing.py
 ```
 
-### Run
-From this directory, you can run: 
-```shell
-docker run -it --rm --volume ${PWD}:/examples geosupport-examples pandas_simple.py 
+### Available Examples
 
+| Example | Description |
+|---------|-------------|
+| `handle_similar_street_names.py` | Extract similar street names when Geosupport returns a "NOT RECOGNIZED" error |
+| `pandas_simple.py` | Geocode addresses in a pandas DataFrame |
+| `pandas_multiprocessing.py` | Parallel geocoding using multiprocessing for large datasets |
+
+## Using Docker
+
+NYC Planning's [docker-geosupport](https://github.com/NYCPlanning/docker-geosupport) image includes python-geosupport pre-installed.
+
+```bash
+# Build the examples container
+docker build . -t geosupport-examples 
+
+# Run examples
+docker run -it --rm --volume ${PWD}:/examples geosupport-examples pandas_simple.py 
 docker run -it --rm --volume ${PWD}:/examples geosupport-examples pandas_multiprocessing.py 
 ```
 
-The outputs will be in the *./data* directory. 
+Output files will be saved to `./data/` directory.

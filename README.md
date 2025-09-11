@@ -20,7 +20,7 @@ Check out documentation for installing and usage [here](https://python-geosuppor
 ## Compatibility
 
 - Python 3.8+
-- Tested on Geosupport Desktop Edition 25a
+- Tested on Geosupport Desktop Edition 25c
 - Windows (64-bit & 32-bit) and Linux operating systems
 
 ## Quickstart

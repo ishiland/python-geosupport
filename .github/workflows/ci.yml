@@ -10,7 +10,7 @@ jobs:
   test-windows:
     runs-on: windows-latest
     env:
-      GEO_VERSION: 25a
+      GEO_VERSION: 25c
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11 (64-bit)
@@ -22,7 +22,7 @@ jobs:
         shell: pwsh
         run: |
           $FILENAME = "gde_${{ env.GEO_VERSION }}_x64.zip"
-          $URL = "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILENAME"
+          $URL = "https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/geosupport/$FILENAME"
           $LOCALDIR = "gde_${{ env.GEO_VERSION }}_x64"
           $TARGETDIR = "C:\Program Files\Geosupport Desktop Edition"
           
@@ -45,7 +45,7 @@ jobs:
   test-linux:
     runs-on: ubuntu-latest
     env:
-      GEO_VERSION: 25a
+      GEO_VERSION: 25c
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.11
@@ -68,7 +68,7 @@ jobs:
           
           # Build the filename based on GEO_VERSION; for example, for 25b it becomes linux_geo25b_25.2.zip
           FILENAME="linux_geo${GEO_VERSION}_${NUM}.${MINOR}.zip"
-          URL="https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILENAME"
+          URL="https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/geosupport/$FILENAME"
           
           LOCALDIR="geosupport-install-lx"
           
